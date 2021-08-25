@@ -1,0 +1,16 @@
+@import "utilities/base";
+@import "utilities/mixins";
+@import "utilities/variables";
+
+@import "components/buttons";
+@import "components/forms";
+@import "components/icons";
+
+@import "layout/footer";
+@import "layout/navbar";
+
+@import "pages/admin";
+@import "pages/booking";
+@import "pages/confirmation";
+@import "pages/home";
+@import "pages/menu";
