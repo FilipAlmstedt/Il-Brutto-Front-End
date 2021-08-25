@@ -1,22 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./SCSS/App.scss";
 import { HomePage } from "./Components/HomePage";
 import { MenuPage } from "./Components/MenuPage";
 import { BookingPage } from "./Components/BookingPage";
 import { ConfirmationPage } from "./Components/ConfirmationPage";
 import { AdminPage } from "./Components/AdminPage";
 import { PageNotFound } from "./Components/PageNotFound";
+import { Navbar } from "./Components/Layout/Navbar";
 
 function App() {
   return (
     <div className="App">
-      <h1>App works!</h1>
       <Router>
     
-     <nav>
-       {/* När navbar-komponenten är skapad, lägg in här: <Navbar/> */}
-     </nav>
+      <Navbar></Navbar>
 
       <Switch>
         <Route exact path="/">
@@ -42,7 +40,7 @@ function App() {
         <Route path="*">
           <PageNotFound></PageNotFound>
         </Route>
-      </Switch>]
+      </Switch>
 
       <footer>
         {/* När footer-komponenten är skapad, lägg in här: <Footer/> */}

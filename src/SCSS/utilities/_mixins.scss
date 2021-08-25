@@ -1,0 +1,43 @@
+//For use with responsive desktop displays
+@mixin desktopsOnly {
+    @media screen and (min-width: 1024px) {
+        @content;
+    }
+}
+
+//Created to recyle flex-styling, arguments for direction and justify-content
+@mixin flexStyling($direction, $justifyContent) {
+    display: flex;
+    justify-content: $justifyContent;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+//Mixin for container with background images
+@mixin homeImage {
+    background-repeat: no-repeat;
+    background-size:  cover;
+    background-position: center;
+}
+
+//Mixin for homepage containers with text
+@mixin homeImageText {
+    h2 {
+        width:100%;
+        font-size: 2rem;
+        color:white;
+        text-align: center;
+        background-color: rgba(0, 0, 0,0.5);
+        position: absolute;
+        bottom: 0;
+        transition: 0.1s ease-in-out;
+       
+      }
+      &:hover {
+        h2 {
+          font-size:2.5rem;
+        }
+      }
+}
+
+
