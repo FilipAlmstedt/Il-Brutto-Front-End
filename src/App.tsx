@@ -8,6 +8,7 @@ import { ConfirmationPage } from "./Components/ConfirmationPage";
 import { AdminPage } from "./Components/AdminPage";
 import { PageNotFound } from "./Components/PageNotFound";
 import { Navbar } from "./Components/Layout/Navbar";
+import { Footer } from "./Components/Layout/Footer" 
 
 function App() {
   return (
@@ -42,9 +43,7 @@ function App() {
         </Route>
       </Switch>
 
-      <footer>
-        {/* När footer-komponenten är skapad, lägg in här: <Footer/> */}
-      </footer>
+      <Footer></Footer>
 
     </Router>
     </div>
