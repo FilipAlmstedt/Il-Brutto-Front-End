@@ -1,0 +1,60 @@
+/* Images and colours to potentially be replaced later with chosen design */
+/* Responsive: Mobile first principle */
+
+//Erik
+
+.homeHero {
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/images/homePageHero.jpg");
+  @include homeImage;
+  color: white;
+  text-align: center;
+  h1 {
+    padding-top: 10vh;
+    font-size: 3rem;
+    color: #b6b7b9;
+
+    @include desktopsOnly {
+      font-size: 5rem;
+    }
+  }
+}
+
+.homeAbout {
+  @include flexStyling(column, center);
+  text-align: center;
+  width: 100%;
+  height: 30vh;
+  margin: 0 auto;
+  letter-spacing: 0.3rem;
+}
+
+.homeMenu {
+  position: relative;
+  height: 30vh;
+  width: 100%;
+  background: url("../assets/images/menuImage.jpg");
+  @include homeImage;
+  @include homeImageText;
+
+  //Menu and booking on same row in desktop mode
+  @include desktopsOnly {
+    display: inline-flex;
+    width: 50%;
+  }
+}
+
+.homeBooking {
+  position: relative;
+  height: 30vh;
+  width: 100%;
+  background: url("../assets/images/bookingImage.jpg");
+  @include homeImage;
+  @include homeImageText;
+
+  @include desktopsOnly {
+    display: inline-flex;
+    width: 50%;
+  }
+}
