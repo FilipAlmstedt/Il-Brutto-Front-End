@@ -12,10 +12,6 @@
     margin: 1rem;
   }
 
-  form {
-    @include flexStyling(column, space-between);
-  }
-
   ul {
     list-style: none;
     margin: 1rem;
