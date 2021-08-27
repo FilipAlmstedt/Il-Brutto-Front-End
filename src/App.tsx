@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./SCSS/App.scss";
 import { HomePage } from "./Components/HomePage";
