@@ -11,6 +11,8 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
   const [guestAmount, setGuestAmount] = useState(1);
   // Test string
   let selectedDate = JSON.stringify(chosenDate);
+  //console.log(chosenDate);
+  
 
   return (
     <>
