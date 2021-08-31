@@ -27,7 +27,6 @@ export const AdminUserForm = (props: IAddCustomerInfo) => {
     };
     
     const submitCustomerInfo = () => {
-        //props.addCustomerInfo(form.firstName, form.lastName, form.email, form.tel, form.additionalInfo)
         const customerInformation: CustomerInfo = {
             firstName: form.firstName,
             lastName: form.lastName,

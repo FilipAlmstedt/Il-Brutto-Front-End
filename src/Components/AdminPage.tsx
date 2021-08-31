@@ -30,6 +30,8 @@ export const AdminPage = () => {
     const bookingObject = {...booking};
     bookingObject.date = selectedDate;
     setBooking(bookingObject);
+    console.log(booking);
+    
   }
 
   // Get seatingTime from AdminSeatingTime component // NOT DONE!!!
@@ -37,6 +39,7 @@ export const AdminPage = () => {
     const bookingObject = {...booking};
     bookingObject.seatingTime = chosenTime;
     setBooking(bookingObject);
+    console.log(booking);
   }
 
   // Get the guest amount from AdminGuestAmount component
@@ -44,6 +47,7 @@ export const AdminPage = () => {
     const bookingObject = {...booking};
     bookingObject.guestAmount = selectedGuestAmount;
     setBooking(bookingObject)
+    console.log(booking);
   }
 
   // Get customer information from AdminUserForm component
@@ -51,13 +55,14 @@ export const AdminPage = () => {
     const bookingObject = {...booking};
     bookingObject.customerInfo = customerInput;
     setBooking(bookingObject);
+    console.log(booking);
     
-    submitAllInfo();
+    //submitAllInfo();
   
   };
 
   const submitAllInfo = () => {
-    axios.post<Booking>("http://localhost:8000/admin", booking);
+    //axios.post<Booking>("http://localhost:8000/admin", booking);
   }
 
   useEffect(() => {
@@ -81,13 +86,7 @@ export const AdminPage = () => {
     );
   });
 
-  /*console.log(chosenDate);
-  console.log(guestAmount);
-  console.log(seatingTime);
-  console.log(customerInfo);*/
-  
-  
-  
+
   
   return (
     <>
