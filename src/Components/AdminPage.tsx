@@ -10,43 +10,53 @@ import { AdminUserForm } from "./AdminComponents/AdminUserForm";
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   
-  
-  //Create states for each child components to then store in booking state
-  const [chosenDate, setChosenDate] = useState<Date>(new Date); 
-  const [seatingTime, setSeatingTime] = useState(""); 
-  const [guestAmount, setGuestAmount] = useState(1); 
-  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({firstName: "", lastName: "", tel: 0, email: "", additionalInfo: ""}); 
-
-
-  const [booking, setBooking] = useState<Booking>({date: chosenDate, seatingTime: seatingTime, bookingRef: "abc123", guestAmount: guestAmount, customerInfo: customerInfo});
+  let defaultValues: Booking = {
+    date: new Date,
+    bookingRef: "abc123",
+    guestAmount: 1,
+    seatingTime: "",
+    customerInfo: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      tel: 123456,
+      additionalInfo: ""
+    }
+  }
+  const [booking, setBooking] = useState<Booking>(defaultValues);
 
   // Get chosen date from AdminCalendarPlugin component
   const getDate = (selectedDate: Date) => {
-    setChosenDate(selectedDate);
+    const bookingObject = {...booking};
+    bookingObject.date = selectedDate;
+    setBooking(bookingObject);
   }
 
   // Get seatingTime from AdminSeatingTime component // NOT DONE!!!
   const getSeatingTime = (chosenTime: string) => {
-    setSeatingTime(chosenTime);
+    const bookingObject = {...booking};
+    bookingObject.seatingTime = chosenTime;
+    setBooking(bookingObject);
   }
 
   // Get the guest amount from AdminGuestAmount component
   const getGuestAmount = (selectedGuestAmount: number) => {
-    setGuestAmount(selectedGuestAmount);
+    const bookingObject = {...booking};
+    bookingObject.guestAmount = selectedGuestAmount;
+    setBooking(bookingObject)
   }
 
   // Get customer information from AdminUserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => { 
-    setCustomerInfo(customerInput);
+    const bookingObject = {...booking};
+    bookingObject.customerInfo = customerInput;
+    setBooking(bookingObject);
     
     submitAllInfo();
   
   };
 
   const submitAllInfo = () => {
-    const bookingInput: Booking = {date: chosenDate, bookingRef: "abc123", seatingTime: seatingTime, guestAmount: guestAmount, customerInfo: customerInfo}; 
-    setBooking(bookingInput);
-    console.log(booking);
     axios.post<Booking>("http://localhost:8000/admin", booking);
   }
 
