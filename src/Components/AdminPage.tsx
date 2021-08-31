@@ -8,6 +8,7 @@ import { AdminSeatingTime } from "./AdminComponents/AdminSeatingTime";
 import { AdminUserForm } from "./AdminComponents/AdminUserForm";
 import { v4 as uuidv4 } from "uuid";
 import Moment from 'react-moment';
+import { Link } from "react-router-dom";
 
 
 export const AdminPage = () => {
@@ -32,38 +33,23 @@ export const AdminPage = () => {
   const getDate = (selectedDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = selectedDate;
+
     setBooking(bookingObject);
-<<<<<<< HEAD
-    console.log(booking);
-    
-  }
-=======
   };
->>>>>>> 1e5c85aa34ba05a4ef189f653379f936b2dd03e9
 
   // Get seatingTime from AdminSeatingTime component // NOT DONE!!!
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject = { ...booking };
     bookingObject.seatingTime = chosenTime;
     setBooking(bookingObject);
-<<<<<<< HEAD
-    console.log(booking);
-  }
-=======
   };
->>>>>>> 1e5c85aa34ba05a4ef189f653379f936b2dd03e9
 
   // Get the guest amount from AdminGuestAmount component
   const getGuestAmount = (selectedGuestAmount: number) => {
     const bookingObject = { ...booking };
     bookingObject.guestAmount = selectedGuestAmount;
-<<<<<<< HEAD
-    setBooking(bookingObject)
-  }
-=======
     setBooking(bookingObject);
   };
->>>>>>> 1e5c85aa34ba05a4ef189f653379f936b2dd03e9
 
   // Get customer information from AdminUserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
@@ -102,7 +88,7 @@ export const AdminPage = () => {
         <h4>Booking reference:{booking.bookingRef}</h4>
 
         <button>DELETE</button>
-        <button>EDIT</button>
+        <Link to={`/edit/${booking.bookingRef}`}><button>EDIT</button></Link>
       </li>
     );
   });
