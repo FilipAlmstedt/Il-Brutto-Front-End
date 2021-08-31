@@ -13,7 +13,7 @@ export const AdminPage = () => {
   let defaultValues: Booking = {
     date: new Date,
     bookingRef: "abc123",
-    guestAmount: 1,
+    guestAmount: 5,
     seatingTime: "",
     customerInfo: {
       firstName: "",
@@ -57,7 +57,11 @@ export const AdminPage = () => {
     setBooking(bookingObject);
     console.log(booking);
     
+<<<<<<< HEAD
     //submitAllInfo();
+=======
+    
+>>>>>>> ab33bed19d006ed13b0a383c87057b3efb3cf30e
   
   };
 
@@ -94,6 +98,7 @@ export const AdminPage = () => {
       <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
       <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
       <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+    <button onClick={submitAllInfo}> POST </button>
       <ul>{liTags}</ul>
       
     </>
