@@ -57,16 +57,12 @@ export const AdminPage = () => {
     setBooking(bookingObject);
     console.log(booking);
     
-<<<<<<< HEAD
-    //submitAllInfo();
-=======
     
->>>>>>> ab33bed19d006ed13b0a383c87057b3efb3cf30e
   
   };
 
   const submitAllInfo = () => {
-    //axios.post<Booking>("http://localhost:8000/admin", booking);
+    axios.post<Booking>("http://localhost:8000/admin", booking);
   }
 
   useEffect(() => {
