@@ -6,14 +6,15 @@ import { AdminCalendarPlugin } from "./AdminComponents/AdminCalendarPlugin";
 import { AdminGuestAmount } from "./AdminComponents/AdminGuestAmount";
 import { AdminSeatingTime } from "./AdminComponents/AdminSeatingTime";
 import { AdminUserForm } from "./AdminComponents/AdminUserForm";
+import { v4 as uuidv4 } from 'uuid';
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   
   let defaultValues: Booking = {
     date: new Date,
-    bookingRef: "abc123",
-    guestAmount: 5,
+    bookingRef: "",
+    guestAmount: 0,
     seatingTime: "",
     customerInfo: {
       firstName: "",
@@ -44,21 +45,24 @@ export const AdminPage = () => {
 
   // Get the guest amount from AdminGuestAmount component
   const getGuestAmount = (selectedGuestAmount: number) => {
+    console.log(selectedGuestAmount);
+    
     const bookingObject = {...booking};
     bookingObject.guestAmount = selectedGuestAmount;
     setBooking(bookingObject)
-    console.log(booking);
   }
 
   // Get customer information from AdminUserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => { 
     const bookingObject = {...booking};
     bookingObject.customerInfo = customerInput;
+
+    // Create unique bookingRef
+    bookingObject.bookingRef = uuidv4();
+    
     setBooking(bookingObject);
-    console.log(booking);
+    console.log(bookingObject);
     
-    
-  
   };
 
   const submitAllInfo = () => {
@@ -67,7 +71,6 @@ export const AdminPage = () => {
 
   useEffect(() => {
     axios.get<Booking[]>("http://localhost:8000/admin").then((response) => {
-      //console.log(response.data);
       setBookings(response.data);
     });
   }, []);
@@ -86,7 +89,12 @@ export const AdminPage = () => {
     );
   });
 
-
+  /*console.log(chosenDate);
+  console.log(guestAmount);
+  console.log(seatingTime);
+  console.log(customerInfo);*/
+  
+  
   
   return (
     <>
