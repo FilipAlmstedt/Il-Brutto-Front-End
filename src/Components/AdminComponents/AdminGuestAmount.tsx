@@ -9,11 +9,11 @@ interface IAddGuestAmount {
 // Component that stores guest amount and send to parent AdminPage
 export const AdminGuestAmount = (props: IAddGuestAmount) => {
 
-    const [guestAmount, setGuestAmont] = useState(1);
+    //const [guestAmount, setGuestAmont] = useState(1);
 
     const submitGuestAmount = (e: ChangeEvent<HTMLInputElement>) => {
-        setGuestAmont(+e.target.value)
-        props.addGuestAmount(guestAmount);
+       // setGuestAmont(+e.target.value)
+        props.addGuestAmount(+e.target.value);
     }
 
     return (
