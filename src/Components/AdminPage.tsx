@@ -10,10 +10,10 @@ export const AdminPage = () => {
   const getBookings = (chosenDate: Date, guestAmount: number) => {};
 
   const addBooking = (
-    date: Date,
+    {/*date: Date,
     bookingRef: string,
     guestAmount: number,
-    seatingTime: string,
+    seatingTime: string,*/},
     firstName: string,
     lastName: string,
     email: string,
