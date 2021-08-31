@@ -6,9 +6,8 @@ import { AdminCalendarPlugin } from "./AdminComponents/AdminCalendarPlugin";
 import { AdminGuestAmount } from "./AdminComponents/AdminGuestAmount";
 import { AdminSeatingTime } from "./AdminComponents/AdminSeatingTime";
 import { AdminUserForm } from "./AdminComponents/AdminUserForm";
-import { v4 as uuidv4 } from "uuid";
-import Moment from 'react-moment';
-
+import { v1 as uuidv1 } from "uuid";
+import Moment from "react-moment";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -55,25 +54,41 @@ export const AdminPage = () => {
     bookingObject.customerInfo = customerInput;
 
     // Create unique bookingRef
-    bookingObject.bookingRef = uuidv4();
+    bookingObject.bookingRef = uuidv1();
 
     setBooking(bookingObject);
     console.log(bookingObject);
   };
 
+  //Post request using booking state
   const submitAllInfo = () => {
     axios.post<Booking>("http://localhost:8000/admin", booking);
   };
 
-  useEffect(() => {
+  // Separate function for axios get request
+  const getBookings = () => {
     axios.get<Booking[]>("http://localhost:8000/admin").then((response) => {
       setBookings(response.data);
     });
+  };
+
+  //Calling bookings state every time user lands on page
+  useEffect(() => {
+    getBookings();
   }, []);
+
+  //Calling bookings state every state updates
+  useEffect(() => {
+    getBookings();
+  }, [bookings]);
+
+  const deleteBooking = (bookingRef: string) => {
+    //Axios delete based on bookingRef route to back end
+    axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`);
+  };
 
   let liTags = bookings.map((booking) => {
     return (
-      // Unikt värde, id?
       <li key={booking.bookingRef}>
         <h3>
           {booking.customerInfo.firstName} {booking.customerInfo.lastName}
@@ -85,7 +100,13 @@ export const AdminPage = () => {
         <h4>Seating time: {booking.seatingTime}</h4>
         <h4>Booking reference:{booking.bookingRef}</h4>
 
-        <button>DELETE</button>
+        <button
+          onClick={() => {
+            deleteBooking(booking.bookingRef);
+          }}
+        >
+          DELETE
+        </button>
         <button>EDIT</button>
       </li>
     );
