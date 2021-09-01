@@ -103,13 +103,14 @@ export const AdminPage = () => {
         <h4>Booking reference:{booking.bookingRef}</h4>
 
         <button
+          className="delete-button"
           onClick={() => {
             deleteBooking(booking.bookingRef);
           }}
         >
-          DELETE
+          X
         </button>
-        <Link to={`/edit/${booking.bookingRef}`}><button>EDIT</button></Link>
+        <Link to={`/edit/${booking.bookingRef}`}><button className="edit-button">EDIT BOOKING</button></Link>
       </li>
     );
   });
@@ -117,11 +118,14 @@ export const AdminPage = () => {
   return (
     <>
       <AdminCalendarPlugin addChosenDate={getDate}></AdminCalendarPlugin>
-      <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
-      <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
-      <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
-      <button onClick={submitAllInfo}> POST </button>
-      <ul>{liTags}</ul>
+      <div className="user-inputs">
+        <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
+        <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
+        <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+        <h2>Is above information entered correctly?</h2>
+        <button className="post-button" onClick={submitAllInfo}> ADD BOOKING </button>
+      </div>
+      <ul className="booking-table">{liTags}</ul>
     </>
   );
 };

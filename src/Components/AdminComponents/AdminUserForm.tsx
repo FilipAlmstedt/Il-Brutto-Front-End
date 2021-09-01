@@ -40,6 +40,7 @@ export const AdminUserForm = (props: IAddCustomerInfo) => {
     return (
         <>
             <form>
+                <h2>Guest information</h2>
                 <label htmlFor="firstname">Firstname: </label>
                 <input
                 id="firstname"
