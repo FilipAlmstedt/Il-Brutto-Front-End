@@ -6,6 +6,7 @@ import { AdminCalendarPlugin } from "./AdminComponents/AdminCalendarPlugin";
 import { AdminGuestAmount } from "./AdminComponents/AdminGuestAmount";
 import { AdminSeatingTime } from "./AdminComponents/AdminSeatingTime";
 import { AdminUserForm } from "./AdminComponents/AdminUserForm";
+import { Link } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import Moment from "react-moment";
 
@@ -31,6 +32,7 @@ export const AdminPage = () => {
   const getDate = (selectedDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = selectedDate;
+
     setBooking(bookingObject);
   };
 
@@ -108,7 +110,7 @@ export const AdminPage = () => {
         >
           X
         </button>
-        <button className="edit-button">EDIT BOOKING</button>
+        <Link to={`/edit/${booking.bookingRef}`}><button className="edit-button">EDIT BOOKING</button></Link>
       </li>
     );
   });
