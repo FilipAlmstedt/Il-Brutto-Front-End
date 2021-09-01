@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminCalendarPlugin } from "./AdminCalendarPlugin";
@@ -83,29 +83,49 @@ export const AdminEditBooking = () => {
 
     return (
         <>
-            <h1>Booking information for {booking?.customerInfo.firstName}</h1>
+            <div className="showEditBookingInfoContainer">
+                <h1>Booking information for {booking?.customerInfo.firstName}</h1>
+                <div className="bookingInfoDiv">
+                    <div className="bookingRefAndDate">
+                        <ul>
+                            <li><b>Booking reference:</b> {id}</li>
+                            <li><b>Date: </b>{booking?.date}</li>
+                        </ul>
+                    </div>
 
-            <ul>
-                <li>Bookingreference: {id}</li>
-                <li>Date: {booking?.date}</li>
-                <li>Amount of guests booked: {booking?.guestAmount}</li>
-                <li>Seating time: {booking?.seatingTime}</li>
-            </ul>
+                    <div className="bookingGuestAmountAndSeatingTime">
+                        <ul>
+                            <li><b>Amount of guests booked:</b> {booking?.guestAmount}</li>
+                            <li><b>Seating time:</b> {booking?.seatingTime}</li>      
+                        </ul>
+                    </div>     
+                </div>
+                <div className="customerInfoDiv">
+                    <h3>Customer info: </h3>
+                    <ul>
+                        <li><b>Firstname:</b> {booking?.customerInfo.firstName}</li>
+                        <li><b>Lastname:</b> {booking?.customerInfo.lastName}</li>
+                        <li><b>Email:</b> {booking?.customerInfo.email}</li>
+                        <li><b>Phone number:</b> {booking?.customerInfo.tel}</li>
+                        <li><b>Additional info:</b> {booking?.customerInfo.additionalInfo}</li>
+                    </ul>
+                </div>
+                <hr className="line" />
+            </div>
 
-            <h3>Customer info: </h3>
-            <ul>
-                <li>Firstname: {booking?.customerInfo.firstName}</li>
-                <li>Lastname: {booking?.customerInfo.lastName}</li>
-                <li>Email: {booking?.customerInfo.email}</li>
-                <li>Phone number: {booking?.customerInfo.tel}</li>
-                <li>Additional info: {booking?.customerInfo.additionalInfo}</li>
-            </ul>
+            
 
             <AdminCalendarPlugin addChosenDate={getDate}></AdminCalendarPlugin>
-            <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
-            <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
-            <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
-            <button type="button" onClick={updateBooking}>Update booking!</button>
+            <div className="user-inputs">
+                <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
+                <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
+                <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+
+                <hr className="line2" />
+
+                <button type="button" onClick={updateBooking}>Update booking!</button>
+                <Link to="/admin">Go back!</Link>
+            </div>
         </>
     );
 }

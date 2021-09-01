@@ -62,3 +62,57 @@
 h2 {
     margin-bottom: .5rem;
 }
+
+// EditBooking page
+.showEditBookingInfoContainer {
+  @include flexStyling(column, center);
+
+  font-size: 1.5rem;
+  
+
+  h1 {
+    text-align: center;
+  }
+
+  .bookingInfoDiv {
+    padding: 2rem;
+    line-height: 2.5rem;
+
+    li {
+      list-style: none;
+    }
+  }
+
+  @include desktopsOnly {
+    .bookingInfoDiv {
+        @include flexStyling(row, center);
+        .bookingRefAndDate {
+          margin: 1rem;
+        }
+        .bookingGuestAmountAndSeatingTime {
+          margin: 1rem;
+        }
+    }
+  }
+
+  .customerInfoDiv {
+    text-decoration: none;
+    padding: 2rem;
+    line-height: 2.5rem;
+
+    li {
+      list-style: none;
+    }
+  }
+
+  .line {
+    border-top: 0.5rem solid red;
+    width: 70vw;
+  }
+}
+
+.line2 {
+  border-top: 0.1rem solid blue;
+  width: 30vw;
+  margin-bottom: 2rem;
+}
