@@ -41,6 +41,7 @@ export const AdminUserForm = (props: IAddCustomerInfo) => {
     return (
         <>
             <form>
+                <h2>Guest information</h2>
                 <input
                 type="text"
                 onChange={updateAll}

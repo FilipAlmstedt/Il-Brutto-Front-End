@@ -1,26 +1,26 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
 interface IAddGuestAmount {
-    addGuestAmount(
-        guestAmount: number
-    ): void;
+  addGuestAmount(guestAmount: number): void;
 }
 
 // Component that stores guest amount and send to parent AdminPage
 export const AdminGuestAmount = (props: IAddGuestAmount) => {
+  const submitGuestAmount = (e: ChangeEvent<HTMLInputElement>) => {
+    props.addGuestAmount(+e.target.value);
+  };
 
-    //const [guestAmount, setGuestAmont] = useState(1);
-
-    const submitGuestAmount = (e: ChangeEvent<HTMLInputElement>) => {
-       // setGuestAmont(+e.target.value)
-        props.addGuestAmount(+e.target.value);
-    }
-
-    return (
-        <>
-            <label htmlFor="guestAmount">Guest amount: </label>
-            <input id="guestAmount" onChange={submitGuestAmount} type="number" defaultValue={1} min={1} placeholder="Type in amount of guests"/>
-        </>
-    );
-
-} 
+  return (
+    <>
+      <label htmlFor="guestAmount"><h2>Guest amount:</h2></label>
+      <input
+        id="guestAmount"
+        onChange={submitGuestAmount}
+        type="number"
+        defaultValue={1}
+        min={1}
+        placeholder="Type in amount of guests"
+      />
+    </>
+  );
+};

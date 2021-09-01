@@ -1,0 +1,9 @@
+.calendar-plugin {
+  @include flexStyling(column, center);
+  width: 100vw;
+  margin: 3rem 0 3rem 0;
+
+  h1 {
+      margin: 1rem;
+  }
+}
