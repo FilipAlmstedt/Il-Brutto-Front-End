@@ -8,6 +8,7 @@ import { AdminPage } from "./Components/AdminPage";
 import { PageNotFound } from "./Components/PageNotFound";
 import { Navbar } from "./Components/Layout/Navbar";
 import { Footer } from "./Components/Layout/Footer" 
+import { AdminEditBooking } from "./Components/AdminComponents/AdminEditBooking";
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
 
         <Route path="/admin">
           <AdminPage></AdminPage>
+        </Route>
+
+        <Route path="/edit/:id">
+          <AdminEditBooking></AdminEditBooking>
         </Route>
 
         <Route path="*">
