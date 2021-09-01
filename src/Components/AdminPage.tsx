@@ -12,41 +12,6 @@ import Moment from "react-moment";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
-<<<<<<< HEAD
-  const [booking, setBooking] = useState<Booking>({date: new Date, seatingTime: "", bookingRef: "abc123", guestAmount: 0, customerInfo: {firstName: "", lastName: "", tel: 0, email: "", additionalInfo: ""}});
-
-  // Get chosen date from AdminCalendarPlugin component
-  const getDate = (selectedDate: Date) => {
-    const update: Booking = {...booking}; 
-    update.date = selectedDate;
-    setBooking(update);
-  }
-
-  // Get seatingTime from AdminSeatingTime component // NOT DONE!!!
-  const getSeatingTime = (chosenTime: string) => {
-    const update: Booking = {...booking}; 
-    update.seatingTime = chosenTime;
-    setBooking(update);
-  }
-
-  // Get the guest amount from AdminGuestAmount component
-  const getGuestAmount = (selectedGuestAmount: number) => {
-    const update: Booking = {...booking}; 
-    update.guestAmount = selectedGuestAmount;
-    setBooking(update);
-  }
-
-  // Get customer information from AdminUserForm component
-  const getCustomerInfo = (customerInput: CustomerInfo) => { 
-    //console.log(customerInput);
-    
-    const update: Booking = {...booking}; 
-    update.customerInfo = customerInput;
-    setBooking(update);
-    console.log(booking);
-    //submitAllInfo();
-  
-=======
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -95,21 +60,12 @@ export const AdminPage = () => {
 
     setBooking(bookingObject);
     console.log(bookingObject);
->>>>>>> 2f6d71fbcbf95dd692ba0a99d372a2c210998c92
   };
 
   //Post request using booking state
   const submitAllInfo = () => {
-<<<<<<< HEAD
-    
-    
-    
-    //axios.post<Booking>("http://localhost:8000/admin", booking);
-  }
-=======
     axios.post<Booking>("http://localhost:8000/admin", booking);
   };
->>>>>>> 2f6d71fbcbf95dd692ba0a99d372a2c210998c92
 
   // Separate function for axios get request
   const getBookings = () => {
