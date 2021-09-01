@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminCalendarPlugin } from "./AdminCalendarPlugin";
@@ -88,7 +88,7 @@ export const AdminEditBooking = () => {
                 <div className="bookingInfoDiv">
                     <div className="bookingRefAndDate">
                         <ul>
-                            <li><b>Bookingreference:</b> {id}</li>
+                            <li><b>Booking reference:</b> {id}</li>
                             <li><b>Date: </b>{booking?.date}</li>
                         </ul>
                     </div>
@@ -120,7 +120,11 @@ export const AdminEditBooking = () => {
                 <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
                 <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
                 <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+
+                <hr className="line2" />
+
                 <button type="button" onClick={updateBooking}>Update booking!</button>
+                <Link to="/admin">Go back!</Link>
             </div>
         </>
     );
