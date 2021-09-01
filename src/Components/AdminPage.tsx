@@ -9,45 +9,46 @@ import { AdminUserForm } from "./AdminComponents/AdminUserForm";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
-  
-  
-  //Create states for each child components to then store in booking state
-  const [chosenDate, setChosenDate] = useState<Date>(new Date); 
-  const [seatingTime, setSeatingTime] = useState(""); 
-  const [guestAmount, setGuestAmount] = useState(1); 
-  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({firstName: "", lastName: "", tel: 0, email: "", additionalInfo: ""}); 
-
-
-  const [booking, setBooking] = useState<Booking>({date: chosenDate, seatingTime: seatingTime, bookingRef: "abc123", guestAmount: guestAmount, customerInfo: customerInfo});
+  const [booking, setBooking] = useState<Booking>({date: new Date, seatingTime: "", bookingRef: "abc123", guestAmount: 0, customerInfo: {firstName: "", lastName: "", tel: 0, email: "", additionalInfo: ""}});
 
   // Get chosen date from AdminCalendarPlugin component
   const getDate = (selectedDate: Date) => {
-    setChosenDate(selectedDate);
+    const update: Booking = {...booking}; 
+    update.date = selectedDate;
+    setBooking(update);
   }
 
   // Get seatingTime from AdminSeatingTime component // NOT DONE!!!
   const getSeatingTime = (chosenTime: string) => {
-    setSeatingTime(chosenTime);
+    const update: Booking = {...booking}; 
+    update.seatingTime = chosenTime;
+    setBooking(update);
   }
 
   // Get the guest amount from AdminGuestAmount component
   const getGuestAmount = (selectedGuestAmount: number) => {
-    setGuestAmount(selectedGuestAmount);
+    const update: Booking = {...booking}; 
+    update.guestAmount = selectedGuestAmount;
+    setBooking(update);
   }
 
   // Get customer information from AdminUserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => { 
-    setCustomerInfo(customerInput);
+    //console.log(customerInput);
     
-    submitAllInfo();
+    const update: Booking = {...booking}; 
+    update.customerInfo = customerInput;
+    setBooking(update);
+    console.log(booking);
+    //submitAllInfo();
   
   };
 
   const submitAllInfo = () => {
-    const bookingInput: Booking = {date: chosenDate, bookingRef: "abc123", seatingTime: seatingTime, guestAmount: guestAmount, customerInfo: customerInfo}; 
-    setBooking(bookingInput);
-    console.log(booking);
-    axios.post<Booking>("http://localhost:8000/admin", booking);
+    
+    
+    
+    //axios.post<Booking>("http://localhost:8000/admin", booking);
   }
 
   useEffect(() => {
