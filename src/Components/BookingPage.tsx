@@ -1,6 +1,6 @@
 import { CalendarPlugin } from "./BookingComponents/CalendarPlugin";
-//import { BookingSummary } from "./BookingComponents/BookingSummary";
-//import { UserForm } from "./BookingComponents/UserForm";
+import { BookingSummary } from "./BookingComponents/BookingSummary";
+import { UserForm } from "./BookingComponents/UserForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Booking } from "../Models/Booking";
