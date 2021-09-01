@@ -18,7 +18,8 @@ export const AdminCalendarPlugin = (props: IAddChosenDate) => {
 
     return (
         <>
-        <div style={{ width: 700 }}>
+        <div className="calendar-plugin">
+        <h1>Admin Bookings Page</h1>
             <Calendar onChange={setChosenDate} showWeekNumbers value={chosenDate} />      
         </div>
         </>

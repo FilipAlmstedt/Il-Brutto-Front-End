@@ -14,31 +14,30 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
 
   return (
     <>
-     
-        <div className="radio">
-          <label>
-            <input
-              id="early"
-              type="radio"
-              value="early"
-              name="seatingTime"
-              onChange={onValueChange}
-            />
-            Early
-          </label>
+      <h2>Seating time</h2>
+      <div className="radio">
+        <label>
+          <input
+            id="early"
+            type="radio"
+            value="early"
+            name="seatingTime"
+            onChange={onValueChange}
+          />
+          Early
+        </label>
 
-          <label>
-            <input
-              id="late"
-              name="seatingTime"
-              type="radio"
-              value="late"
-              onChange={onValueChange}
-            />
-            Late
-          </label>
-        </div>
-     
+        <label>
+          <input
+            id="late"
+            name="seatingTime"
+            type="radio"
+            value="late"
+            onChange={onValueChange}
+          />
+          Late
+        </label>
+      </div>
     </>
   );
 };
