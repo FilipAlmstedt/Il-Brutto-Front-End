@@ -9,8 +9,6 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
 
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     let selectedTime = e.target.value;
-
-    setForm(selectedTime);
     props.addSeatingTime(selectedTime);
   };
 
