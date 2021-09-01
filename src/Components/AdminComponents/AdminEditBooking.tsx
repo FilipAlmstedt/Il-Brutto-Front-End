@@ -37,12 +37,12 @@ export const AdminEditBooking = () => {
     // Booking object that you will update and the send to DB 
     const [updatedBooking, setUpdatedBooking] = useState<Booking>(defaultValues);
 
+    // Collect the booking object everytime the booking object is updated. The info updates on the page
     useEffect(() => {
         axios.get<Booking>(`http://localhost:8000/editReservation/${id}`).then((response) => {
             setBooking(response.data);
-            //console.log(response.data);
         });
-    }, []);
+    }, [booking]);
 
     // Get chosen date from AdminCalendarPlugin component
     const getDate = (selectedDate: Date) => {
@@ -51,7 +51,7 @@ export const AdminEditBooking = () => {
         setUpdatedBooking(bookingObject);
     };
 
-    // Get seating time from AdminSeatingTime component // NOT DONE!!!
+    // Get seating time from AdminSeatingTime component
     const getSeatingTime = (chosenTime: string) => {
         const bookingObject: Booking = {...updatedBooking};
         bookingObject.seatingTime = chosenTime;
