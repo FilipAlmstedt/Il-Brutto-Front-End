@@ -4,7 +4,6 @@ import { UserForm } from "./BookingComponents/UserForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Booking } from "../Models/Booking";
-import Moment from "react-moment";
 import moment from "moment";
 import { EarlyAvailable } from "./BookingComponents/SeatingComponents/EarlyAvailable";
 import { EarlyFull } from "./BookingComponents/SeatingComponents/EarlyFull";
