@@ -1,6 +1,6 @@
 export const LateFull = () => {
 
     return (
-        <div className=" seatingfull"> 21:00</div>
+        <div className=" seating full"> 21:00</div>
     )
 }
