@@ -11,22 +11,23 @@ interface IParams {
 export const ConfirmationPage = () => {
   let { id } = useParams<IParams>();
 
+  // Create state to store confirmed booking info from DB
   const [booking, setBooking] = useState<Booking>();
 
+  // Collect the right booking info from DB and store in state
   useEffect(() => {
     axios
       .get<Booking>(`http://localhost:8000/confirmedReservation/${id}`)
       .then((response) => {
         setBooking(response.data);
-      });
-      
-      
+      }); 
   }, [id]);
 
   return (
     <>
       <h1>Your booking has been confirmed</h1>
-      <BookingSummary></BookingSummary>
+        {/* Send booking to Booking summary component */}
+       <BookingSummary booking={booking}></BookingSummary> 
     </>
   );
 };
