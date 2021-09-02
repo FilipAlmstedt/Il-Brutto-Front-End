@@ -59,7 +59,6 @@ export const AdminPage = () => {
     bookingObject.bookingRef = uuidv1();
 
     setBooking(bookingObject);
-    console.log(bookingObject);
   };
 
   //Post request using booking state
@@ -123,7 +122,7 @@ export const AdminPage = () => {
         <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
         <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
         <h2>Is above information entered correctly?</h2>
-        <button className="post-button" onClick={submitAllInfo}> ADD BOOKING </button>
+        <Link to={`/confirmation/${booking.bookingRef}`}><button className="post-button" onClick={submitAllInfo}> ADD BOOKING </button></Link>
       </div>
       <ul className="booking-table">{liTags}</ul>
     </>
