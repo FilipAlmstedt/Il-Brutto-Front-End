@@ -1,0 +1,27 @@
+.seatingContainer {
+  @include flexStyling(row, start);
+  align-items: flex-start;
+  
+  width: 133px;
+  height: 50px;
+  border-radius: 5%;
+}
+
+.seating {
+  width: 50%;
+  border: 1px solid rgb(77, 77, 97);
+  background-color: rgb(230, 232, 255);
+  border-radius: 5%;
+  height: 100%;
+  @include flexCenter(column);
+  font-size: 2rem;
+  color:rgb(77, 77, 97);
+}
+
+.full {
+  opacity: 0.5;
+}
+
+.available {
+  cursor:pointer;
+}
