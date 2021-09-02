@@ -21,8 +21,6 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
 
   return (
     <>
-      <h1>CalendarPlugin works!</h1>
-      <div style={{ width: 700 }}>
         <label htmlFor="guestAmount">Guest amount: </label>
         <input
           id="guestAmount"
@@ -33,7 +31,7 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
         />
 
         <Calendar onChange={setChosenDate} showWeekNumbers value={chosenDate} />
-      </div>
+      
     </>
   );
 }

@@ -1,6 +1,5 @@
 import { CalendarPlugin } from "./BookingComponents/CalendarPlugin";
-//import { BookingSummary } from "./BookingComponents/BookingSummary";
-//import { UserForm } from "./BookingComponents/UserForm";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Booking } from "../Models/Booking";
@@ -9,6 +8,9 @@ import { EarlyAvailable } from "./BookingComponents/SeatingComponents/EarlyAvail
 import { EarlyFull } from "./BookingComponents/SeatingComponents/EarlyFull";
 import { LateAvailable } from "./BookingComponents/SeatingComponents/LateAvailable";
 import { LateFull } from "./BookingComponents/SeatingComponents/LateFull";
+import { AdminUserForm } from "./AdminComponents/AdminUserForm";
+import { CustomerInfo } from "../Models/CustomerInfo";
+import { v1 as uuidv1 } from "uuid";
 
 export const BookingPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -45,6 +47,16 @@ export const BookingPage = () => {
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject = { ...booking };
     bookingObject.seatingTime = chosenTime;
+    setBooking(bookingObject);
+  };
+  
+  const getCustomerInfo = (customerInput: CustomerInfo) => {
+    const bookingObject = { ...booking };
+    bookingObject.customerInfo = customerInput;
+
+    // Create unique bookingRef
+    bookingObject.bookingRef = uuidv1();
+
     setBooking(bookingObject);
     console.log(bookingObject);
   };
@@ -93,11 +105,12 @@ export const BookingPage = () => {
   }, []);
 
   return (
-    <>
+    <><div className="calenderContainer">
       <CalendarPlugin
         getUserAmount={getGuestAmount}
         getUserDate={sortBookings}
       ></CalendarPlugin>
+      </div>
       {/* rendera komponent beroende på tillgänglighet */}
       <div className="seatingContainer">
         {earlyTable ? (
@@ -112,8 +125,8 @@ export const BookingPage = () => {
         )}
       </div>
 
-      {/* <UserForm></UserForm>
-      <BookingSummary></BookingSummary> */}
+      <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+      
     </>
   );
 };
