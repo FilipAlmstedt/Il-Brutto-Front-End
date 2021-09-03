@@ -124,8 +124,8 @@ export const BookingPage = () => {
           <LateFull />
         )}
       </div>
-
-      <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+          {(booking.seatingTime === "late" || booking.seatingTime === "early") ? (<AdminUserForm addCustomerInfo={getCustomerInfo}/>) : null}
+      
       
     </>
   );

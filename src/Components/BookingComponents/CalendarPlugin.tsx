@@ -9,7 +9,6 @@ interface ICalendarPluginProps {
 
 export function CalendarPlugin(props: ICalendarPluginProps) {
   const [chosenDate, setChosenDate] = useState(new Date());
-  const [guestAmount, setGuestAmount] = useState(0);
 
   useEffect(() => {
     props.getUserDate(chosenDate);
