@@ -90,7 +90,7 @@ export const AdminUserForm = (props: IAddCustomerInfo) => {
                 name="additionalInfo"
                 placeholder="Additional information"
                 />
-                <button type="button" onClick={submitCustomerInfo}>Update customer information</button>
+                <button type="button" onClick={submitCustomerInfo}>UPDATE CUSTOMER INFORMATION</button>
             </form>
         </>
     );

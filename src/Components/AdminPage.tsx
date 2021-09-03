@@ -9,6 +9,7 @@ import { AdminUserForm } from "./AdminComponents/AdminUserForm";
 import { Link } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import Moment from "react-moment";
+import { AdminBookingTable } from "./AdminComponents/AdminBookingTable";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -89,43 +90,17 @@ export const AdminPage = () => {
     axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`);
   };
 
-  let liTags = bookings.map((booking) => {
-    return (
-      <li key={booking.bookingRef}>
-        <h3>
-          {booking.customerInfo.firstName} {booking.customerInfo.lastName}
-        </h3>
-        <h4>Guestamount:{booking.guestAmount}</h4>
-        <h4>
-          Date:<Moment format="YYYY/MM/DD">{booking.date}</Moment>
-        </h4>
-        <h4>Seating time: {booking.seatingTime}</h4>
-        <h4>Booking reference:{booking.bookingRef}</h4>
-
-        <button
-          className="delete-button"
-          onClick={() => {
-            deleteBooking(booking.bookingRef);
-          }}
-        >
-          X
-        </button>
-        <Link to={`/edit/${booking.bookingRef}`}><button className="edit-button">EDIT BOOKING</button></Link>
-      </li>
-    );
-  });
-
   return (
     <>
-      <AdminCalendarPlugin addChosenDate={getDate}></AdminCalendarPlugin>
+      <AdminCalendarPlugin addChosenDate={getDate}/>
       <div className="user-inputs">
-        <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
-        <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
-        <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+        <AdminSeatingTime addSeatingTime={getSeatingTime}/>
+        <AdminGuestAmount addGuestAmount={getGuestAmount}/>
+        <AdminUserForm addCustomerInfo={getCustomerInfo}/>
         <h2>Is above information entered correctly?</h2>
         <button className="post-button" onClick={submitAllInfo}> ADD BOOKING </button>
       </div>
-      <ul className="booking-table">{liTags}</ul>
+      <AdminBookingTable cancelReservation={deleteBooking} bookings={bookings}/>
     </>
   );
 };
