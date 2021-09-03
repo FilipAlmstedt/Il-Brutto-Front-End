@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from "react";
-import Calendar, { OnChangeDateCallback } from "react-calendar";
+import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 interface ICalendarPluginProps {
