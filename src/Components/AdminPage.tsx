@@ -6,12 +6,14 @@ import { AdminCalendarPlugin } from "./AdminComponents/AdminCalendarPlugin";
 import { AdminGuestAmount } from "./AdminComponents/AdminGuestAmount";
 import { AdminSeatingTime } from "./AdminComponents/AdminSeatingTime";
 import { AdminUserForm } from "./AdminComponents/AdminUserForm";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import Moment from "react-moment";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
+
+  let history = useHistory();
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -59,12 +61,18 @@ export const AdminPage = () => {
     bookingObject.bookingRef = uuidv1();
 
     setBooking(bookingObject);
-    console.log(bookingObject);
   };
 
   //Post request using booking state
   const submitAllInfo = () => {
-    axios.post<Booking>("http://localhost:8000/admin", booking);
+    axios.post<Booking>("http://localhost:8000/admin", booking).then(response => {
+       history.push(`/confirmation/${booking.bookingRef}`);
+       console.log("Hello!");
+    });
+
+    // Should be in then but it doesn't work right now 
+    history.push(`/confirmation/${booking.bookingRef}`);
+   
   };
 
   // Separate function for axios get request
