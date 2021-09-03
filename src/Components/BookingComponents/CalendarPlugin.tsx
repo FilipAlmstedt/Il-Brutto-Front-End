@@ -20,17 +20,16 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
 
   return (
     <>
-        <label htmlFor="guestAmount">Guest amount: </label>
-        <input
-          id="guestAmount"
-          onChange={submitGuestAmount}
-          type="number"
-          defaultValue={1}
-          min={1}
-        />
+      <label htmlFor="guestAmount">Guest amount: </label>
+      <input
+        id="guestAmount"
+        onChange={submitGuestAmount}
+        type="number"
+        defaultValue={1}
+        min={1}
+      />
 
-        <Calendar onChange={setChosenDate} showWeekNumbers value={chosenDate} />
-      
+      <Calendar onChange={setChosenDate} showWeekNumbers value={chosenDate} />
     </>
   );
 }

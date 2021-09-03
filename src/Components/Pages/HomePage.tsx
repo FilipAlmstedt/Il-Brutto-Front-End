@@ -23,7 +23,7 @@ export const HomePage = () => {
           <h2>Il menu</h2>
         </div>
       </Link>
-      
+
       <Link to="/booking">
         <div className="homeBooking">
           <h2>Book a table</h2>

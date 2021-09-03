@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Booking } from "../Models/Booking";
-import { CustomerInfo } from "../Models/CustomerInfo";
-import { AdminSeatingTime } from "./AdminComponents/AdminSeatingTime";
-import { AdminUserForm } from "./AdminComponents/AdminUserForm";
-import { Link, useHistory } from "react-router-dom";
+import { Booking } from "../../Models/Booking";
+import { CustomerInfo } from "../../Models/CustomerInfo";
+import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
+import { UserForm } from "../BookingComponents/UserForm";
+import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
-import { AdminBookingTable } from "./AdminComponents/AdminBookingTable";
-import { CalendarPlugin } from "./BookingComponents/CalendarPlugin";
+import { AdminBookingTable } from "../AdminComponents/AdminBookingTable";
+import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -33,7 +33,6 @@ export const AdminPage = () => {
   const getDate = (selectedDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = selectedDate;
-
     setBooking(bookingObject);
   };
 
@@ -58,20 +57,21 @@ export const AdminPage = () => {
 
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
-
     setBooking(bookingObject);
   };
 
   //Post request using booking state
   const submitAllInfo = () => {
-    axios.post<Booking>("http://localhost:8000/admin", booking).then(response => {
-       history.push(`/confirmation/${booking.bookingRef}`);
-       console.log("Hello!");
-    });
+    axios
+      .post<Booking>("http://localhost:8000/admin", booking)
+      .then((response) => {
+        //To be removed / Solved
+        // history.push(`/confirmation/${booking.bookingRef}`);
+        // console.log("Hello!");
+      });
 
-    // Should be in then but it doesn't work right now 
-    history.push(`/confirmation/${booking.bookingRef}`);
-   
+    // Should be in then but it doesn't work right now: only for users at BookingPage
+    //history.push(`/confirmation/${booking.bookingRef}`);
   };
 
   // Separate function for axios get request
@@ -98,17 +98,19 @@ export const AdminPage = () => {
 
   return (
     <>
-      <CalendarPlugin
-        getUserAmount={getGuestAmount}
-        getUserDate={getDate}
-      />
+      <CalendarPlugin getUserAmount={getGuestAmount} getUserDate={getDate} />
       <div className="user-inputs">
-        <AdminSeatingTime addSeatingTime={getSeatingTime}/>
-        <AdminUserForm addCustomerInfo={getCustomerInfo}/>
+        <AdminSeatingTime addSeatingTime={getSeatingTime} />
+        <UserForm addCustomerInfo={getCustomerInfo} />
         <h2>Is above information entered correctly?</h2>
-        <button className="post-button" onClick={submitAllInfo}> ADD BOOKING </button>
+        <button className="post-button" onClick={submitAllInfo}>
+          ADD BOOKING
+        </button>
       </div>
-      <AdminBookingTable cancelReservation={deleteBooking} bookings={bookings}/>
+      <AdminBookingTable
+        cancelReservation={deleteBooking}
+        bookings={bookings}
+      />
     </>
   );
 };

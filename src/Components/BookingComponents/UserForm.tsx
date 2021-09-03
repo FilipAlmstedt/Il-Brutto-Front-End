@@ -1,25 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 
-interface IAddFormInput {
-  addFormInput(
-    date: Date,
-    bookingRef: string,
-    guestAmount: number,
-    seatingTime: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    tel: number,
-    additionalInfo: string
-  ): void;
+interface IAddCustomerInfo {
+  addCustomerInfo(customerInfo: CustomerInfo): void;
 }
 
 interface IForm {
-  //date: Date;
-  bookingRef: string;
-  //guestAmount: number;
-  seatingTime: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -27,18 +13,16 @@ interface IForm {
   additionalInfo: string;
 }
 
-export const UserForm = (props: IAddFormInput) => {
-  const [form, setForm] = useState<IForm>({
-    // date: new Date(),
-    bookingRef: "",
-    // guestAmount: 1,
-    seatingTime: "",
+// Collect all the customers info and send it up to parent component AdminPage
+export const UserForm = (props: IAddCustomerInfo) => {
+  const defaultFormValues: IForm = {
     firstName: "",
     lastName: "",
     email: "",
     tel: 0,
     additionalInfo: "",
-  });
+  };
+  const [form, setForm] = useState<IForm>(defaultFormValues);
 
   const updateAll = (e: ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
@@ -46,55 +30,53 @@ export const UserForm = (props: IAddFormInput) => {
   };
 
   const submitCustomerInfo = () => {
-    props.addFormInput(
-      //PS - Dummy data
-      new Date(),
-      form.bookingRef,
-      2,
-      form.seatingTime,
-      form.firstName,
-      form.lastName,
-      form.email,
-      form.tel,
-      form.additionalInfo
-    );
+    const customerInformation: CustomerInfo = {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      email: form.email,
+      tel: form.tel,
+      additionalInfo: form.additionalInfo,
+    };
+    props.addCustomerInfo(customerInformation);
   };
-
-  console.log(form);
 
   return (
     <>
-      <h1>UserForm works!</h1>
       <form>
+        <h2>Guest information</h2>
+        <label htmlFor="firstname">Firstname: </label>
         <input
+          id="firstname"
           type="text"
           onChange={updateAll}
           value={form.firstName}
           name="firstName"
           placeholder="First name"
         />
+
+        <label htmlFor="lastname">Lastname: </label>
         <input
-          type="text"
-          hidden
-          name="bookingRef"
-          value="abc123"
-          onChange={updateAll}
-        />
-        <input
+          id="lastname"
           type="text"
           onChange={updateAll}
           value={form.lastName}
           name="lastName"
           placeholder="Last name"
         />
+
+        <label htmlFor="email">Email: </label>
         <input
+          id="email"
           type="email"
           onChange={updateAll}
           value={form.email}
           name="email"
           placeholder="Email"
         />
+
+        <label htmlFor="telnumber">Telephone number: </label>
         <input
+          id="telnumber"
           type="tel"
           onChange={updateAll}
           value={form.tel}
@@ -102,38 +84,17 @@ export const UserForm = (props: IAddFormInput) => {
           placeholder="Phone number"
         />
 
+        <label htmlFor="additionalInfo">Additional information: </label>
         <input
+          id="additionalInfo"
           type="text"
           onChange={updateAll}
           value={form.additionalInfo}
           name="additionalInfo"
           placeholder="Additional information"
         />
-        {/*Seating input only for admin use (temporarily)*/}
-        <div className="radio">
-          <label>
-            <input
-              type="radio"
-              value="early"
-              name="seatingTime"
-              onChange={updateAll}
-            />
-            Early
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input
-              name="seatingTime"
-              type="radio"
-              value="late"
-              onChange={updateAll}
-            />
-            Late
-          </label>
-        </div>
         <button type="button" onClick={submitCustomerInfo}>
-          Submit
+          UPDATE CUSTOMER INFORMATION
         </button>
       </form>
     </>

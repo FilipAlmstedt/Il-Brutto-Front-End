@@ -6,7 +6,6 @@ interface IAddSeatingTime {
 
 // Collect seating times early or late in a form and send up to parent
 export const AdminSeatingTime = (props: IAddSeatingTime) => {
-
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     let selectedTime = e.target.value;
     props.addSeatingTime(selectedTime);
