@@ -43,7 +43,7 @@ export const AdminEditBooking = () => {
       .then((response) => {
         setBooking(response.data);
       });
-  }, [booking]);
+  }, [id]);
 
   // Get chosen date from AdminCalendarPlugin component
   const getDate = (selectedDate: Date) => {

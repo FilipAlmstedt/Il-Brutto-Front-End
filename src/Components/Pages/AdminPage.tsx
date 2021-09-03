@@ -4,7 +4,7 @@ import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
 import { UserForm } from "../BookingComponents/UserForm";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import { AdminBookingTable } from "../AdminComponents/AdminBookingTable";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
@@ -12,7 +12,7 @@ import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
-  let history = useHistory();
+  //let history = useHistory();
 
   let defaultValues: Booking = {
     date: new Date(),

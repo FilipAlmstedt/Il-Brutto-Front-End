@@ -1,5 +1,5 @@
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Booking } from "../../Models/Booking";
 import moment from "moment";
@@ -10,10 +10,13 @@ import { LateFull } from "../BookingComponents/SeatingComponents/LateFull";
 import { UserForm } from "../BookingComponents/UserForm";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { v1 as uuidv1 } from "uuid";
+import { useHistory } from "react-router-dom";
 
 export const BookingPage = () => {
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
+
+  let history = useHistory();
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -90,8 +93,24 @@ export const BookingPage = () => {
       });
   };
 
+  //Post request using booking state
+  const submitAllInfo = () => {
+    axios
+      .post<Booking>("http://localhost:8000/admin", booking)
+      .then((response) => {
+        //To be removed / Solved
+        // history.push(`/confirmation/${booking.bookingRef}`);
+        // console.log("Hello!");
+      });
+
+    // Should be in then but it doesn't work right now: only for users at BookingPage
+    history.push(`/confirmation/${booking.bookingRef}`);
+  };
+
   return (
     <>
+    <h1>Book a table at Il Brutto!</h1>
+    <h3>Enter your desired preferences below:</h3>
       <div className="calenderContainer">
         <CalendarPlugin
           getUserAmount={getGuestAmount}
@@ -114,6 +133,10 @@ export const BookingPage = () => {
       {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
         <UserForm addCustomerInfo={getCustomerInfo} />
       ) : null}
+
+      <button className="post-button" onClick={submitAllInfo}>
+        ADD BOOKING
+      </button>
     </>
   );
 };
