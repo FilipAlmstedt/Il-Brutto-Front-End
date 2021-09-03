@@ -8,4 +8,3 @@ export class Booking {
     public customerInfo: CustomerInfo
   ) {}
 }
- 

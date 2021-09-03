@@ -1,20 +1,17 @@
-import { CalendarPlugin } from "./BookingComponents/CalendarPlugin";
-
+import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Booking } from "../Models/Booking";
+import { Booking } from "../../Models/Booking";
 import moment from "moment";
-import { EarlyAvailable } from "./BookingComponents/SeatingComponents/EarlyAvailable";
-import { EarlyFull } from "./BookingComponents/SeatingComponents/EarlyFull";
-import { LateAvailable } from "./BookingComponents/SeatingComponents/LateAvailable";
-import { LateFull } from "./BookingComponents/SeatingComponents/LateFull";
-import { AdminUserForm } from "./AdminComponents/AdminUserForm";
-import { CustomerInfo } from "../Models/CustomerInfo";
+import { EarlyAvailable } from "../BookingComponents/SeatingComponents/EarlyAvailable";
+import { EarlyFull } from "../BookingComponents/SeatingComponents/EarlyFull";
+import { LateAvailable } from "../BookingComponents/SeatingComponents/LateAvailable";
+import { LateFull } from "../BookingComponents/SeatingComponents/LateFull";
+import { UserForm } from "../BookingComponents/UserForm";
+import { CustomerInfo } from "../../Models/CustomerInfo";
 import { v1 as uuidv1 } from "uuid";
 
 export const BookingPage = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
-
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
 
@@ -49,16 +46,14 @@ export const BookingPage = () => {
     bookingObject.seatingTime = chosenTime;
     setBooking(bookingObject);
   };
-  
+
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
 
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
-
     setBooking(bookingObject);
-    console.log(bookingObject);
   };
 
   const sortBookings = (chosenDate: Date) => {
@@ -71,7 +66,6 @@ export const BookingPage = () => {
         //Hitta befintliga bokningar på kundens valda datum
         for (let i = 0; i < response.data.length; i++) {
           let dbDate: Date = response.data[i].date;
-
           if (
             moment(chosenDate).format("YYYY MM DD") ===
             moment(dbDate).format("YYYY MM DD")
@@ -96,20 +90,13 @@ export const BookingPage = () => {
       });
   };
 
-  useEffect(() => {
-    axios
-      .get<Booking[]>("http://localhost:8000/reservations")
-      .then((response) => {
-        setBookings(response.data);
-      });
-  }, []);
-
   return (
-    <><div className="calenderContainer">
-      <CalendarPlugin
-        getUserAmount={getGuestAmount}
-        getUserDate={sortBookings}
-      ></CalendarPlugin>
+    <>
+      <div className="calenderContainer">
+        <CalendarPlugin
+          getUserAmount={getGuestAmount}
+          getUserDate={sortBookings}
+        ></CalendarPlugin>
       </div>
       {/* rendera komponent beroende på tillgänglighet */}
       <div className="seatingContainer">
@@ -124,9 +111,9 @@ export const BookingPage = () => {
           <LateFull />
         )}
       </div>
-          {(booking.seatingTime === "late" || booking.seatingTime === "early") ? (<AdminUserForm addCustomerInfo={getCustomerInfo}/>) : null}
-      
-      
+      {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
+        <UserForm addCustomerInfo={getCustomerInfo} />
+      ) : null}
     </>
   );
 };

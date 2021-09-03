@@ -3,7 +3,6 @@ interface IAddSeatingTime {
 }
 
 export const EarlyAvailable = (props: IAddSeatingTime) => {
-    
   const onValueChange = () => {
     props.addSeatingTime("early");
   };
