@@ -2,14 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Booking } from "../Models/Booking";
 import { CustomerInfo } from "../Models/CustomerInfo";
-import { AdminCalendarPlugin } from "./AdminComponents/AdminCalendarPlugin";
-import { AdminGuestAmount } from "./AdminComponents/AdminGuestAmount";
 import { AdminSeatingTime } from "./AdminComponents/AdminSeatingTime";
 import { AdminUserForm } from "./AdminComponents/AdminUserForm";
 import { Link, useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
-import Moment from "react-moment";
 import { AdminBookingTable } from "./AdminComponents/AdminBookingTable";
+import { CalendarPlugin } from "./BookingComponents/CalendarPlugin";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -100,10 +98,12 @@ export const AdminPage = () => {
 
   return (
     <>
-      <AdminCalendarPlugin addChosenDate={getDate}/>
+      <CalendarPlugin
+        getUserAmount={getGuestAmount}
+        getUserDate={getDate}
+      />
       <div className="user-inputs">
         <AdminSeatingTime addSeatingTime={getSeatingTime}/>
-        <AdminGuestAmount addGuestAmount={getGuestAmount}/>
         <AdminUserForm addCustomerInfo={getCustomerInfo}/>
         <h2>Is above information entered correctly?</h2>
         <button className="post-button" onClick={submitAllInfo}> ADD BOOKING </button>
