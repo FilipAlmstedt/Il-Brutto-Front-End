@@ -14,6 +14,11 @@ export const ConfirmationPage = () => {
   // Create state to store confirmed booking info from DB
   const [booking, setBooking] = useState<Booking>();
 
+  const deleteBooking = (bookingRef: string) => {
+    //Axios delete based on bookingRef route to back end
+    axios.delete<Booking>(`http://localhost:8000/deleteReservation/${bookingRef}`);
+  };
+
   // Collect the right booking info from DB and store in state
   useEffect(() => {
     axios
@@ -27,7 +32,7 @@ export const ConfirmationPage = () => {
     <>
       <h1>Your booking has been confirmed</h1>
         {/* Send booking to Booking summary component */}
-       <BookingSummary booking={booking}></BookingSummary> 
+       <BookingSummary booking={booking} cancelReservation={deleteBooking}></BookingSummary> 
     </>
   );
 };
