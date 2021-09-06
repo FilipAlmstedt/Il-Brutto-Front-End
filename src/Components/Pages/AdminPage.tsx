@@ -89,7 +89,10 @@ export const AdminPage = () => {
   //Calling bookings state every state updates
   useEffect(() => {
     getBookings();
-  }, [bookings]);
+    console.log("raderade");
+    
+    
+  }, [bookings.length]);
 
   const deleteBooking = (bookingRef: string) => {
     //Axios delete based on bookingRef route to back end

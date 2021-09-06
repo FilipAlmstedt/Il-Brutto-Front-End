@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { BookingSummary } from "../BookingComponents/BookingSummary";
 
@@ -11,13 +11,18 @@ interface IParams {
 export const ConfirmationPage = () => {
   let { id } = useParams<IParams>();
 
+  let history = useHistory();
   // Create state to store confirmed booking info from DB
   const [booking, setBooking] = useState<Booking>();
 
-  const deleteBooking = (bookingRef: string) => {
+  const deleteBooking = () => {
+    console.log(booking?.bookingRef, booking?.customerInfo.firstName);
+    history.push("/");
+    
+    
     //Axios delete based on bookingRef route to back end
     axios.delete<Booking>(
-      `http://localhost:8000/deleteReservation/${bookingRef}`
+      `http://localhost:8000/deleteReservation/${booking?.bookingRef}`
     );
   };
 
@@ -36,8 +41,9 @@ export const ConfirmationPage = () => {
       {/* Send booking to Booking summary component */}
       <BookingSummary
         booking={booking}
-        cancelReservation={deleteBooking}
+
       ></BookingSummary>
+      <button onClick={deleteBooking}>DELETE BOOKING</button>
     </>
   );
 };

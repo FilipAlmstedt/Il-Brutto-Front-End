@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "./AdminSeatingTime";
@@ -18,6 +18,8 @@ export const AdminEditBooking = () => {
   let { id } = useParams<IParams>();
   // Booking info that you get from DB
   const [booking, setBooking] = useState<Booking>();
+
+  let history = useHistory();
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -82,19 +84,21 @@ export const AdminEditBooking = () => {
     axios.post(`http://localhost:8000/editReservation`, updatedBooking);
   };
 
-  const deleteBooking = (bookingRef: string) => {
+  const deleteBooking = () => {
+    console.log(booking?.bookingRef, booking?.customerInfo.firstName);
+    
     //Axios delete based on bookingRef route to back end
     axios.delete<Booking>(
-      `http://localhost:8000/deleteReservation/${bookingRef}`
+      `http://localhost:8000/deleteReservation/${booking?.bookingRef}`
     );
+    history.push("/admin");
   };
 
   return (
     <>
       <BookingSummary
-        cancelReservation={deleteBooking}
         booking={booking}
-      ></BookingSummary>
+      />
 
       <CalendarPlugin getUserAmount={getGuestAmount} getUserDate={getDate} />
 
@@ -109,6 +113,7 @@ export const AdminEditBooking = () => {
         </button>
         <Link to="/admin">Go back!</Link>
       </div>
+      <button onClick={deleteBooking}>DELETE BOOKING</button>
     </>
   );
 };

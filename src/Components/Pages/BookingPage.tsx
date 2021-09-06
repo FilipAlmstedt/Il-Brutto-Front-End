@@ -11,12 +11,14 @@ import { UserForm } from "../BookingComponents/UserForm";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { v1 as uuidv1 } from "uuid";
 import { useHistory } from "react-router-dom";
+import { BookingSummary } from "../BookingComponents/BookingSummary";
 
 export const BookingPage = () => {
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
-
+  const [summaryValue, setSummaryValue] = useState<Boolean>(true);
   let history = useHistory();
+  
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -53,10 +55,12 @@ export const BookingPage = () => {
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
-
+    
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
+
     setBooking(bookingObject);
+
   };
 
   const sortBookings = (chosenDate: Date) => {
@@ -104,6 +108,7 @@ export const BookingPage = () => {
       });
 
     // Should be in then but it doesn't work right now: only for users at BookingPage
+
     history.push(`/confirmation/${booking.bookingRef}`);
   };
 
@@ -137,6 +142,9 @@ export const BookingPage = () => {
       <button className="post-button" onClick={submitAllInfo}>
         ADD BOOKING
       </button>
+      {summaryValue ? <BookingSummary /> : null}
+
+
     </>
   );
 };

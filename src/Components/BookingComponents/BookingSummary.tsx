@@ -6,17 +6,14 @@ import { useHistory } from "react-router-dom";
 */
 interface IBookingSummaryProps {
   booking?: Booking;
-  cancelReservation(bookingRef?: string): void
+
 }
 
 // Component that show customer all the booking info about his/her reservation
 export const BookingSummary = (props: IBookingSummaryProps) => {
   let history = useHistory();
 
-  const cancelReservation = () => {
-    props.cancelReservation(props.booking?.bookingRef);
-    history.push("/admin");
-  };
+
 
   return (
     <>
@@ -67,9 +64,7 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
             </li>
           </ul>
         </div>
-        <button type="button" onClick={cancelReservation}>
-          Cancel reservation!
-        </button>
+
         <hr className="line" />
       </div>
     </>
