@@ -89,7 +89,7 @@ export const AdminPage = () => {
 
 
   const deleteBooking = (bookingRef: string) => {
-    //Axios delete based on bookingRef route to back end
+    //Axios delete based on bookingRef route to back end & updates page when a booking is deleted
     axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`).then((response)=> {
       getBookings();
     })

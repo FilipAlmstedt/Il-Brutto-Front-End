@@ -6,15 +6,10 @@ import Moment from "react-moment";
 */
 interface IBookingSummaryProps {
   booking?: Booking;
-
 }
 
 // Component that show customer all the booking info about his/her reservation
 export const BookingSummary = (props: IBookingSummaryProps) => {
-
-
-
-
   return (
     <>
       <div className="showEditBookingInfoContainer">
@@ -26,7 +21,8 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
                 <b>Booking reference:</b> {props.booking?.bookingRef}
               </li>
               <li>
-              <b>Date:</b><Moment format="YYYY/MM/DD">{props.booking?.date}</Moment>
+                <b>Date:</b>
+                <Moment format="YYYY/MM/DD">{props.booking?.date}</Moment>
               </li>
             </ul>
           </div>
