@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-
 interface IAddSeatingTime {
   addSeatingTime(seatingTime: string): void;
-  availability:Boolean;
+  availability: Boolean;
 }
 
 export const EarlyAvailable = (props: IAddSeatingTime) => {
@@ -10,13 +8,11 @@ export const EarlyAvailable = (props: IAddSeatingTime) => {
     props.addSeatingTime("early");
   };
 
-  useEffect(() => {
-    console.log(props.availability);
-    
-  }, []);
-
   return (
-    <div className={"seating available"} onClick={onValueChange}>
+    <div
+      className={`seating ${props.availability ? "available" : "full"}`}
+      onClick={onValueChange}
+    >
       18.00
     </div>
   );

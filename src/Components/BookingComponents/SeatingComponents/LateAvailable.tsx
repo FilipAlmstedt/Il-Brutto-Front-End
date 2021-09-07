@@ -1,5 +1,6 @@
 interface IAddSeatingTime {
   addSeatingTime(seatingTime: string): void;
+  availability: Boolean;
 }
 
 export const LateAvailable = (props: IAddSeatingTime) => {
@@ -8,8 +9,10 @@ export const LateAvailable = (props: IAddSeatingTime) => {
   };
 
   return (
-    <div className="seating available" onClick={onValueChange}>
-      {" "}
+    <div
+      className={`seating ${props.availability ? "available" : "full"}`}
+      onClick={onValueChange}
+    >
       21:00
     </div>
   );
