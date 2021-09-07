@@ -18,12 +18,11 @@ export const BookingPage = () => {
   const [lateTable, setLateTable] = useState<Boolean>(false);
   const [summaryValue, setSummaryValue] = useState<Boolean>(false);
   let history = useHistory();
-  
 
   let defaultValues: Booking = {
     date: new Date(),
     bookingRef: "",
-    guestAmount: 0,
+    guestAmount: 2,
     seatingTime: "",
     customerInfo: {
       firstName: "",
@@ -55,16 +54,16 @@ export const BookingPage = () => {
   //Slå om summaryValue så att summary renderas med ifyllda värden
   const showSummary = () => {
     setSummaryValue(true);
-  }
+  };
+
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
-  
+
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
     setBooking(bookingObject);
-    showSummary()
-    
+    showSummary();
   };
 
   const sortBookings = (chosenDate: Date) => {
@@ -118,8 +117,8 @@ export const BookingPage = () => {
 
   return (
     <>
-    <h1>Book a table at Il Brutto!</h1>
-    <h3>Enter your desired preferences below:</h3>
+      <h4>Book a table at Il Brutto!</h4>
+      <h5>Enter your desired preferences below:</h5>
       <div className="calenderContainer">
         <CalendarPlugin
           getUserAmount={getGuestAmount}
@@ -127,16 +126,25 @@ export const BookingPage = () => {
         ></CalendarPlugin>
       </div>
       {/* rendera komponent beroende på tillgänglighet */}
-      <div className="seatingContainer">
-        {earlyTable ? (
-          <EarlyAvailable addSeatingTime={getSeatingTime} />
+      <div>
+        {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
+        {earlyTable === false && lateTable === false ? (
+          <h4>
+            No reservations are available at this date, try a different date!
+          </h4>
         ) : (
-          <EarlyFull />
-        )}
-        {lateTable ? (
-          <LateAvailable addSeatingTime={getSeatingTime} />
-        ) : (
-          <LateFull />
+          <div className="seatingContainer">
+            {earlyTable ? (
+              <EarlyAvailable addSeatingTime={getSeatingTime} />
+            ) : (
+              <EarlyFull />
+            )}
+            {lateTable ? (
+              <LateAvailable addSeatingTime={getSeatingTime} />
+            ) : (
+              <LateFull />
+            )}
+          </div>
         )}
       </div>
       {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
@@ -146,15 +154,12 @@ export const BookingPage = () => {
       {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
       {summaryValue ? (
         <div>
-      <BookingSummary booking={booking} />
-      <button className="post-button" onClick={submitAllInfo}>
-      ADD BOOKING
-    </button> </div>)
-      : null}
-
-        
-
-      
+          <BookingSummary booking={booking} />
+          <button className="post-button" onClick={submitAllInfo}>
+            ADD BOOKING
+          </button>{" "}
+        </div>
+      ) : null}
     </>
   );
 };
