@@ -31,7 +31,6 @@ export const MenuPage = () => {
         </div>
       </div>
 
-
       <div className="menuSection">
       <h1 className="sectionHead">CARNI</h1>
         <div className="menuItem">
@@ -65,7 +64,6 @@ export const MenuPage = () => {
           </p>
         </div>
       </div>
-
 
       <div className="menuSection">
       <h1 className="sectionHead">Secondi</h1>

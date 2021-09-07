@@ -1,22 +1,19 @@
 import { Booking } from "../../Models/Booking";
-import { useHistory } from "react-router-dom";
+import Moment from "react-moment";
 
 /* If booking poosibly is undefined, don't use, but if it finds booking, collect data 
    , Also use a function to delete a reservation 
 */
 interface IBookingSummaryProps {
   booking?: Booking;
-  cancelReservation(bookingRef?: string): void
+
 }
 
 // Component that show customer all the booking info about his/her reservation
 export const BookingSummary = (props: IBookingSummaryProps) => {
-  let history = useHistory();
 
-  const cancelReservation = () => {
-    props.cancelReservation(props.booking?.bookingRef);
-    history.push("/admin");
-  };
+
+
 
   return (
     <>
@@ -29,8 +26,7 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
                 <b>Booking reference:</b> {props.booking?.bookingRef}
               </li>
               <li>
-                <b>Date: </b>
-                {props.booking?.date}
+              <b>Date:</b><Moment format="YYYY/MM/DD">{props.booking?.date}</Moment>
               </li>
             </ul>
           </div>
@@ -67,9 +63,7 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
             </li>
           </ul>
         </div>
-        <button type="button" onClick={cancelReservation}>
-          Cancel reservation!
-        </button>
+
         <hr className="line" />
       </div>
     </>

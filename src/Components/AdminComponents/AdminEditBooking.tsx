@@ -19,6 +19,8 @@ export const AdminEditBooking = () => {
   // Booking info that you get from DB
   const [booking, setBooking] = useState<Booking>();
 
+  
+
   let defaultValues: Booking = {
     date: new Date(),
     bookingRef: "",
@@ -82,19 +84,11 @@ export const AdminEditBooking = () => {
     axios.post(`http://localhost:8000/editReservation`, updatedBooking);
   };
 
-  const deleteBooking = (bookingRef: string) => {
-    //Axios delete based on bookingRef route to back end
-    axios.delete<Booking>(
-      `http://localhost:8000/deleteReservation/${bookingRef}`
-    );
-  };
-
   return (
     <>
       <BookingSummary
-        cancelReservation={deleteBooking}
         booking={booking}
-      ></BookingSummary>
+      />
 
       <CalendarPlugin getUserAmount={getGuestAmount} getUserDate={getDate} />
 
@@ -109,6 +103,7 @@ export const AdminEditBooking = () => {
         </button>
         <Link to="/admin">Go back!</Link>
       </div>
+
     </>
   );
 };
