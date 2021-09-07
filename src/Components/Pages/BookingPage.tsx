@@ -142,7 +142,7 @@ export const BookingPage = () => {
         ) : (
           <div className="seatingContainer">
             {earlyTable ? (
-              <EarlyAvailable addSeatingTime={getSeatingTime} />
+              <EarlyAvailable addSeatingTime={getSeatingTime} availability={earlyTable} />
             ) : (
               <EarlyFull />
             )}
