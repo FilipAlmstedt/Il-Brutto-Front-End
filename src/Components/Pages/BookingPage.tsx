@@ -52,9 +52,9 @@ export const BookingPage = () => {
     setBooking(bookingObject);
   };
 
+  //Slå om summaryValue så att summary renderas med ifyllda värden
   const showSummary = () => {
     setSummaryValue(true);
-    
   }
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
@@ -143,6 +143,7 @@ export const BookingPage = () => {
         <UserForm addCustomerInfo={getCustomerInfo} />
       ) : null}
 
+      {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
       {summaryValue ? (
         <div>
       <BookingSummary booking={booking} />
