@@ -1,0 +1,49 @@
+.menuHero {
+
+  @include pageHero(url("../assets/images/menuImage.jpg"));
+
+  }
+
+
+.menuContainer {
+    margin-bottom:2rem;
+    @include desktopsOnly {
+      display:flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  .menuSection {
+        width:90%;
+        margin:0 auto;
+        font-size: 1.3rem;
+        margin-top:2rem;
+        @include flexStyling(column,center);
+        @include desktopsOnly {
+          width:45%;
+        }
+        
+    .menuItem {
+        position: relative;
+        color: rgb(146, 0, 0);
+        margin:5px;
+        letter-spacing: 0.1rem;
+        .price {
+          position: absolute;
+          right:0;
+        }
+    }
+  }
+
+.sectionHead {
+  text-align: center;
+  color: darkred;
+}
+
+.menuHead {
+  text-align: center;
+  font-size: 3rem;
+  color: darkred;
+  margin:2rem;
+}
+
+}

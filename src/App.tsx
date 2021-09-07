@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./SCSS/App.scss";
-import { HomePage } from "./Components/HomePage";
-import { MenuPage } from "./Components/MenuPage";
-import { BookingPage } from "./Components/BookingPage";
-import { ConfirmationPage } from "./Components/ConfirmationPage";
-import { AdminPage } from "./Components/AdminPage";
-import { PageNotFound } from "./Components/PageNotFound";
+import { HomePage } from "./Components/Pages/HomePage";
+import { MenuPage } from "./Components/Pages/MenuPage";
+import { BookingPage } from "./Components/Pages/BookingPage";
+import { ConfirmationPage } from "./Components/Pages/ConfirmationPage";
+import { AdminPage } from "./Components/Pages/AdminPage";
+import { PageNotFound } from "./Components/Pages/PageNotFound";
 import { Navbar } from "./Components/Layout/Navbar";
 import { Footer } from "./Components/Layout/Footer" 
 
