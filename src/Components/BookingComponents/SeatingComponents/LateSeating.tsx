@@ -3,9 +3,9 @@ interface IAddSeatingTime {
   availability: Boolean;
 }
 
-export const EarlyAvailable = (props: IAddSeatingTime) => {
+export const LateSeating = (props: IAddSeatingTime) => {
   const onValueChange = () => {
-    props.addSeatingTime("early");
+    props.addSeatingTime("late");
   };
 
   return (
@@ -13,7 +13,7 @@ export const EarlyAvailable = (props: IAddSeatingTime) => {
       className={`seating ${props.availability ? "available" : "full"}`}
       onClick={onValueChange}
     >
-      18.00
+      21:00
     </div>
   );
 };
