@@ -12,11 +12,13 @@ import { CustomerInfo } from "../../Models/CustomerInfo";
 import { v1 as uuidv1 } from "uuid";
 import { useHistory } from "react-router-dom";
 import { BookingSummary } from "../BookingComponents/BookingSummary";
+import { GDPR } from "../BookingComponents/GDPR";
 
 export const BookingPage = () => {
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
   const [summaryValue, setSummaryValue] = useState<Boolean>(false);
+  const [checkBox, setCheckBox] = useState<Boolean>(false);
   let history = useHistory();
 
   let defaultValues: Booking = {
@@ -114,9 +116,14 @@ export const BookingPage = () => {
 
     history.push(`/confirmation/${booking.bookingRef}`);
   };
+// Toggle checkbox value when checking användarvilkor
+  const toggleCheckbox = () => { 
+    setCheckBox(!checkBox); 
+  };
 
   return (
     <>
+
       <h4>Book a table at Il Brutto!</h4>
       <h5>Enter your desired preferences below:</h5>
       <div className="calenderContainer">
@@ -155,11 +162,16 @@ export const BookingPage = () => {
       {summaryValue ? (
         <div>
           <BookingSummary booking={booking} />
-          <button className="post-button" onClick={submitAllInfo}>
-            ADD BOOKING
-          </button>{" "}
+          <GDPR checkBox={toggleCheckbox} />
+
         </div>
       ) : null}
+      {/* Rendera post-knapp ifall villkoren är godkända */}
+      {checkBox ? <button className="post-button"  onClick={submitAllInfo}>
+            ADD BOOKING
+        </button>
+        : null}
+
     </>
   );
 };
