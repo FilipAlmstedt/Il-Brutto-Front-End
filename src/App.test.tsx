@@ -4,6 +4,27 @@ import { HomePage } from "./Components/Pages/HomePage";
 import { AdminBookingTable } from "./Components/AdminComponents/AdminBookingTable";
 import { UserForm } from "./Components/BookingComponents/UserForm";
 import { CustomerInfo } from "./Models/CustomerInfo";
+import axios from "axios"
+import { Booking } from "./Models/Booking";
+jest.mock("axios")
+
+const mockAxios = axios as jest.Mocked<typeOf axios>;
+const mockData: Booking[] = [{date: new Date}]
+
+test("Bookings should have correct number of bookings", ()=> {
+  mockAxios.get.mockResolvedValues({data: mockData})
+
+  render (<AdminBookingTable bookings={[]} cancelReservation={function (bookingRef?: string): void {
+    throw new Error("Function not implemented.");
+  } }/>)
+
+  await waitFor(()=>{
+    const bookings = screen.getAllByRole("heading");
+  expect(bookings.length.toBe(mockData.length))
+  })
+  
+})
+
 
 test("renders home page", () => {
   const { getByText } = render(<HomePage />);
@@ -14,7 +35,11 @@ test("renders home page", () => {
 test("Should have 0 bookings", () => {
   const { container } = render(
     <AdminBookingTable
-      bookings={[]}
+      bookings={[
+        {date: new Date, bookingRef: "abc123", guestAmount: 2, seatingTime: "early", CustomerInfo {
+          firstname: "Edvin", lastname: "Sjögren", 
+        }}
+      ]}
       cancelReservation={function (bookingRef?: string): void {
         throw new Error("Function not implemented.");
       }}
@@ -34,6 +59,9 @@ test("Add booking works", () => {
   );
   const input = getByPlaceholderText("New Booking")
   fireEvent.change(input, {target: {value: "Lorem Ipsum"}})
-  const button = getByText(/UPDATE CUSTOMER INFORMATION/i);
+  const button = getByText(/UPDATE/i);
   button.click()
 });
+
+
+
