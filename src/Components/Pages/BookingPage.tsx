@@ -16,7 +16,7 @@ import { BookingSummary } from "../BookingComponents/BookingSummary";
 export const BookingPage = () => {
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
-  const [summaryValue, setSummaryValue] = useState<Boolean>(true);
+  const [summaryValue, setSummaryValue] = useState<Boolean>(false);
   let history = useHistory();
   
 
@@ -52,15 +52,19 @@ export const BookingPage = () => {
     setBooking(bookingObject);
   };
 
+  const showSummary = () => {
+    setSummaryValue(true);
+    
+  }
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
-    
+  
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
-
     setBooking(bookingObject);
-
+    showSummary()
+    
   };
 
   const sortBookings = (chosenDate: Date) => {
@@ -139,12 +143,17 @@ export const BookingPage = () => {
         <UserForm addCustomerInfo={getCustomerInfo} />
       ) : null}
 
+      {summaryValue ? (
+        <div>
+      <BookingSummary booking={booking} />
       <button className="post-button" onClick={submitAllInfo}>
-        ADD BOOKING
-      </button>
-      {summaryValue ? <BookingSummary /> : null}
+      ADD BOOKING
+    </button> </div>)
+      : null}
 
+        
 
+      
     </>
   );
 };
