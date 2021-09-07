@@ -12,13 +12,15 @@ import { CustomerInfo } from "../../Models/CustomerInfo";
 import { v1 as uuidv1 } from "uuid";
 import { useHistory } from "react-router-dom";
 import { BookingSummary } from "../BookingComponents/BookingSummary";
+import { GDPR } from "../BookingComponents/GDPR";
 
 export const BookingPage = () => {
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
   const [summaryValue, setSummaryValue] = useState<Boolean>(false);
+  const [checkBox, setCheckBox] = useState<Boolean>(false);
   let history = useHistory();
-  
+
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -55,16 +57,15 @@ export const BookingPage = () => {
   //Slå om summaryValue så att summary renderas med ifyllda värden
   const showSummary = () => {
     setSummaryValue(true);
-  }
+  };
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
-  
+
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
     setBooking(bookingObject);
-    showSummary()
-    
+    showSummary();
   };
 
   const sortBookings = (chosenDate: Date) => {
@@ -116,10 +117,14 @@ export const BookingPage = () => {
     history.push(`/confirmation/${booking.bookingRef}`);
   };
 
+  const toggleCheckbox = () => { 
+    setCheckBox(!checkBox); 
+  };
+
   return (
     <>
-    <h1>Book a table at Il Brutto!</h1>
-    <h3>Enter your desired preferences below:</h3>
+      <h1>Book a table at Il Brutto!</h1>
+      <h3>Enter your desired preferences below:</h3>
       <div className="calenderContainer">
         <CalendarPlugin
           getUserAmount={getGuestAmount}
@@ -146,15 +151,15 @@ export const BookingPage = () => {
       {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
       {summaryValue ? (
         <div>
-      <BookingSummary booking={booking} />
-      <button className="post-button" onClick={submitAllInfo}>
-      ADD BOOKING
-    </button> </div>)
-      : null}
+          <BookingSummary booking={booking} />
+          <GDPR checkBox={toggleCheckbox} />
 
-        
-
-      
+        </div>
+      ) : null}
+      {checkBox ? <button className="post-button"  onClick={submitAllInfo}>
+            ADD BOOKING
+        </button>
+        : null}
     </>
   );
 };
