@@ -12,7 +12,7 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
 
   useEffect(() => {
     props.getUserDate(chosenDate);
-  }, [chosenDate]);
+  }, [chosenDate, props]);
 
   const submitGuestAmount = (e: ChangeEvent<HTMLInputElement>) => {
     props.getUserAmount(+e.target.value);
