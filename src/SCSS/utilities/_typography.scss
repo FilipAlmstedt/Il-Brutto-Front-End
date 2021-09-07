@@ -36,7 +36,7 @@
   font-size: $fs-subtitle;
   color: $fontana; 
   margin: 1rem;
- // text-transform: uppercase;
+  text-transform: uppercase;
 }  
 
 @mixin fontBody() {
@@ -58,8 +58,8 @@
   font-family: $ff-montserrat;
   font-weight: $fw-bold;
   font-size: $fs-body;
-  letter-spacing: $ls-positive;
-  text-transform: uppercase;
+  //letter-spacing: $ls-positive;
+  //text-transform: uppercase;
   color: $fontana; 
 }
 

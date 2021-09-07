@@ -21,11 +21,10 @@ export const BookingPage = () => {
   const [checkBox, setCheckBox] = useState<Boolean>(false);
   let history = useHistory();
 
-
   let defaultValues: Booking = {
     date: new Date(),
     bookingRef: "",
-    guestAmount: 0,
+    guestAmount: 2,
     seatingTime: "",
     customerInfo: {
       firstName: "",
@@ -58,6 +57,7 @@ export const BookingPage = () => {
   const showSummary = () => {
     setSummaryValue(true);
   };
+
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
@@ -123,8 +123,9 @@ export const BookingPage = () => {
 
   return (
     <>
-      <h1>Book a table at Il Brutto!</h1>
-      <h3>Enter your desired preferences below:</h3>
+
+      <h4>Book a table at Il Brutto!</h4>
+      <h5>Enter your desired preferences below:</h5>
       <div className="calenderContainer">
         <CalendarPlugin
           getUserAmount={getGuestAmount}
@@ -132,16 +133,25 @@ export const BookingPage = () => {
         ></CalendarPlugin>
       </div>
       {/* rendera komponent beroende på tillgänglighet */}
-      <div className="seatingContainer">
-        {earlyTable ? (
-          <EarlyAvailable addSeatingTime={getSeatingTime} />
+      <div>
+        {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
+        {earlyTable === false && lateTable === false ? (
+          <h4>
+            No reservations are available at this date, try a different date!
+          </h4>
         ) : (
-          <EarlyFull />
-        )}
-        {lateTable ? (
-          <LateAvailable addSeatingTime={getSeatingTime} />
-        ) : (
-          <LateFull />
+          <div className="seatingContainer">
+            {earlyTable ? (
+              <EarlyAvailable addSeatingTime={getSeatingTime} />
+            ) : (
+              <EarlyFull />
+            )}
+            {lateTable ? (
+              <LateAvailable addSeatingTime={getSeatingTime} />
+            ) : (
+              <LateFull />
+            )}
+          </div>
         )}
       </div>
       {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
@@ -160,6 +170,7 @@ export const BookingPage = () => {
             ADD BOOKING
         </button>
         : null}
+
     </>
   );
 };

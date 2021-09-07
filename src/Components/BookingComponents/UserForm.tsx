@@ -1,11 +1,13 @@
-import { ChangeEvent, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 
+//import interface from parent
 interface IAddCustomerInfo {
   addCustomerInfo(customerInfo: CustomerInfo): void;
 }
 
-interface IForm {
+// declare interface for react hook form
+interface IUserInfo {
   firstName: string;
   lastName: string;
   email: string;
@@ -13,90 +15,68 @@ interface IForm {
   additionalInfo: string;
 }
 
-// Collect all the customers info and send it up to parent component AdminPage
 export const UserForm = (props: IAddCustomerInfo) => {
-  const defaultFormValues: IForm = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    tel: 0,
-    additionalInfo: "",
-  };
-  const [form, setForm] = useState<IForm>(defaultFormValues);
+  // declare object which handles validation and error msgs, using react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IUserInfo>();
 
-  const updateAll = (e: ChangeEvent<HTMLInputElement>) => {
-    let name = e.target.name;
-    setForm({ ...form, [name]: e.target.value });
-  };
-
-  const submitCustomerInfo = () => {
+  const onSubmit: SubmitHandler<IUserInfo> = (data) => {
+    //convert data input from form into props and send to parent component
     const customerInformation: CustomerInfo = {
-      firstName: form.firstName,
-      lastName: form.lastName,
-      email: form.email,
-      tel: form.tel,
-      additionalInfo: form.additionalInfo,
-    };
-    props.addCustomerInfo(customerInformation);
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        tel: data.tel,
+        additionalInfo: data.additionalInfo,
+      };
+      props.addCustomerInfo(customerInformation);
   };
 
   return (
-    <>
-      <form>
-        <h2>Guest information</h2>
-        <label htmlFor="firstname">Firstname: </label>
-        <input
-          id="firstname"
-          type="text"
-          onChange={updateAll}
-          value={form.firstName}
-          name="firstName"
-          placeholder="First name"
-        />
-
-        <label htmlFor="lastname">Lastname: </label>
-        <input
-          id="lastname"
-          type="text"
-          onChange={updateAll}
-          value={form.lastName}
-          name="lastName"
-          placeholder="Last name"
-        />
-
-        <label htmlFor="email">Email: </label>
-        <input
-          id="email"
-          type="email"
-          onChange={updateAll}
-          value={form.email}
-          name="email"
-          placeholder="Email"
-        />
-
-        <label htmlFor="telnumber">Telephone number: </label>
-        <input
-          id="telnumber"
-          type="tel"
-          onChange={updateAll}
-          value={form.tel}
-          name="tel"
-          placeholder="Phone number"
-        />
-
-        <label htmlFor="additionalInfo">Additional information: </label>
-        <input
-          id="additionalInfo"
-          type="text"
-          onChange={updateAll}
-          value={form.additionalInfo}
-          name="additionalInfo"
-          placeholder="Additional information"
-        />
-        <button type="button" onClick={submitCustomerInfo}>
-          UPDATE CUSTOMER INFORMATION
-        </button>
-      </form>
-    </>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="firstName">First name *</label>
+      <input
+        {...register("firstName", { required: true })}
+        type="text"
+        id="firstName"
+        name="firstName"
+      />
+      {errors.firstName && "First name is required"}
+      <label htmlFor="lastname">Last name *</label>
+      <input
+        {...register("lastName", { required: true })}
+        type="text"
+        id="lastName"
+        name="lastName"
+      />
+      {errors.lastName && "Last name is required"}
+      <label htmlFor="firstName">Email *</label>
+      <input
+        {...register("email", { required: true })}
+        type="email"
+        id="email"
+        name="email"
+      />
+      {errors.email && "Email is required"}
+      <label htmlFor="tel">Phone number *</label>
+      <input
+        {...register("tel", { required: true })}
+        type="number"
+        id="tel"
+        name="tel"
+      />
+      {errors.tel && "Phone number is required"}
+      <label htmlFor="additionalinfo">Additional info</label>
+      <textarea
+        {...register("additionalInfo")}
+        name="additionalInfo"
+        id="additionalInfo"
+      ></textarea>
+      <p>* = required</p>
+      <input type="submit" />
+    </form>
   );
 };

@@ -12,7 +12,7 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
 
   useEffect(() => {
     props.getUserDate(chosenDate);
-  }, [chosenDate]);
+  }, [chosenDate, props]);
 
   const submitGuestAmount = (e: ChangeEvent<HTMLInputElement>) => {
     props.getUserAmount(+e.target.value);
@@ -25,11 +25,11 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
         id="guestAmount"
         onChange={submitGuestAmount}
         type="number"
-        defaultValue={1}
+        defaultValue={2}
         min={1}
       />
 
-      <Calendar onChange={setChosenDate} showWeekNumbers value={chosenDate} />
+      <Calendar onChange={setChosenDate} minDate={new Date()} showWeekNumbers value={chosenDate} />
     </>
   );
 }
