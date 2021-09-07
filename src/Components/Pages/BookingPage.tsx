@@ -3,10 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Booking } from "../../Models/Booking";
 import moment from "moment";
-import { EarlyAvailable } from "../BookingComponents/SeatingComponents/EarlyAvailable";
-import { EarlyFull } from "../BookingComponents/SeatingComponents/EarlyFull";
-import { LateAvailable } from "../BookingComponents/SeatingComponents/LateAvailable";
-import { LateFull } from "../BookingComponents/SeatingComponents/LateFull";
+import { EarlySeating } from "../BookingComponents/SeatingComponents/EarlySeating";
+import { LateSeating } from "../BookingComponents/SeatingComponents/LateSeating";
 import { UserForm } from "../BookingComponents/UserForm";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { v1 as uuidv1 } from "uuid";
@@ -141,16 +139,11 @@ export const BookingPage = () => {
           </h4>
         ) : (
           <div className="seatingContainer">
-            {earlyTable ? (
-              <EarlyAvailable addSeatingTime={getSeatingTime} />
-            ) : (
-              <EarlyFull />
-            )}
-            {lateTable ? (
-              <LateAvailable addSeatingTime={getSeatingTime} />
-            ) : (
-              <LateFull />
-            )}
+           <EarlySeating addSeatingTime={getSeatingTime} 
+           availability={earlyTable}/>
+          <LateSeating addSeatingTime={getSeatingTime} 
+          availability={lateTable}/>
+
           </div>
         )}
       </div>
