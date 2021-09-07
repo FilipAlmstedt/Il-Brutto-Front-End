@@ -116,7 +116,7 @@ export const BookingPage = () => {
 
     history.push(`/confirmation/${booking.bookingRef}`);
   };
-
+// Toggle checkbox value when checking användarvilkor
   const toggleCheckbox = () => { 
     setCheckBox(!checkBox); 
   };
@@ -156,6 +156,7 @@ export const BookingPage = () => {
 
         </div>
       ) : null}
+      {/* Rendera post-knapp ifall villkoren är godkända */}
       {checkBox ? <button className="post-button"  onClick={submitAllInfo}>
             ADD BOOKING
         </button>
