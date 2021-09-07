@@ -18,6 +18,8 @@ export const ConfirmationPage = () => {
   const deleteBooking = () => {
     console.log(booking?.bookingRef, booking?.customerInfo.firstName);
     history.push("/");
+    console.log("booking deleted");
+    
     
     
     //Axios delete based on bookingRef route to back end
