@@ -18,7 +18,7 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
   return (
     <>
       <div className="showEditBookingInfoContainer">
-        <h1>Booking information for {props.booking?.customerInfo.firstName}</h1>
+        <h4>Booking information for {props.booking?.customerInfo.firstName}</h4>
         <div className="bookingInfoDiv">
           <div className="bookingRefAndDate">
             <ul>
@@ -43,7 +43,7 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
           </div>
         </div>
         <div className="customerInfoDiv">
-          <h3>Customer info: </h3>
+          <h4>Customer info: </h4>
           <ul>
             <li>
               <b>Firstname:</b> {props.booking?.customerInfo.firstName}
