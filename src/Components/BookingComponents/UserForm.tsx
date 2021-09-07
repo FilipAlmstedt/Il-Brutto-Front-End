@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export const UserForm = () => {
-=======
 import { ChangeEvent, useState } from "react";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 
@@ -43,28 +40,14 @@ export const UserForm = (props: IAddCustomerInfo) => {
     props.addCustomerInfo(customerInformation);
   };
 
->>>>>>> 1181d884829cac85b8e4a2cfdc515347ad657a76
   return (
     <>
       <form>
-<<<<<<< HEAD
-        <input type="text" name="firstName" placeholder="First name" />
-        <input type="text" name="lastName" placeholder="Last name" />
-        <input type="email" name="email" placeholder="Email" />
-        <input type="tel" name="tel" placeholder="Phone number" />
-=======
         <h2>Guest information</h2>
         <label htmlFor="firstname">Firstname: </label>
->>>>>>> 1181d884829cac85b8e4a2cfdc515347ad657a76
         <input
           id="firstname"
           type="text"
-<<<<<<< HEAD
-          name="addlInfo"
-          placeholder="Additional information"
-        />
-        <input type="submit" value="Submit" />
-=======
           onChange={updateAll}
           value={form.firstName}
           name="firstName"
@@ -113,7 +96,6 @@ export const UserForm = (props: IAddCustomerInfo) => {
         <button type="button" onClick={submitCustomerInfo}>
           UPDATE CUSTOMER INFORMATION
         </button>
->>>>>>> 1181d884829cac85b8e4a2cfdc515347ad657a76
       </form>
     </>
   );

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState } from "react";
-=======
 import { useState, ChangeEvent, useEffect } from "react";
->>>>>>> 1181d884829cac85b8e4a2cfdc515347ad657a76
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 

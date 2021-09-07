@@ -1,12 +1,3 @@
-<<<<<<< HEAD:src/Components/AdminPage.tsx
-export const AdminPage = () => {
-    return (
-        <>
-            <h1>Adminpage works!</h1>
-        </>
-    )
-}
-=======
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Booking } from "../../Models/Booking";
@@ -123,4 +114,3 @@ export const AdminPage = () => {
     </>
   );
 };
->>>>>>> 1181d884829cac85b8e4a2cfdc515347ad657a76:src/Components/Pages/AdminPage.tsx
