@@ -4,7 +4,7 @@ import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
 import { UserForm } from "../BookingComponents/UserForm";
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import { AdminBookingTable } from "../AdminComponents/AdminBookingTable";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
@@ -12,7 +12,7 @@ import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
-  //let history = useHistory();
+  let history = useHistory();
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -71,7 +71,7 @@ export const AdminPage = () => {
       });
 
     // Should be in then but it doesn't work right now: only for users at BookingPage
-    //history.push(`/confirmation/${booking.bookingRef}`);
+    history.push(`/confirmation/${booking.bookingRef}`);
   };
 
   // Separate function for axios get request
@@ -86,14 +86,14 @@ export const AdminPage = () => {
     getBookings();
   }, []);
 
-  //Calling bookings state every state updates
-  useEffect(() => {
-    getBookings();
-  }, [bookings]);
+
 
   const deleteBooking = (bookingRef: string) => {
     //Axios delete based on bookingRef route to back end
-    axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`);
+    axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`).then((response)=> {
+      getBookings();
+    })
+
   };
 
   return (
