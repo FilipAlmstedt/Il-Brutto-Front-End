@@ -1,5 +1,5 @@
 .calenderContainer {
-  @include flexCenter(column);
+  @include flexStyling(column, center);
   margin: 1rem;
 
   #guestAmount {
