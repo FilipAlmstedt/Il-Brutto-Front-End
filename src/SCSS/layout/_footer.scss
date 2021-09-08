@@ -1,19 +1,21 @@
 .footerContainer {
   @include flexStyling(column, space-between);
-  background-color: grey;
-  color: white;
-  width: 100%;
-
-  .logoContainer {
-    background-color: white;
-    border-radius: 50%;
-    padding: 10px;
-    color: red;
-    margin: 1rem;
-  }
+  background-color: $brunello;
+  padding: 1rem;
 
   ul {
     list-style: none;
     margin: 1rem;
+
+    li {
+      @include fontBody();
+      color: $dorian;
+    }
+  }
+
+  p {
+    color: $dorian;
+    margin-top: 1rem;
+    border-top: 1px solid $dorian
   }
 }

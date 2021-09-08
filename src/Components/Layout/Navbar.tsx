@@ -10,12 +10,12 @@ export const Navbar = () => {
               <Link to="/">
                 <div className="logoContainer">
                   <b>
-                    <p>LOGO</p>
+                    <p>IL BRUTTO</p>
                   </b>
                 </div>
               </Link>
             </li>
-            <div className="notLogoLinks">
+            <div className="navbarLinks">
               <li>
                 <Link to="/">Home</Link>
               </li>

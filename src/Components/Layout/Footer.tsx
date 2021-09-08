@@ -2,14 +2,7 @@ export const Footer = () => {
   return (
     <>
       <div className="footerContainer">
-        <div className="logoContainer">Logo</div>
-
-        <h1>Contact us</h1>
-        <form>
-          <input type="text" name="email" placeholder="email" />
-          <input type="text" name="subject" placeholder="subject" />
-          <input type="submit" value="Submit" />
-        </form>
+        <div className="logoContainer">IL BRUTTO</div>
 
         <ul className="social-media-links">
           <li>
