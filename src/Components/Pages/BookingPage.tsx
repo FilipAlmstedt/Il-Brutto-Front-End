@@ -7,7 +7,7 @@ import { EarlyAvailable } from "../BookingComponents/SeatingComponents/EarlyAvai
 import { EarlyFull } from "../BookingComponents/SeatingComponents/EarlyFull";
 import { LateAvailable } from "../BookingComponents/SeatingComponents/LateAvailable";
 import { LateFull } from "../BookingComponents/SeatingComponents/LateFull";
-import { UserForm } from "../BookingComponents/UserForm";
+import { UserForm } from "../BookingComponents/UserForm/UserForm";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { v1 as uuidv1 } from "uuid";
 import { useHistory } from "react-router-dom";

@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "./AdminSeatingTime";
-import { UserForm } from "../BookingComponents/UserForm";
+import { UserForm } from "../BookingComponents/UserForm/UserForm";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 import { BookingSummary } from "../BookingComponents/BookingSummary";
 

@@ -18,17 +18,17 @@ export const HomePage = () => {
         </p>
       </div>
 
-      <Link to="/menu">
-        <div className="homeMenu">
-          <h2>Il menu</h2>
-        </div>
-      </Link>
+        <Link to="/menu">
+          <div className="homeMenu">
+            <h2>Il menu</h2>
+          </div>
+        </Link>
 
-      <Link to="/booking">
-        <div className="homeBooking">
-          <h2>Book a table</h2>
-        </div>
-      </Link>
+        <Link to="/booking">
+          <div className="homeBooking">
+            <h2>Book a table</h2>
+          </div>
+        </Link>
     </>
   );
 };

@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
-import { UserForm } from "../BookingComponents/UserForm";
+import { UserForm } from "../BookingComponents/UserForm/UserForm";
 import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
-import { AdminBookingTable } from "../AdminComponents/AdminBookingTable";
+import { AdminBookingTable } from "../AdminComponents/AdminBookingTable/AdminBookingTable";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 
 export const AdminPage = () => {
@@ -98,6 +98,7 @@ export const AdminPage = () => {
 
   return (
     <>
+    <h2>Il Brutto Admin Page</h2>
       <CalendarPlugin getUserAmount={getGuestAmount} getUserDate={getDate} />
       <div className="user-inputs">
         <AdminSeatingTime addSeatingTime={getSeatingTime} />
