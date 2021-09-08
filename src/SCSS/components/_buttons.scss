@@ -1,0 +1,10 @@
+.primaryButton {
+    margin: 1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: $dorian;
+    @include fontBody();   
+    border: 1px solid black;
+}

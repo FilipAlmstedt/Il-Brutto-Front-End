@@ -1,50 +1,33 @@
-/* Colors will be changed in the future!!! */
 /* Responsive: Mobile first principle */
 
-// Created by: Filip
-  
 .navbarContainer {
-    background-color: grey;
-    color: black;
+  background-color: $brunello;
+  @include fontPreTitle();
 
-    font-size: 20px;
+  .navbarUl {
+    @include flexStyling(row, space-between);
+    list-style: none;
+    padding: 2%;
 
-    .navbarUl {
-    
-        @include flexStyling(row, space-between);
+    .navbarLinks {
+      @include flexStyling(row, space-between);
+      width: 70vw;
+      color: $dorian;
+    }
 
-        list-style: none;
-        padding: 2%;        
+    @include desktopsOnly {
+      .navbarLinks {
+        width: 50vw;
+      }
+    }
 
-        /* Possibly not needed. Wil simlulate a round logo right now */
-        .logoContainer {
-            background-color: white;
-            border-radius: 50%;
-            padding: 10px;
-        }
+    a {
+      text-decoration: none;
+      color: $dorian;
 
-        // Create better class-name in future!!
-        .notLogoLinks {
-            @include flexStyling(row, space-between); 
-
-            width: 70vw;
-            color: red;
-        }
-
-        // Created mixin for desktop
-        @include desktopsOnly {
-            .notLogoLinks {
-                width: 50vw;
-            }
-        }
-
-        a {
-            text-decoration: none;
-            color: red;
-
-            &:hover {
-                color: blue;
-            }
-        }
-    } 
+      &:hover {
+        color: $vitello;
+      }
+    }
+  }
 }

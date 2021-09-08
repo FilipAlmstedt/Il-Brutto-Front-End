@@ -114,57 +114,62 @@ export const BookingPage = () => {
 
     history.push(`/confirmation/${booking.bookingRef}`);
   };
-// Toggle checkbox value when checking användarvilkor
-  const toggleCheckbox = () => { 
-    setCheckBox(!checkBox); 
+  // Toggle checkbox value when checking användarvilkor
+  const toggleCheckbox = () => {
+    setCheckBox(!checkBox);
   };
 
   return (
     <>
-
-      <h4>Book a table at Il Brutto!</h4>
-      <h5>Enter your desired preferences below:</h5>
-      <div className="calenderContainer">
-        <CalendarPlugin
-          getUserAmount={getGuestAmount}
-          getUserDate={sortBookings}
-        ></CalendarPlugin>
-      </div>
-      {/* rendera komponent beroende på tillgänglighet */}
-      <div>
-        {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
-        {earlyTable === false && lateTable === false ? (
-          <h4>
-            No reservations are available at this date, try a different date!
-          </h4>
-        ) : (
-          <div className="seatingContainer">
-           <EarlySeating addSeatingTime={getSeatingTime} 
-           availability={earlyTable}/>
-          <LateSeating addSeatingTime={getSeatingTime} 
-          availability={lateTable}/>
-
-          </div>
-        )}
-      </div>
-      {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
-        <UserForm addCustomerInfo={getCustomerInfo} />
-      ) : null}
-
-      {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
-      {summaryValue ? (
-        <div>
-          <BookingSummary booking={booking} />
-          <GDPR checkBox={toggleCheckbox} />
-
+      <div className="bookingContainer">
+        <h4>Book a table</h4>
+        <h5>Enter your desired preferences below:</h5>
+        <div className="calenderContainer">
+          <CalendarPlugin
+            getUserAmount={getGuestAmount}
+            getUserDate={sortBookings}
+          ></CalendarPlugin>
         </div>
-      ) : null}
-      {/* Rendera post-knapp ifall villkoren är godkända */}
-      {checkBox ? <button className="post-button"  onClick={submitAllInfo}>
-            ADD BOOKING
-        </button>
-        : null}
+        {/* rendera komponent beroende på tillgänglighet */}
+        <div>
+          {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
+          {earlyTable === false && lateTable === false ? (
+            <h4>
+              No reservations are available at this date, try a different date!
+            </h4>
+          ) : (
+            <div className="seatingContainer">
+              <h5>Select time:</h5>
+              <EarlySeating
+                addSeatingTime={getSeatingTime}
+                availability={earlyTable}
+              />
+              <p>or:</p>
+              <LateSeating
+                addSeatingTime={getSeatingTime}
+                availability={lateTable}
+              />
+            </div>
+          )}
+        </div>
+        {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
+          <UserForm addCustomerInfo={getCustomerInfo} />
+        ) : null}
 
+        {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
+        {summaryValue ? (
+          <div>
+            <BookingSummary booking={booking} />
+            <GDPR checkBox={toggleCheckbox} />
+          </div>
+        ) : null}
+        {/* Rendera post-knapp ifall villkoren är godkända */}
+        {checkBox ? (
+          <button className="post-button" onClick={submitAllInfo}>
+            BOKA
+          </button>
+        ) : null}
+      </div>
     </>
   );
 };

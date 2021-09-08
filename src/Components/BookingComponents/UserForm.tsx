@@ -44,7 +44,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
         id="firstName"
         name="firstName"
       />
-      {errors.firstName && "First name is required"}
+      <p className="errorMsg">{errors.firstName && "First name is required"}</p>
       <label htmlFor="lastname">Last name *</label>
       <input
         {...register("lastName", { required: true })}
@@ -52,7 +52,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
         id="lastName"
         name="lastName"
       />
-      {errors.lastName && "Last name is required"}
+      <p className="errorMsg">{errors.lastName && "Last name is required"}</p>
       <label htmlFor="firstName">Email *</label>
       <input
         {...register("email", { required: true })}
@@ -60,7 +60,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
         id="email"
         name="email"
       />
-      {errors.email && "Email is required"}
+      <p className="errorMsg">{errors.email && "Email is required"}</p>
       <label htmlFor="tel">Phone number *</label>
       <input
         {...register("tel", { required: true })}
@@ -68,7 +68,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
         id="tel"
         name="tel"
       />
-      {errors.tel && "Phone number is required"}
+      <p className="errorMsg">{errors.tel && "Phone number is required"}</p>
       <label htmlFor="additionalinfo">Additional info</label>
       <textarea
         {...register("additionalInfo")}
@@ -76,7 +76,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
         id="additionalInfo"
       ></textarea>
       <p>* = required</p>
-      <input type="submit" />
+      <button className="primaryButton" type="submit">Submit</button>
     </form>
   );
 };
