@@ -1,7 +1,12 @@
 /* Responsive: Mobile first principle */
 
 .navbarContainer {
-  background-color: $brunello;
+  background-image: linear-gradient(
+    to top,
+    $terra 0%,
+    $brunello 99%,
+    $vitello 100%
+  );
   @include fontPreTitle();
 
   .navbarUl {
@@ -13,21 +18,26 @@
       @include flexStyling(row, space-between);
       width: 70vw;
       color: $dorian;
-    }
-
-    @include desktopsOnly {
-      .navbarLinks {
-        width: 50vw;
-      }
+      //text-shadow: 2px 2px 1px $terra;
     }
 
     a {
       text-decoration: none;
       color: $dorian;
+      text-shadow: 2px 2px 1px $terra;
 
       &:hover {
-        color: $vitello;
+        border-bottom: 2px solid $dorian;
       }
+    }
+  }
+
+  @include desktopsOnly {
+    font-size: $fs-header-3;
+
+    .navbarLinks {
+      width: 50vw;
+      margin-right: 5%;
     }
   }
 }

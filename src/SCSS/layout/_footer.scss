@@ -1,21 +1,32 @@
 .footerContainer {
   @include flexStyling(column, space-between);
-  background-color: $brunello;
-  padding: 1rem;
+  background-image: linear-gradient(to top, $terra 0%, $brunello 99%, $vitello 100%);
+
+  .social-media-links {
+    width: 50%;
+    margin: 1rem;
+    @include flexStyling(row, space-between);
+  }
 
   ul {
     list-style: none;
-    margin: 1rem;
+    margin: 3rem;
 
     li {
       @include fontBody();
+      @include flexStyling(row, space-between);
       color: $dorian;
+      text-align: right;
     }
   }
 
   p {
     color: $dorian;
+    width: 90%;
+    text-align: center;
     margin-top: 1rem;
-    border-top: 1px solid $dorian
+    padding-top: .5rem;
+    border-top: 1px solid $dorian;
+    opacity: 0.8;
   }
 }

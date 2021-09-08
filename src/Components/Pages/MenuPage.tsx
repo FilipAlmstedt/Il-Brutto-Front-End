@@ -38,7 +38,7 @@ export const MenuPage = () => {
           </div>
           <div className="menuItem">
             <h3>
-              Burrata DOP Pugliese <span className="price">230:-</span>
+              Burrata <br/> DOP Pugliese <span className="price">230:-</span>
             </h3>
             <p>På en bädd av krispig sallad och confiterade pachinotomater</p>
           </div>
@@ -48,7 +48,7 @@ export const MenuPage = () => {
           <h1 className="sectionHead">- CARNI -</h1>
           <div className="menuItem">
             <h3>
-              Il tentazione di papa <span className="price">380:-</span>
+              Il tentazione <br/> di papa <span className="price">380:-</span>
             </h3>
             <p>Grillad gödkalvskotlett av högsta kvalitet. Pappas favorit.</p>
           </div>
@@ -133,7 +133,7 @@ export const MenuPage = () => {
           </div>
           <div className="menuItem">
             <h3>
-              2010 Blauburgunder DOC Selezione Mazzon{" "}
+              2010 Blauburgunder <br/>
               <span className="price">1 500:-</span>
             </h3>
             <p>Pinot Nero</p>

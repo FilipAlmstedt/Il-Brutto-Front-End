@@ -9,9 +9,7 @@ export const Navbar = () => {
             <li>
               <Link to="/">
                 <div className="logoContainer">
-                  <b>
-                    <p>IL BRUTTO</p>
-                  </b>
+                    IL BRUTTO
                 </div>
               </Link>
             </li>
