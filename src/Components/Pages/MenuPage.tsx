@@ -5,11 +5,11 @@ export const MenuPage = () => {
         <h1>Benvenuti nel nostro brutto,</h1>
         <h1>Il nostro fatto in casa,</h1>
         <h1>Il nostro menu inaffidabile.</h1>
-        <h1>-</h1>
+        <h1>...</h1>
         <h1>La nostra bella,</h1>
         <h1>Il nostro fatto in casa,</h1>
         <h1>Il nostro menu ben eseguito</h1>
-        <h1>-</h1>
+        <h1>...</h1>
         <h1>Quando abbiamo finito di litigare,</h1>
         <h1>Benvenuto nel brutto</h1>
       </div>

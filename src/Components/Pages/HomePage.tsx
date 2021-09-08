@@ -4,17 +4,13 @@ export const HomePage = () => {
   return (
     <>
       <div className="homeHero">
-        <h1>Il brutto</h1>
+        <span className="heroSpan"><h1>Il brutto</h1></span>
       </div>
 
       <div className="homeAbout">
-        <h2>About</h2>
+        <h2>Chi siamo</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias,
-          laudantium quibusdam distinctio esse sapiente ipsum. Vel nostrum
-          facere veritatis necessitatibus beatae autem perferendis eum quaerat?
-          Eaque aliquid quis mollitia doloribus temporibus suscipit odio
-          voluptatum pariatur!
+        Il brutto è un ristorante a conduzione familiare. Ci concentriamo più sull'esperienza della bocca, meno sugli occhi. Dal terribile puoi trovare qualcosa di bello. Trova il lordo.
         </p>
       </div>
 

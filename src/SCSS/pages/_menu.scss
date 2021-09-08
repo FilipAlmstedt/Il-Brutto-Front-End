@@ -1,5 +1,14 @@
 .menuHero {
   @include pageHero(url("../assets/images/menuImage.jpg"));
+  h1 {
+    padding:2rem;
+    font-size:3rem;
+    @include desktopsOnly {
+    font-size:$fs-header-2;
+    padding:3rem;
+    }
+  }
+
 }
 
 .menuContainer {
@@ -13,7 +22,6 @@
   .menuSection {
     width: 90%;
     margin: 2rem auto 2rem auto;
-    font-size: 1.3rem;
     @include flexStyling(column, center);
     @include desktopsOnly {
       width: 45%;
@@ -38,6 +46,7 @@
     text-align: center;
     margin: 2rem auto 2rem auto;
     color: $brunello;
+    font-size:$fs-header-2;
   }
 
   .menuHead {

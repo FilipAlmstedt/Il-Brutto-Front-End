@@ -4,17 +4,35 @@
 //Erik
 
 .homeHero {
-@include pageHero(url("../assets/images/homePageHero.jpg"))
+@include pageHero(url("../assets/images/homeHero.jpg"));
+position:relative;
+  h1 {
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    top: 40%;
+    font-size:7rem;
+    background-color: rgba(0,0,0,0.3);
+    padding:5rem;
+    width:100%;
+    margin:0 auto;
+  }
 
 }
 
 .homeAbout {
   @include flexStyling(column, center);
   text-align: center;
-  width: 100%;
+  width: 80%;
   height: 30vh;
-  margin: 0 auto;
-  letter-spacing: 0.3rem;
+  margin: 3rem auto 3rem auto;
+  letter-spacing: $ls-positive;
+    h2 {
+      margin:2rem;
+    }
+    p {
+      font-style: italic;
+    }
 }
 
 .homeMenu {
