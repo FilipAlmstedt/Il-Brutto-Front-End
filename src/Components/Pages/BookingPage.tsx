@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { BookingSummary } from "../BookingComponents/BookingSummary";
 import { GDPR } from "../BookingComponents/GDPR";
 import { motion } from "framer-motion";
+import { LoadingComponent } from "../BookingComponents/LoadingComponent";
 import { NONAME } from "dns";
 
 export const BookingPage = () => {
@@ -19,10 +20,9 @@ export const BookingPage = () => {
   const [lateTable, setLateTable] = useState<Boolean>(false);
 
   // State that are used as trigger for slideanimations for different components
-  const [removeCalendarAnimation, setRemoveCalendarAnimation] =
-    useState<Boolean>(false);
-  const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] =
-    useState<Boolean>(false);
+  const [removeCalendarAnimation, setRemoveCalendarAnimation] = useState<Boolean>(false);
+  const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] = useState<Boolean>(false);
+  const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(false);
 
   const [lateTablesTaken, setLateTablesTaken] = useState<number>(0);
   const [earlyTablesTaken, setEarlyTablesTaken] = useState<number>(0);  
@@ -152,11 +152,20 @@ export const BookingPage = () => {
 
   //Post request using booking state
   const submitAllInfo = () => {
-    axios
+
+    // trigger loading animation
+    setLoadingAnimation(!loadingAnimation);
+
+    // Created so the loading function is present on the scree for 2 seconds and then move the user to confirmation page
+    setTimeout(() => {
+      axios
       .post<Booking>("http://localhost:8000/reservations", booking)
       .then((response) => {
+        console.log("Added booking!");
         history.push(`/confirmation/${booking.bookingRef}`);
       });
+    }, 2000)
+  
   };
   // Toggle checkbox value when checking användarvilkor
   const toggleCheckbox = () => {
@@ -166,68 +175,77 @@ export const BookingPage = () => {
   return (
     <>
       <div className="bookingContainer">
-        <h4>Book a table</h4>
+
         {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/}
-        <motion.div
-          className="calenderContainer"
+       
+        <motion.div className="calenderContainer"
+        <h4>Book a table</h4>
+        {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/
           initial={{
             x: "100vw",
           }}
-          animate={{ x: removeCalendarAnimation ? "-100vw" : "0vw" }}
-          transition={{ type: "spring", delay: 0.6, stiffness: 40 }}
+
+          animate={{x: removeCalendarAnimation ? '-100vw': '0vw', display: removeCalendarAnimation ? 'none': 'flex'}}
+          transition={{type: 'spring', delay: 0.3, stiffness: 40}}
+          exit={{opacity: 0}}
         >
+          <h4>Book a table</h4>
+          <h5>Enter date and guest amount:</h5>
           <CalendarPlugin
             getUserAmount={getGuestAmount}
             getUserDate={sortBookings}
           ></CalendarPlugin>
         </motion.div>
+   
         {/* rendera komponent beroende på tillgänglighet */}
 
-        {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
-        {earlyTable === false && lateTable === false ? (
-          <h4>
-            No reservations are available at this date, try a different date!
-          </h4>
-        ) : (
-          <motion.div
-            className="seatingContainer"
-            initial={{
-              x: "100vw",
-            }}
-            animate={{ x: removeCalendarAnimation ? "-100vw" : "0vw" }}
-            transition={{ type: "spring", delay: 0.6, stiffness: 40 }}
-          >
-            <h5>Select time:</h5>
-            <EarlySeating
-              addSeatingTime={getSeatingTime}
-              availability={earlyTable}
-            />
-            <p>or:</p>
-            <LateSeating
-              addSeatingTime={getSeatingTime}
-              availability={lateTable}
-            />
-          </motion.div>
-        )}
-
+        <div>
+          {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
+          {earlyTable === false && lateTable === false ? (
+            <h4>
+              No reservations are available at this date, try a different date!
+            </h4>
+          ) : (
+            /* seatingContainer is a div that is appearing when the removeCalendarAnimation trigger is changed */
+            <motion.div className="seatingContainer"
+              initial={{
+                x: '100vw'
+              }}
+              animate={{x: removeCalendarAnimation ? '-100vw': '0vw', display: removeCalendarAnimation ? 'none': 'flex' }}
+              transition={{type: 'spring', delay: 0.3, stiffness: 40}}
+            >
+              <h5>Select time:</h5>
+              <EarlySeating
+                addSeatingTime={getSeatingTime}
+                availability={earlyTable}
+              />
+              <p>or:</p>
+              <LateSeating
+                addSeatingTime={getSeatingTime}
+                availability={lateTable}
+              />
+            </motion.div>
+            
+          )}
+        </div>
         {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
-          <motion.div
-            className="userFormContainer"
+          <motion.div className="userFormContainer"
             initial={{
               display: "visible",
               x: "100vw",
             }}
-            animate={{ x: removeCustomerInfoAnimation ? "-100vw" : "0vw" }}
-            transition={{ type: "spring", delay: 0.5, stiffness: 40 }}
+            animate={{x: removeCustomerInfoAnimation ? '-100vw': '0vw',  display: removeCalendarAnimation ? 'flex': 'none'}}
+            transition={{type: 'spring', delay: 0.3, stiffness: 40}}
           >
-            <motion.div
-              initial={{ x: "100vw", y: "-35vh" }}
-              animate={{ x: removeCalendarAnimation ? 0 : "100vw", y: "-35vh" }}
-              transition={{ type: "spring", delay: 0.5, stiffness: 40 }}
+            <motion.div className="customerInfoContainer2"
+              initial={{ x: '100vw'}}
+              animate={{ x: removeCalendarAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'none': 'flex' }}
+              transition={{type: 'spring', delay: 0.3, stiffness: 40}}
             >
-              <p className="calendarSwitch" onClick={goBackAndFourthCalendar}>
-                Tillbaka
-              </p>
+              <h4>Book a table</h4>
+              <h5>Enter your contact information</h5>
+              <p className="goBackLink" onClick={goBackAndFourthCalendar}>Gå tillbaka</p>
+
               <UserForm addCustomerInfo={getCustomerInfo} />
             </motion.div>
           </motion.div>
@@ -236,31 +254,34 @@ export const BookingPage = () => {
         {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
         {summaryValue ? (
           <motion.div
-            initial={{ x: "100vw", y: "-65vh" }}
-            animate={{
-              x: removeCustomerInfoAnimation ? 0 : "100vw",
-              y: "-70vh",
-            }}
-            transition={{ type: "spring", delay: 0.4, stiffness: 40 }}
+
+            initial={{ x: '100vw'}}
+            animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'block': 'none'}}
+            transition={{type: 'spring', delay: 0.3, stiffness: 40}}
           >
-            <p onClick={goBackAndFourthCustomerInfo}>
-              Detta är en länk! Styla den! Tillbaka
-            </p>
+            <h4>Book a table</h4>
+            <h5>Bokningsbekräftelse:</h5>
+            <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>Gå tillbaka!</p>
             <BookingSummary booking={booking} />
             <GDPR checkBox={toggleCheckbox} />
           </motion.div>
         ) : null}
         {/* Rendera post-knapp ifall villkoren är godkända */}
         {checkBox ? (
-          <motion.button
-            className="post-button"
+          <motion.button className="post-button"
             onClick={submitAllInfo}
-            initial={{ x: "-100vw", y: "-60vh" }}
-            animate={{ x: checkBox ? "0vw" : "90vw" }}
+            initial={{x: '-100vw', y: '0vh'}}
+            animate={{x: checkBox ? '0vw' : '-0vw'}}
           >
             ADD BOOKING
           </motion.button>
         ) : null}
+
+      {/* Loading animation component when the loadinganimation state is triggered to true */}  
+      {loadingAnimation ? (
+          <LoadingComponent></LoadingComponent>
+      ): null}
+      
       </div>
     </>
   );

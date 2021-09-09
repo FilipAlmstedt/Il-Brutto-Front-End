@@ -3,6 +3,28 @@
   margin: 1rem;
   //min-height: 75vh;
 
+  .customerInfoContainer {
+    width: 100vw;
+    .customerInfoContainer2 {
+      width: 100vw;
+      @include flexStyling(column, center);
+    }
+  }
+
+  /*Link to go back to previous child component in bookingPage*/
+  .goBackLink {
+    cursor: pointer;
+    text-align: center;
+    text-decoration: underline;
+    color: black;
+    transition: color .2s ease-in-out;
+
+    &:hover {
+      color: $tomata;
+      transition: $tomata 0.2s ease-in-out;
+    }
+  }
+
   .seatingContainer {
     @include flexStyling(row, space-evenly);
     width: 35rem;
