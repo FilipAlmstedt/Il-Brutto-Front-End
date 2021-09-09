@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { BookingSummary } from "../BookingComponents/BookingSummary";
 import { GDPR } from "../BookingComponents/GDPR";
 import { motion } from "framer-motion";
+import { LoadingComponent } from "../BookingComponents/LoadingComponent";
 
 
 export const BookingPage = () => {
@@ -21,6 +22,7 @@ export const BookingPage = () => {
   // State that are used as trigger for slideanimations for different components
   const [removeCalendarAnimation, setRemoveCalendarAnimation] = useState<Boolean>(false);
   const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] = useState<Boolean>(false);
+  const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(false);
 
   const [summaryValue, setSummaryValue] = useState<Boolean>(false);
   const [checkBox, setCheckBox] = useState<Boolean>(false);
@@ -83,7 +85,7 @@ export const BookingPage = () => {
     setRemoveCustomerInfoAnimation(!removeCustomerInfoAnimation);
   }
   const slideOutCalendarComponent = () => {
-    setRemoveCalendarAnimation(!removeCalendarAnimation);;
+    setRemoveCalendarAnimation(!removeCalendarAnimation);
   }
 
   // These fucntion trigger the set state functions that are triggered from links
@@ -91,7 +93,7 @@ export const BookingPage = () => {
     slideOutCustomerInfoComponent();
   }
   const goBackAndFourthCalendar = () => {
-    slideOutCalendarComponent()
+    slideOutCalendarComponent();
   }
 
   const sortBookings = (chosenDate: Date) => {
@@ -130,12 +132,18 @@ export const BookingPage = () => {
 
   //Post request using booking state
   const submitAllInfo = () => {
-    axios
+    // trigger loading animation
+    setLoadingAnimation(!loadingAnimation);
+
+    // Created so the loading function is present on the scree for 2 seconds and then move the user to confirmation page
+    setTimeout(() => {
+      axios
       .post<Booking>("http://localhost:8000/reservations", booking)
       .then((response) => {
         console.log("Added booking!");
         history.push(`/confirmation/${booking.bookingRef}`);
       });
+    }, 2000)
   };
   // Toggle checkbox value when checking användarvilkor
   const toggleCheckbox = () => {
@@ -146,21 +154,24 @@ export const BookingPage = () => {
     <>
       
       <div className="bookingContainer">
-        <h4>Book a table</h4>
-        <h5>Enter your desired preferences below:</h5>
         {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/}
+       
         <motion.div className="calenderContainer"
           initial={{
             x: '100vw'
           }}
-          animate={{x: removeCalendarAnimation ? '-100vw': '0vw', display: removeCalendarAnimation ? 'none': 'visible'}}
-          transition={{type: 'spring', delay: 0.6, stiffness: 40}}
+          animate={{x: removeCalendarAnimation ? '-100vw': '0vw', display: removeCalendarAnimation ? 'none': 'flex'}}
+          transition={{type: 'spring', delay: 0.3, stiffness: 40}}
+          exit={{opacity: 0}}
         >
+          <h4>Book a table</h4>
+          <h5>Enter date and guest amount:</h5>
           <CalendarPlugin
             getUserAmount={getGuestAmount}
             getUserDate={sortBookings}
           ></CalendarPlugin>
         </motion.div>
+   
         {/* rendera komponent beroende på tillgänglighet */}
         <div>
           {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
@@ -169,12 +180,14 @@ export const BookingPage = () => {
               No reservations are available at this date, try a different date!
             </h4>
           ) : (
+            /* seatingContainer is a div that is appearing when the removeCalendarAnimation trigger is changed */
             <motion.div className="seatingContainer"
               initial={{
                 x: '100vw'
               }}
-              animate={{x: removeCalendarAnimation ? '-100vw': '0vw'}}
-              transition={{type: 'spring', delay: 0.6, stiffness: 40}}
+              animate={{x: removeCalendarAnimation ? '-100vw': '0vw', display: removeCalendarAnimation ? 'none': 'flex' }}
+              exit={{opacity: 0}}
+              transition={{type: 'spring', delay: 0.3, stiffness: 40}}
             >
               <h5>Select time:</h5>
               <EarlySeating
@@ -187,6 +200,7 @@ export const BookingPage = () => {
                 availability={lateTable}
               />
             </motion.div>
+            
           )}
         </div>
         {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
@@ -194,14 +208,16 @@ export const BookingPage = () => {
             initial={{
               x: '100vw'
             }}
-            animate={{x: removeCustomerInfoAnimation ? '-100vw': '0vw',  display: removeCustomerInfoAnimation ? 'none': 'visible'}}
-            transition={{type: 'spring', delay: 0.5, stiffness: 40}}
+            animate={{x: removeCustomerInfoAnimation ? '-100vw': '0vw',  display: removeCalendarAnimation ? 'flex': 'none'}}
+            transition={{type: 'spring', delay: 0.3, stiffness: 40}}
           >
             <motion.div className="customerInfoContainer2"
               initial={{ x: '100vw'}}
-              animate={{ x: removeCalendarAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'none': 'visible' }}
-              transition={{type: 'spring', delay: 0.5, stiffness: 40}}
+              animate={{ x: removeCalendarAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'none': 'flex' }}
+              transition={{type: 'spring', delay: 0.3, stiffness: 40}}
             >
+              <h4>Book a table</h4>
+              <h5>Enter your contact information</h5>
               <p className="goBackLink" onClick={goBackAndFourthCalendar}>Gå tillbaka</p>
               <UserForm addCustomerInfo={getCustomerInfo} />
             </motion.div>
@@ -212,9 +228,11 @@ export const BookingPage = () => {
         {summaryValue ? (
           <motion.div
             initial={{ x: '100vw'}}
-            animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'none': 'visible'}}
-            transition={{type: 'spring', delay: 0.4, stiffness: 40}}
-            >
+            animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'block': 'none'}}
+            transition={{type: 'spring', delay: 0.3, stiffness: 40}}
+          >
+            <h4>Book a table</h4>
+            <h5>Bokningsbekräftelse:</h5>
             <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>Gå tillbaka!</p>
             <BookingSummary booking={booking} />
             <GDPR checkBox={toggleCheckbox} />
@@ -222,13 +240,19 @@ export const BookingPage = () => {
         ) : null}
         {/* Rendera post-knapp ifall villkoren är godkända */}
         {checkBox ? (
-          <motion.button className="post-button"  onClick={submitAllInfo}
+          <motion.button className="post-button" onClick={submitAllInfo}
             initial={{x: '-100vw', y: '0vh'}}
-            animate={{x: checkBox ? '0vw' : '-0vw', y: '-80vh'}}
+            animate={{x: checkBox ? '0vw' : '-0vw'}}
           >
             ADD BOOKING
           </motion.button>
         ) : null}
+
+      {/* Loading animation component when the loadinganimation state is triggered to true */}  
+      {loadingAnimation ? (
+          <LoadingComponent></LoadingComponent>
+      ): null}
+      
       </div>
     </>
   );
