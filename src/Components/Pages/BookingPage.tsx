@@ -24,6 +24,8 @@ export const BookingPage = () => {
   const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] =
     useState<Boolean>(false);
 
+  const [lateTablesTaken, setLateTablesTaken] = useState<number>(0);
+  const [earlyTablesTaken, setEarlyTablesTaken] = useState<number>(0);  
   const [summaryValue, setSummaryValue] = useState<Boolean>(false);
   const [checkBox, setCheckBox] = useState<Boolean>(false);
   let history = useHistory();
@@ -95,10 +97,10 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
-  const sortBookings = (chosenDate: Date) => {
-    let currentBookings: Booking[] = [];
+  const sortBookings = (chosenDate: Date, guestAmount: number) => {
     let earlyBookings: Booking[] = [];
     let lateBookings: Booking[] = [];
+
     axios
       .get<Booking[]>("http://localhost:8000/reservations")
       .then((response) => {
@@ -107,26 +109,45 @@ export const BookingPage = () => {
           let dbDate: Date = response.data[i].date;
           if (
             moment(chosenDate).format("YYYY MM DD") ===
-            moment(dbDate).format("YYYY MM DD")
+              moment(dbDate).format("YYYY MM DD") &&
+            response.data[i].seatingTime === "early"
           ) {
-            currentBookings.push(response.data[i]);
+            earlyBookings.push(response.data[i]);
+          } else if (
+            moment(chosenDate).format("YYYY MM DD") ===
+              moment(dbDate).format("YYYY MM DD") &&
+            response.data[i].seatingTime === "late"
+          ) {
+            lateBookings.push(response.data[i]);
           }
         }
-        //Dela upp de befintliga bokningarna i late/early sittningar
-        for (let i = 0; i < currentBookings.length; i++) {
-          // if/else för uppdelning
-          currentBookings[i].seatingTime === "early"
-            ? earlyBookings.push(currentBookings[i])
-            : lateBookings.push(currentBookings[i]);
-        }
 
-        //Ändra early och late table-state beroende på tillgängliga bord
-        setEarlyTable(earlyBookings.length <= 14);
-        setLateTable(lateBookings.length <= 14);
-
-        //Fyll på booking-state med gästens valda amount och datum
-        getDate(chosenDate);
+        getDate(chosenDate)
+        getGuestAmount(guestAmount)
+        checkAvailability(earlyBookings, lateBookings, guestAmount);
       });
+  };
+
+  const checkAvailability = (
+    earlyBookings: Booking[],
+    lateBookings: Booking[],
+    guestAmount: number
+  ) => {
+    
+    let lateTables: number = 0;
+    let earlyTables:number = 0;
+    for (let i = 0; i < lateBookings.length; i++) {
+      (lateBookings[i].guestAmount <= 6 ? lateTables++ : lateTables += 2)
+    }
+    for (let i = 0; i < earlyBookings.length; i++) {
+      (earlyBookings[i].guestAmount <= 6 ? earlyTables++ : earlyTables += 2)
+    }
+
+    setLateTablesTaken(lateTables);
+    setEarlyTablesTaken(earlyTables);
+
+    (guestAmount <= 6 ? setLateTable(lateTablesTaken <= 14) : setLateTable(lateTablesTaken <= 13));
+    (guestAmount <= 6 ? setEarlyTable(earlyTablesTaken <= 14) : setEarlyTable(earlyTablesTaken <= 13));
   };
 
   //Post request using booking state
