@@ -131,16 +131,11 @@ export const BookingPage = () => {
   //Post request using booking state
   const submitAllInfo = () => {
     axios
-      .post<Booking>("http://localhost:8000/admin", booking)
+      .post<Booking>("http://localhost:8000/reservations", booking)
       .then((response) => {
-        //To be removed / Solved
-        //history.push(`/confirmation/${booking.bookingRef}`);
-        // console.log("Hello!");
+        console.log("Added booking!");
+        history.push(`/confirmation/${booking.bookingRef}`);
       });
-
-    // Should be in then but it doesn't work right now: only for users at BookingPage
-
-    history.push(`/confirmation/${booking.bookingRef}`);
   };
   // Toggle checkbox value when checking användarvilkor
   const toggleCheckbox = () => {
@@ -158,7 +153,7 @@ export const BookingPage = () => {
           initial={{
             x: '100vw'
           }}
-          animate={{x: removeCalendarAnimation ? '-100vw': '0vw'}}
+          animate={{x: removeCalendarAnimation ? '-100vw': '0vw', display: removeCalendarAnimation ? 'none': 'visible'}}
           transition={{type: 'spring', delay: 0.6, stiffness: 40}}
         >
           <CalendarPlugin
@@ -195,19 +190,19 @@ export const BookingPage = () => {
           )}
         </div>
         {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
-          <motion.div
+          <motion.div className="customerInfoContainer"
             initial={{
               x: '100vw'
             }}
-            animate={{x: removeCustomerInfoAnimation ? '-100vw': '0vw'}}
+            animate={{x: removeCustomerInfoAnimation ? '-100vw': '0vw',  display: removeCustomerInfoAnimation ? 'none': 'visible'}}
             transition={{type: 'spring', delay: 0.5, stiffness: 40}}
           >
-            <motion.div className="showEditBookingInfoContainer"
-              initial={{ x: '100vw', y: '-35vh'}}
-              animate={{ x: removeCalendarAnimation ? 0: '100vw' , y: '-35vh'}}
+            <motion.div className="customerInfoContainer2"
+              initial={{ x: '100vw'}}
+              animate={{ x: removeCalendarAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'none': 'visible' }}
               transition={{type: 'spring', delay: 0.5, stiffness: 40}}
             >
-              <p onClick={goBackAndFourthCalendar}>Detta är en länk! Styla den! Tillbaka</p>
+              <p className="goBackLink" onClick={goBackAndFourthCalendar}>Gå tillbaka</p>
               <UserForm addCustomerInfo={getCustomerInfo} />
             </motion.div>
           </motion.div>
@@ -216,11 +211,11 @@ export const BookingPage = () => {
         {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
         {summaryValue ? (
           <motion.div
-            initial={{ x: '100vw', y: '-65vh'}}
-            animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , y: '-70vh'}}
+            initial={{ x: '100vw'}}
+            animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'none': 'visible'}}
             transition={{type: 'spring', delay: 0.4, stiffness: 40}}
             >
-            <p onClick={goBackAndFourthCustomerInfo}>Detta är en länk! Styla den! Tillbaka</p>
+            <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>Gå tillbaka!</p>
             <BookingSummary booking={booking} />
             <GDPR checkBox={toggleCheckbox} />
           </motion.div>
@@ -228,8 +223,8 @@ export const BookingPage = () => {
         {/* Rendera post-knapp ifall villkoren är godkända */}
         {checkBox ? (
           <motion.button className="post-button"  onClick={submitAllInfo}
-            initial={{x: '-100vw', y: '-60vh'}}
-            animate={{x: checkBox ? '0vw' : '90vw'}}
+            initial={{x: '-100vw', y: '0vh'}}
+            animate={{x: checkBox ? '0vw' : '-0vw', y: '-80vh'}}
           >
             ADD BOOKING
           </motion.button>

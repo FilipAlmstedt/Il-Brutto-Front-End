@@ -65,13 +65,9 @@ export const AdminPage = () => {
     axios
       .post<Booking>("http://localhost:8000/admin", booking)
       .then((response) => {
-        //To be removed / Solved
-        // history.push(`/confirmation/${booking.bookingRef}`);
-        // console.log("Hello!");
+        console.log("Added booking!");
+        history.push(`/confirmation/${booking.bookingRef}`);
       });
-
-    // Should be in then but it doesn't work right now: only for users at BookingPage
-    history.push(`/confirmation/${booking.bookingRef}`);
   };
 
   // Separate function for axios get request
@@ -85,7 +81,6 @@ export const AdminPage = () => {
   useEffect(() => {
     getBookings();
   }, []);
-
 
 
   const deleteBooking = (bookingRef: string) => {
