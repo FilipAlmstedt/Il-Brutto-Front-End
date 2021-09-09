@@ -118,8 +118,10 @@ export const BookingPage = () => {
 
   return (
     <>
+    <UserForm addCustomerInfo={getCustomerInfo} />
     <h1>Book a table at Il Brutto!</h1>
     <h3>Enter your desired preferences below:</h3>
+    
       <div className="calenderContainer">
         <CalendarPlugin
           getUserAmount={getGuestAmount}
