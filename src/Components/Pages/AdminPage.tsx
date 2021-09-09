@@ -30,9 +30,16 @@ export const AdminPage = () => {
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
   // Get chosen date from AdminCalendarPlugin component
-  const getDate = (selectedDate: Date) => {
+  // const getDate = (selectedDate: Date) => {
+  //   const bookingObject = { ...booking };
+  //   bookingObject.date = selectedDate;
+  //   setBooking(bookingObject);
+  // };
+
+  const getDateAndGuestAmount = (chosenDate: Date, guestAmount:number) => {
     const bookingObject = { ...booking };
-    bookingObject.date = selectedDate;
+    bookingObject.date = chosenDate;
+    bookingObject.guestAmount = guestAmount;
     setBooking(bookingObject);
   };
 
@@ -44,11 +51,11 @@ export const AdminPage = () => {
   };
 
   // Get the guest amount from AdminGuestAmount component
-  const getGuestAmount = (selectedGuestAmount: number) => {
-    const bookingObject = { ...booking };
-    bookingObject.guestAmount = selectedGuestAmount;
-    setBooking(bookingObject);
-  };
+  // const getGuestAmount = (selectedGuestAmount: number) => {
+  //   const bookingObject = { ...booking };
+  //   bookingObject.guestAmount = selectedGuestAmount;
+  //   setBooking(bookingObject);
+  // };
 
   // Get customer information from AdminUserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
@@ -92,7 +99,7 @@ export const AdminPage = () => {
 
   return (
     <>
-      <CalendarPlugin getUserAmount={getGuestAmount} getUserDate={getDate} />
+      <CalendarPlugin getUserInput={getDateAndGuestAmount}/>
       <div className="user-inputs">
         <AdminSeatingTime addSeatingTime={getSeatingTime} />
         <UserForm addCustomerInfo={getCustomerInfo} />
