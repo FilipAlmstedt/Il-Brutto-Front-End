@@ -65,7 +65,7 @@ export const AdminPage = () => {
     axios
       .post<Booking>("http://localhost:8000/admin", booking)
       .then((response) => {
-        history.push(`/confirmation/${booking.bookingRef}`);
+        getBookings();
       });
   };
 
