@@ -36,47 +36,50 @@ export const UserForm = (props: IAddCustomerInfo) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="firstName">First name *</label>
-      <input
-        {...register("firstName", { required: true })}
-        type="text"
-        id="firstName"
-        name="firstName"
-      />
-      {errors.firstName && "First name is required"}
-      <label htmlFor="lastname">Last name *</label>
-      <input
-        {...register("lastName", { required: true })}
-        type="text"
-        id="lastName"
-        name="lastName"
-      />
-      {errors.lastName && "Last name is required"}
-      <label htmlFor="firstName">Email *</label>
-      <input
-        {...register("email", { required: true })}
-        type="email"
-        id="email"
-        name="email"
-      />
-      {errors.email && "Email is required"}
-      <label htmlFor="tel">Phone number *</label>
-      <input
-        {...register("tel", { required: true })}
-        type="number"
-        id="tel"
-        name="tel"
-      />
-      {errors.tel && "Phone number is required"}
-      <label htmlFor="additionalinfo">Additional info</label>
-      <textarea
-        {...register("additionalInfo")}
-        name="additionalInfo"
-        id="additionalInfo"
-      ></textarea>
-      <p>* = required</p>
-      <input type="submit" />
-    </form>
+
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="firstName">First name *</label>
+        <input
+          {...register("firstName", { required: true })}
+          type="text"
+          id="firstName"
+          name="firstName"
+        />
+        <p className="errorMsg">{errors.firstName && "First name is required"}</p>
+        <label htmlFor="lastname">Last name *</label>
+        <input
+          {...register("lastName", { required: true })}
+          type="text"
+          id="lastName"
+          name="lastName"
+        />
+        <p className="errorMsg">{errors.lastName && "Last name is required"}</p>
+        <label htmlFor="firstName">Email *</label>
+        <input
+          {...register("email", { required: true })}
+          type="email"
+          id="email"
+          name="email"
+        />
+        <p className="errorMsg">{errors.email && "Email is required"}</p>
+        <label htmlFor="tel">Phone number *</label>
+        <input
+          {...register("tel", { required: true })}
+          type="number"
+          id="tel"
+          name="tel"
+        />
+        <p className="errorMsg">{errors.tel && "Phone number is required"}</p>
+        <label htmlFor="additionalinfo">Additional info</label>
+        <textarea
+          {...register("additionalInfo")}
+          name="additionalInfo"
+          id="additionalInfo"
+        ></textarea>
+        <p>* = required</p>
+        <button className="primaryButton" type="submit">Submit</button>
+      </form>
+    </>
   );
 };

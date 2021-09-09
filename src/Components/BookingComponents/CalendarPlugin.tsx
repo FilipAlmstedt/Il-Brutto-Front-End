@@ -1,22 +1,24 @@
 import { useState, ChangeEvent, useEffect } from "react";
-import Calendar from "react-calendar";
+import Calendar, { OnChangeDateRangeCallback } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 interface ICalendarPluginProps {
-  getUserDate(chosenDate: Date): void;
+  getUserDate(chosenDate: Date, guestAmount: number): void;
   getUserAmount(guestAmount: number): void;
 }
 
 export function CalendarPlugin(props: ICalendarPluginProps) {
   const [chosenDate, setChosenDate] = useState(new Date());
+  const [guestAmount, setGuestAmount] = useState<number>(2);
 
   useEffect(() => {
-    props.getUserDate(chosenDate);
-  }, [chosenDate]);
+    props.getUserDate(chosenDate, guestAmount);
+  }, [chosenDate, guestAmount]);
 
   const submitGuestAmount = (e: ChangeEvent<HTMLInputElement>) => {
-    props.getUserAmount(+e.target.value);
+    setGuestAmount(+e.target.value)
   };
+
 
   return (
     <>

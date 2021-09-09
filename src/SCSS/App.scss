@@ -7,13 +7,14 @@
 @import "components/forms";
 @import "components/icons";
 @import "components/calendar";
-@import "components/modal";
+@import "components/modals";
+@import "components/logo";
 
 @import "layout/footer";
 @import "layout/navbar";
 
 @import "pages/admin";
-@import "pages/booking";
+@import "pages/booking"; 
 @import "pages/confirmation";
 @import "pages/home";
 @import "pages/menu";

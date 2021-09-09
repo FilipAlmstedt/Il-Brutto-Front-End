@@ -1,0 +1,55 @@
+.gdprContainer {
+  .gdprBody {
+    overflow: scroll;
+    height: 10rem;
+    margin: 1rem;
+    border: 1px solid black;
+    padding: 1rem;
+  }
+
+  input {
+    height: 5rem;
+    width: 5rem;
+    font-size: $fs-title;
+  }
+}
+
+.summaryContainer {
+  @include flexStyling(column, center);
+  font-size: 1.5rem;
+
+  h1 {
+    text-align: center;
+  }
+
+  .bookingDetails {
+    padding: 2rem;
+    line-height: 2.5rem;
+
+    li {
+      list-style: none;
+    }
+  }
+
+  @include desktopsOnly {
+    .bookingInfoDiv {
+      @include flexStyling(row, center);
+      .bookingRefAndDate {
+        margin: 1rem;
+      }
+      .amountAndTime {
+        margin: 1rem;
+      }
+    }
+  }
+
+  .customerInfoContainer {
+    text-decoration: none;
+    padding: 2rem;
+    line-height: 2.5rem;
+
+    li {
+      list-style: none;
+    }
+  }
+}

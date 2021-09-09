@@ -12,22 +12,21 @@ interface IBookingSummaryProps {
 export const BookingSummary = (props: IBookingSummaryProps) => {
   return (
     <>
-      <div className="showEditBookingInfoContainer">
-        <h4>Booking information for {props.booking?.customerInfo.firstName}</h4>
-        <div className="bookingInfoDiv">
+      <div className="summaryContainer">
+        <div className="bookingDetails">
           <div className="bookingRefAndDate">
             <ul>
               <li>
-                <b>Booking reference:</b> {props.booking?.bookingRef}
+                <b>Booking reference: </b> {props.booking?.bookingRef}
               </li>
               <li>
-                <b>Date:</b>
+                <b>Date: </b>
                 <Moment format="YYYY/MM/DD">{props.booking?.date}</Moment>
               </li>
             </ul>
           </div>
 
-          <div className="bookingGuestAmountAndSeatingTime">
+          <div className="amountAndTime">
             <ul>
               <li>
                 <b>Amount of guests booked:</b> {props.booking?.guestAmount}
@@ -38,29 +37,27 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
             </ul>
           </div>
         </div>
-        <div className="customerInfoDiv">
-          <h4>Customer info: </h4>
+        <div className="customerInfoContainer">
+          <h5>Customer info: </h5>
           <ul>
             <li>
-              <b>Firstname:</b> {props.booking?.customerInfo.firstName}
+              <b>Firstname: </b> {props.booking?.customerInfo.firstName}
             </li>
             <li>
-              <b>Lastname:</b> {props.booking?.customerInfo.lastName}
+              <b>Lastname: </b> {props.booking?.customerInfo.lastName}
             </li>
             <li>
-              <b>Email:</b> {props.booking?.customerInfo.email}
+              <b>Email: </b> {props.booking?.customerInfo.email}
             </li>
             <li>
-              <b>Phone number:</b> {props.booking?.customerInfo.tel}
+              <b>Phone number: </b> {props.booking?.customerInfo.tel}
             </li>
             <li>
-              <b>Additional info:</b>{" "}
+              <b>Additional info: </b>{" "}
               {props.booking?.customerInfo.additionalInfo}
             </li>
           </ul>
         </div>
-
-        <hr className="line" />
       </div>
     </>
   );

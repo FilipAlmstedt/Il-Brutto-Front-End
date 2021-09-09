@@ -8,6 +8,7 @@ import { AdminPage } from "./Components/Pages/AdminPage";
 import { PageNotFound } from "./Components/Pages/PageNotFound";
 import { Navbar } from "./Components/Layout/Navbar";
 import { Footer } from "./Components/Layout/Footer" 
+<<<<<<< HEAD
 
 function App() {
   return (
@@ -46,6 +47,54 @@ function App() {
 
     </Router>
     </div>
+=======
+import { AdminEditBooking } from "./Components/AdminComponents/AdminEditBooking";
+import { AnimatePresence } from "framer-motion";
+
+function App() {
+  return (
+    <AnimatePresence>
+      <div className="App">
+        <Router>
+      
+        <Navbar></Navbar>
+
+        <Switch>
+          <Route exact path="/">
+            <HomePage></HomePage>
+          </Route>
+
+          <Route path="/menu">
+            <MenuPage></MenuPage>
+          </Route>
+
+          <Route path="/booking">
+            <BookingPage></BookingPage>
+          </Route>
+
+          <Route path="/confirmation/:id">
+            <ConfirmationPage></ConfirmationPage>
+          </Route>
+
+          <Route path="/admin">
+            <AdminPage></AdminPage>
+          </Route>
+
+          <Route path="/edit/:id">
+            <AdminEditBooking></AdminEditBooking>
+          </Route>
+
+          <Route path="*">
+            <PageNotFound></PageNotFound>
+          </Route>
+        </Switch>
+
+        <Footer></Footer>
+
+      </Router>
+      </div>
+    </AnimatePresence>
+>>>>>>> 38aa64fe49478f49b0bcf4d745f0cd551274fd1c
   );
 }
 

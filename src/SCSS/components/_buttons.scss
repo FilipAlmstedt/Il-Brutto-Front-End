@@ -1,0 +1,20 @@
+.primaryButton {
+    @include fontBody(); 
+    background-color: $dorian;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.deleteButton {
+    @include fontBody(); 
+    background-color: $tomata;
+    color: $dorian;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}

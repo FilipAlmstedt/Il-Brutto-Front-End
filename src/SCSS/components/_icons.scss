@@ -1,0 +1,23 @@
+.icon-facebook{
+    @include bigIcon(url("../assets/icons/icon_fb.png"));
+}
+
+.icon-instagram{
+    @include bigIcon(url("../assets/icons/icon_insta.png"))
+}
+
+.icon-tripadvisor{
+    @include bigIcon(url("../assets/icons/icon_tripadvisor.png"))
+}
+
+.icon-clock{
+    @include smallIcon(url("../assets/icons/icon_time.png"))
+}
+
+.icon-pin{
+    @include smallIcon(url("../assets/icons/icon_pin.png"))
+}
+
+.icon-tel{
+    @include smallIcon(url("../assets/icons/icon_tel.png"))
+}

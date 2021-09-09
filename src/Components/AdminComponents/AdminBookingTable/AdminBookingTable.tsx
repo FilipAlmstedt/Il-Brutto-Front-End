@@ -1,6 +1,6 @@
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
-import { Booking } from "../../Models/Booking";
+import { Booking } from "../../../Models/Booking";
 
 // Inherit booking data and function from parent adminPage
 interface IAdminBookingTable {
@@ -45,6 +45,7 @@ export const AdminBookingTable = (props: IAdminBookingTable) => {
 
   return (
     <>
+      <h2>Bookings</h2>
       <ul className="booking-table">{liTags}</ul>
     </>
   );

@@ -1,3 +1,38 @@
 form {
+<<<<<<< HEAD
     @include flexStyling(column, space-between);
   }
+=======
+  @include flexStyling(column, space-between);
+  margin: 1rem;
+  width: 100%;
+  margin: 0 auto;
+
+  input {
+    margin: 0.3rem;
+    height: 3rem;
+    width: 100%;
+    @include fontBody();
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  .errorMsg {
+    color: $tomata;
+  }
+
+  @include desktopsOnly {
+    width: 75%;
+    input {
+      width: 50%;
+    }
+
+    textarea {
+      width: 50%;
+      @include fontBody();
+    }
+  }
+}
+>>>>>>> 38aa64fe49478f49b0bcf4d745f0cd551274fd1c
