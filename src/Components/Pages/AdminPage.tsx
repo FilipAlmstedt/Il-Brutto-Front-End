@@ -6,7 +6,7 @@ import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
 import { UserForm } from "../BookingComponents/UserForm";
 import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
-import { AdminBookingTable } from "../AdminComponents/AdminBookingTable";
+import { AdminBookingTable } from "../AdminComponents/AdminBookingTable/AdminBookingTable";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 
 export const AdminPage = () => {
@@ -81,13 +81,13 @@ export const AdminPage = () => {
     getBookings();
   }, []);
 
-
   const deleteBooking = (bookingRef: string) => {
     //Axios delete based on bookingRef route to back end & updates page when a booking is deleted
-    axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`).then((response)=> {
-      getBookings();
-    })
-
+    axios
+      .delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`)
+      .then((response) => {
+        getBookings();
+      });
   };
 
   return (

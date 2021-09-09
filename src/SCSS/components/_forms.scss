@@ -1,7 +1,8 @@
 form {
   @include flexStyling(column, space-between);
   margin: 1rem;
-  width: 60%;
+  width: 100%;
+  margin: 0 auto;
 
   input {
     margin: 0.3rem;
@@ -19,6 +20,7 @@ form {
   }
 
   @include desktopsOnly {
+    width: 75%;
     input {
       width: 50%;
     }
