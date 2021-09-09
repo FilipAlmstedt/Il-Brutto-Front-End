@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { CustomerInfo } from "../../Models/CustomerInfo";
+import { motion } from "framer-motion";
 
 //import interface from parent
 interface IAddCustomerInfo {
@@ -36,48 +37,47 @@ export const UserForm = (props: IAddCustomerInfo) => {
   };
 
   //Loading animation
-  const LoadingDot = {
-    display: "block",
-    width: "2rem",
-    height: "2rem",
-    backgroundColor: "black",
-    borderRadius: "50%"
-  };
-  
-  const LoadingContainer = {
-    width: "10rem",
-    height: "5rem",
-    display: "flex",
-    justifyContent: "space-around"
-  };
-  
-  const ContainerVariants = {
-    initial: {
-      transition: {
-        staggerChildren: 0.2
-      }
-    },
-    animate: {
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-  
-  const DotVariants = {
-    initial: {
-      y: "0%"
-    },
-    animate: {
-      y: "100%"
-    }
-  };
-  
-  const DotTransition = {
-    duration: 0.5,
-    yoyo: Infinity,
-    ease: "easeInOut"
-  };
+  // const loadingContainer = {
+  //   width: "2rem",
+  //   height: "2rem",
+  //   display: "flex",
+  //   justifyContent: "space-around"
+  // };
+
+  // const loadingCircle = {
+  //   display: "block",
+  //   width: "0.5rem",
+  //   height: "0.5rem",
+  //   backgroundColor: "black",
+  //   borderRadius: "0.25rem"
+  // };
+
+  // const loadingContainerVariants = {
+  //   start: {
+  //     transition: {
+  //       staggerChildren: 0.2,
+  //     },
+  //   },
+  //   end: {
+  //     transition: {
+  //       staggerChildren: 0.2,
+  //     },
+  //   },
+  // }
+  // const loadingCircleVariants = {
+  //   start: {
+  //     y: "0%",
+  //   },
+  //   end: {
+  //     y: "100%",
+  //   },
+  // }
+  // const loadingCircleTransition = {
+  //   duration: 0.5,
+  //   yoyo: Infinity,
+  //   ease: "easeInOut",
+  // }
+   
 
   return (
     <>
@@ -126,38 +126,29 @@ export const UserForm = (props: IAddCustomerInfo) => {
         </form>
       </div>
  
-       {/* <div
-        style={{
-          paddingTop: "5rem",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
+      {/* <motion.div
+      style={loadingContainer}
+      variants={loadingContainerVariants}
+      initial="start"
+      animate="end"
       >
-        <motion.div
-          style={LoadingContainer}
-          variants={ContainerVariants}
-          initial="initial"
-          animate="animate"
-        >
-          <motion.span
-            style={LoadingDot}
-            variants={DotVariants}
-            transition={DotTransition}
-          />
-          <motion.span
-            style={LoadingDot}
-            variants={DotVariants}
-            transition={DotTransition}
-          />
-          <motion.span
-            style={LoadingDot}
-            variants={DotVariants}
-            transition={DotTransition}
-          />
-        </motion.div>
-      </div> */}
+        <motion.span
+          style={loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        />
+        <motion.span
+          style={loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        />
+        <motion.span
+          style={loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        />
+      </motion.div> */}
+  
     </>
 
     
