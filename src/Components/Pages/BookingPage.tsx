@@ -179,19 +179,16 @@ export const BookingPage = () => {
         {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/}
        
         <motion.div className="calenderContainer"
-        <h4>Book a table</h4>
-        {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/
           initial={{
             x: "100vw",
           }}
-
           animate={{x: removeCalendarAnimation ? '-100vw': '0vw', display: removeCalendarAnimation ? 'none': 'flex'}}
           transition={{type: 'spring', delay: 0.3, stiffness: 40}}
           exit={{opacity: 0}}
         >
           <h4>Book a table</h4>
           <h5>Enter date and guest amount:</h5>
-          <CalendarPlugin
+          <CalendarPlugin 
             getUserAmount={getGuestAmount}
             getUserDate={sortBookings}
           ></CalendarPlugin>
