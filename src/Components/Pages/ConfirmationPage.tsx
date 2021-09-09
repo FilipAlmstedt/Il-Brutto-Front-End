@@ -19,9 +19,7 @@ export const ConfirmationPage = () => {
     console.log(booking?.bookingRef, booking?.customerInfo.firstName);
     history.push("/");
     console.log("booking deleted");
-    
-    
-    
+
     //Axios delete based on bookingRef route to back end
     axios.delete<Booking>(
       `http://localhost:8000/deleteReservation/${booking?.bookingRef}`
@@ -39,13 +37,13 @@ export const ConfirmationPage = () => {
 
   return (
     <>
-      <h1>Your booking has been confirmed</h1>
-      {/* Send booking to Booking summary component */}
-      <BookingSummary
-        booking={booking}
-
-      ></BookingSummary>
-      <button onClick={deleteBooking}>DELETE BOOKING</button>
+      <div className="confirmationContainer">
+        <h4>Your booking has been confirmed</h4>
+        {/* Send booking to Booking summary component */}
+        <BookingSummary booking={booking}></BookingSummary>
+        <p>If you need to cancel your booking, contact the restaurant or click this button:</p>
+        <button className="deleteButton" onClick={deleteBooking}>DELETE BOOKING</button>
+      </div>
     </>
   );
 };

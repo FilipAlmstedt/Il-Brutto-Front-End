@@ -1,18 +1,20 @@
-
 interface IPropsCheckbox {
-    checkBox():void;
+  checkBox(): void;
 }
 
-export const GDPR = (props:IPropsCheckbox) => {
-
-const checkBox = () => {
-    props.checkBox()
-}
+export const GDPR = (props: IPropsCheckbox) => {
+  const checkBox = () => {
+    props.checkBox();
+  };
   return (
     <>
       <div className="gdprContainer">
+        <h3>Användarvillkor </h3>
+        <p>
+         <em> För att kunna bekräfta bokningen måste du först acceptera villkoren:</em>
+        </p>
+
         <div className="gdprBody">
-          <h3>Användarvillkor </h3>
           <p>
             Du har använt en digital produkt eller tjänst som tillhandahålls av
             IlBrutto AB ("Il Brutto"). Il Brutto är registrerat i Sverige, orgnr
@@ -124,7 +126,7 @@ const checkBox = () => {
       </div>
 
       <label htmlFor="terms">Jag godkänner vilkoren </label>
-      <input type="checkbox" id="terms" onChange={checkBox}/>
+      <input type="checkbox" id="terms" onChange={checkBox} />
     </>
   );
 };

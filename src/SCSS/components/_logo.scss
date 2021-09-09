@@ -1,0 +1,10 @@
+.logoContainer {
+    @include fontHeader3();
+    color: $dorian;
+    margin: 2rem;
+    text-shadow: 2px 2px 1px $terra;
+    @include desktopsOnly{
+        font-size: $fs-header-2;
+        margin: 3rem;
+    }
+}

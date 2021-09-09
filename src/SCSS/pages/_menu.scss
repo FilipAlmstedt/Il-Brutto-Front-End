@@ -1,49 +1,63 @@
 .menuHero {
-
   @include pageHero(url("../assets/images/menuImage.jpg"));
+  @include flexStyling(column, space-evenly);
+  padding: 3rem;
 
+  h1 {
+    font-size: 3rem;
+
+    @include desktopsOnly {
+      font-size: $fs-header-2;
+      width: 75vw;
+      margin: 0 auto;
+    }
   }
-
+}
 
 .menuContainer {
-    margin-bottom:2rem;
-    @include desktopsOnly {
-      display:flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  @include desktopsOnly {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 75vw;
+    margin: 0 auto;
+  }
+
   .menuSection {
-        width:90%;
-        margin:0 auto;
-        font-size: 1.3rem;
-        margin-top:2rem;
-        @include flexStyling(column,center);
-        @include desktopsOnly {
-          width:45%;
-        }
-        
+    margin: 2rem auto 2rem auto;
+    width: 90%;
+    @include flexStyling(column, center);
+    @include desktopsOnly {
+      width: 50%;
+    }
+
     .menuItem {
-        position: relative;
-        color: rgb(146, 0, 0);
-        margin:5px;
-        letter-spacing: 0.1rem;
-        .price {
-          position: absolute;
-          right:0;
-        }
+      width: 100%;
+      position: relative;
+      margin: 5px;
+      letter-spacing: $ls-positive;
+      .price {
+        position: absolute;
+        right: 0;
+      }
+      h3 {
+        margin: 1rem auto 1rem auto;
+      }
     }
   }
 
-.sectionHead {
-  text-align: center;
-  color: darkred;
-}
+  .sectionHead {
+    text-align: center;
+    margin: 2rem auto 2rem auto;
+    color: $brunello;
+    font-size: $fs-header-2;
+  }
 
-.menuHead {
-  text-align: center;
-  font-size: 3rem;
-  color: darkred;
-  margin:2rem;
-}
-
+  .menuHead {
+    text-align: center;
+    font-size: 3rem;
+    margin: 2rem;
+  }
 }
