@@ -65,13 +65,8 @@ export const AdminPage = () => {
     axios
       .post<Booking>("http://localhost:8000/admin", booking)
       .then((response) => {
-        //To be removed / Solved
-        // history.push(`/confirmation/${booking.bookingRef}`);
-        // console.log("Hello!");
+        history.push(`/confirmation/${booking.bookingRef}`);
       });
-
-    // Should be in then but it doesn't work right now: only for users at BookingPage
-    history.push(`/confirmation/${booking.bookingRef}`);
   };
 
   // Separate function for axios get request
@@ -86,14 +81,13 @@ export const AdminPage = () => {
     getBookings();
   }, []);
 
-
-
   const deleteBooking = (bookingRef: string) => {
     //Axios delete based on bookingRef route to back end & updates page when a booking is deleted
-    axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`).then((response)=> {
-      getBookings();
-    })
-
+    axios
+      .delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`)
+      .then((response) => {
+        getBookings();
+      });
   };
 
   return (

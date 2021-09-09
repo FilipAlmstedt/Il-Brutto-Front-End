@@ -132,16 +132,10 @@ export const BookingPage = () => {
   //Post request using booking state
   const submitAllInfo = () => {
     axios
-      .post<Booking>("http://localhost:8000/admin", booking)
+      .post<Booking>("http://localhost:8000/reservations", booking)
       .then((response) => {
-        //To be removed / Solved
-        //history.push(`/confirmation/${booking.bookingRef}`);
-        // console.log("Hello!");
+        history.push(`/confirmation/${booking.bookingRef}`);
       });
-
-    // Should be in then but it doesn't work right now: only for users at BookingPage
-
-    history.push(`/confirmation/${booking.bookingRef}`);
   };
   // Toggle checkbox value when checking användarvilkor
   const toggleCheckbox = () => {
@@ -167,37 +161,37 @@ export const BookingPage = () => {
           ></CalendarPlugin>
         </motion.div>
         {/* rendera komponent beroende på tillgänglighet */}
-        
-          {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
-          {earlyTable === false && lateTable === false ? (
-            <h4>
-              No reservations are available at this date, try a different date!
-            </h4>
-          ) : (
-            <motion.div
-              className="seatingContainer"
-              initial={{
-                x: "100vw",
-              }}
-              animate={{ x: removeCalendarAnimation ? "-100vw" : "0vw" }}
-              transition={{ type: "spring", delay: 0.6, stiffness: 40 }}
-            >
-              <h5>Select time:</h5>
-              <EarlySeating
-                addSeatingTime={getSeatingTime}
-                availability={earlyTable}
-              />
-              <p>or:</p>
-              <LateSeating
-                addSeatingTime={getSeatingTime}
-                availability={lateTable}
-              />
-            </motion.div>
-          )}
-        
+
+        {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
+        {earlyTable === false && lateTable === false ? (
+          <h4>
+            No reservations are available at this date, try a different date!
+          </h4>
+        ) : (
+          <motion.div
+            className="seatingContainer"
+            initial={{
+              x: "100vw",
+            }}
+            animate={{ x: removeCalendarAnimation ? "-100vw" : "0vw" }}
+            transition={{ type: "spring", delay: 0.6, stiffness: 40 }}
+          >
+            <h5>Select time:</h5>
+            <EarlySeating
+              addSeatingTime={getSeatingTime}
+              availability={earlyTable}
+            />
+            <p>or:</p>
+            <LateSeating
+              addSeatingTime={getSeatingTime}
+              availability={lateTable}
+            />
+          </motion.div>
+        )}
+
         {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
           <motion.div
-          className="userFormContainer"
+            className="userFormContainer"
             initial={{
               display: "visible",
               x: "100vw",
@@ -206,13 +200,12 @@ export const BookingPage = () => {
             transition={{ type: "spring", delay: 0.5, stiffness: 40 }}
           >
             <motion.div
-              
               initial={{ x: "100vw", y: "-35vh" }}
               animate={{ x: removeCalendarAnimation ? 0 : "100vw", y: "-35vh" }}
               transition={{ type: "spring", delay: 0.5, stiffness: 40 }}
             >
               <p className="calendarSwitch" onClick={goBackAndFourthCalendar}>
-              Tillbaka
+                Tillbaka
               </p>
               <UserForm addCustomerInfo={getCustomerInfo} />
             </motion.div>
