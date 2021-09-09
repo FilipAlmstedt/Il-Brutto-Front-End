@@ -1,5 +1,5 @@
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Booking } from "../../Models/Booking";
 import moment from "moment";
@@ -45,16 +45,18 @@ export const BookingPage = () => {
   };
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
-  const getDate = (selectedDate: Date) => {
+  const getDateAndGuestAmount = (chosenDate: Date, guestAmount:number) => {
     const bookingObject = { ...booking };
-    bookingObject.date = selectedDate;
+    bookingObject.date = chosenDate;
+    bookingObject.guestAmount = guestAmount;
     setBooking(bookingObject);
   };
-  const getGuestAmount = (selectedGuestAmount: number) => {
-    const bookingObject = { ...booking };
-    bookingObject.guestAmount = selectedGuestAmount;
-    setBooking(bookingObject);
-  };
+
+  // const getGuestAmount = (selectedGuestAmount: number) => {
+  //   const bookingObject = { ...booking };
+  //   bookingObject.guestAmount = selectedGuestAmount;
+  //   setBooking(bookingObject);
+  // };
 
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject = { ...booking };
@@ -100,7 +102,7 @@ export const BookingPage = () => {
   const sortBookings = (chosenDate: Date, guestAmount: number) => {
     let earlyBookings: Booking[] = [];
     let lateBookings: Booking[] = [];
-
+  
     axios
       .get<Booking[]>("http://localhost:8000/reservations")
       .then((response) => {
@@ -121,9 +123,9 @@ export const BookingPage = () => {
             lateBookings.push(response.data[i]);
           }
         }
+        
 
-        getDate(chosenDate)
-        getGuestAmount(guestAmount)
+        getDateAndGuestAmount(chosenDate, guestAmount)
         checkAvailability(earlyBookings, lateBookings, guestAmount);
       });
   };
@@ -149,6 +151,18 @@ export const BookingPage = () => {
     (guestAmount <= 6 ? setLateTable(lateTablesTaken <= 14) : setLateTable(lateTablesTaken <= 13));
     (guestAmount <= 6 ? setEarlyTable(earlyTablesTaken <= 14) : setEarlyTable(earlyTablesTaken <= 13));
   };
+
+  useEffect(() => {
+    console.log("latetables:" + lateTablesTaken);
+    
+  }, [lateTablesTaken]);
+
+  useEffect(() => {
+    console.log("latefull?:" + lateTable);
+    
+  }, [lateTable]);
+
+
 
   //Post request using booking state
   const submitAllInfo = () => {
@@ -189,8 +203,8 @@ export const BookingPage = () => {
           <h4>Book a table</h4>
           <h5>Enter date and guest amount:</h5>
           <CalendarPlugin 
-            getUserAmount={getGuestAmount}
-            getUserDate={sortBookings}
+            getUserInput={sortBookings}
+            // getUserDate={sortBookings}
           ></CalendarPlugin>
         </motion.div>
    
