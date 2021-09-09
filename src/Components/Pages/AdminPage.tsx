@@ -6,7 +6,7 @@ import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
 import { UserForm } from "../BookingComponents/UserForm";
 import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
-import { AdminBookingTable } from "../AdminComponents/AdminBookingTable";
+import { AdminBookingTable } from "../AdminComponents/AdminBookingTable/AdminBookingTable";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 
 export const AdminPage = () => {
