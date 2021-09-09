@@ -207,7 +207,7 @@ export const BookingPage = () => {
               animate={{ x: removeCalendarAnimation ? 0: '100vw' , y: '-35vh'}}
               transition={{type: 'spring', delay: 0.5, stiffness: 40}}
             >
-              <p onClick={goBackAndFourthCustomerInfo}>Detta är en länk! Styla den! Tillbaka</p>
+              <p onClick={goBackAndFourthCalendar}>Detta är en länk! Styla den! Tillbaka</p>
               <UserForm addCustomerInfo={getCustomerInfo} />
             </motion.div>
           </motion.div>
@@ -232,7 +232,7 @@ export const BookingPage = () => {
             animate={{x: checkBox ? '0vw' : '90vw'}}
           >
             ADD BOOKING
-          </motion.button>)
+          </motion.button>
         ) : null}
       </div>
     </>
