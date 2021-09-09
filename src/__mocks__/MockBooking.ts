@@ -10,7 +10,7 @@ const MockBooking: Booking = {
     firstName: "Edvin",
     lastName: "Sjögren",
     email: "esfed20s@gmail.com",
-    tel: 123,
+    tel: 123987,
     additionalInfo: "Nut allergy",
   },
 };

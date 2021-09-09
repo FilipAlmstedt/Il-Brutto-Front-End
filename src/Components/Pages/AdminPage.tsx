@@ -86,19 +86,18 @@ export const AdminPage = () => {
     getBookings();
   }, []);
 
-
-
   const deleteBooking = (bookingRef: string) => {
     //Axios delete based on bookingRef route to back end & updates page when a booking is deleted
-    axios.delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`).then((response)=> {
-      getBookings();
-    })
-
+    axios
+      .delete<Booking>(`http://localhost:8000/admin/delete/${bookingRef}`)
+      .then((response) => {
+        getBookings();
+      });
   };
 
   return (
     <>
-    <h2>Il Brutto Admin Page</h2>
+      <h2>Il Brutto Admin Page</h2>
       <CalendarPlugin getUserAmount={getGuestAmount} getUserDate={getDate} />
       <div className="user-inputs">
         <AdminSeatingTime addSeatingTime={getSeatingTime} />
