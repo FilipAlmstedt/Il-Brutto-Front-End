@@ -1,0 +1,9 @@
+.confirmationContainer {
+    @include flexStyling(column, center);
+    margin: 1rem;
+    min-height: 75vh;
+
+    h4, p {
+        text-align: center;
+    }
+}
