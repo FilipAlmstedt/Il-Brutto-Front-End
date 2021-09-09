@@ -226,7 +226,7 @@ export const BookingPage = () => {
           )}
         </div>
         {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
-          <motion.div className="userFormContainer"
+          <motion.div className="userFormContainer customerInfoContainer"
             initial={{
               display: "visible",
               x: "100vw",
@@ -251,7 +251,6 @@ export const BookingPage = () => {
         {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
         {summaryValue ? (
           <motion.div
-
             initial={{ x: '100vw'}}
             animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , display: removeCustomerInfoAnimation ? 'block': 'none'}}
             transition={{type: 'spring', delay: 0.3, stiffness: 40}}
