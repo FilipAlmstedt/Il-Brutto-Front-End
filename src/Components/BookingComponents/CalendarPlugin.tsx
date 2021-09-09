@@ -20,6 +20,7 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
 
   return (
     <>
+    <h5>Enter your desired preferences below:</h5>
       <div className="guestAmountContainer">
         <label htmlFor="guestAmount">Guest amount: </label>
         <input

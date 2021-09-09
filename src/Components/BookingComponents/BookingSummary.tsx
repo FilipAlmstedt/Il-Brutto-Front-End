@@ -13,7 +13,6 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
   return (
     <>
       <div className="summaryContainer">
-        <h5>Booking information for {props.booking?.customerInfo.firstName}</h5>
         <div className="bookingDetails">
           <div className="bookingRefAndDate">
             <ul>
