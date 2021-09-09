@@ -142,95 +142,99 @@ export const BookingPage = () => {
 
     history.push(`/confirmation/${booking.bookingRef}`);
   };
-// Toggle checkbox value when checking användarvilkor
-  const toggleCheckbox = () => { 
-    setCheckBox(!checkBox); 
+  // Toggle checkbox value when checking användarvilkor
+  const toggleCheckbox = () => {
+    setCheckBox(!checkBox);
   };
 
   return (
     <>
-
-      <h4>Book a table at Il Brutto!</h4>
-      <h5>Enter your desired preferences below:</h5>
-      {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/}
-      <motion.div className="calenderContainer"
-        initial={{
-          x: '100vw'
-        }}
-        animate={{x: removeCalendarAnimation ? '-100vw': '0vw'}}
-        transition={{type: 'spring', delay: 0.6, stiffness: 40}}
-      >
-        <CalendarPlugin
-          getUserAmount={getGuestAmount}
-          getUserDate={sortBookings}
-        ></CalendarPlugin>
-      </motion.div>
-      {/* rendera komponent beroende på tillgänglighet */}
-      <div>
-        {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
-        {earlyTable === false && lateTable === false ? (
-          <h4>
-            No reservations are available at this date, try a different date!
-          </h4>
-        ) : /*animation that activates the animation of the seatingConatiner to slide in from the right*/
-        (
-          <motion.div className="seatingContainer"
-            initial={{
-              x: '100vw'
-            }}
-            animate={{x: removeCalendarAnimation ? '-100vw': '0vw'}}
-            transition={{type: 'spring', delay: 0.6, stiffness: 40}}
-          >
-            <EarlySeating addSeatingTime={getSeatingTime} 
-            availability={earlyTable}/>
-            <LateSeating addSeatingTime={getSeatingTime} 
-            availability={lateTable}/>
-
-          </motion.div>
-        )}
-      </div>
-      {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
-
-        <motion.div
+      
+      <div className="bookingContainer">
+        <h4>Book a table</h4>
+        <h5>Enter your desired preferences below:</h5>
+        {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/}
+        <motion.div className="calenderContainer"
           initial={{
             x: '100vw'
           }}
-          animate={{x: removeCustomerInfoAnimation ? '-100vw': '0vw'}}
-          transition={{type: 'spring', delay: 0.5, stiffness: 40}}
+          animate={{x: removeCalendarAnimation ? '-100vw': '0vw'}}
+          transition={{type: 'spring', delay: 0.6, stiffness: 40}}
         >
-          <motion.div className="showEditBookingInfoContainer"
-            initial={{ x: '100vw', y: '-35vh'}}
-            animate={{ x: removeCalendarAnimation ? 0: '100vw' , y: '-35vh'}}
+          <CalendarPlugin
+            getUserAmount={getGuestAmount}
+            getUserDate={sortBookings}
+          ></CalendarPlugin>
+        </motion.div>
+        {/* rendera komponent beroende på tillgänglighet */}
+        <div>
+          {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
+          {earlyTable === false && lateTable === false ? (
+            <h4>
+              No reservations are available at this date, try a different date!
+            </h4>
+          ) : (
+            <motion.div className="seatingContainer"
+              initial={{
+                x: '100vw'
+              }}
+              animate={{x: removeCalendarAnimation ? '-100vw': '0vw'}}
+              transition={{type: 'spring', delay: 0.6, stiffness: 40}}
+            >
+              <h5>Select time:</h5>
+              <EarlySeating
+                addSeatingTime={getSeatingTime}
+                availability={earlyTable}
+              />
+              <p>or:</p>
+              <LateSeating
+                addSeatingTime={getSeatingTime}
+                availability={lateTable}
+              />
+            </motion.div>
+          )}
+        </div>
+        {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
+          <motion.div
+            initial={{
+              x: '100vw'
+            }}
+            animate={{x: removeCustomerInfoAnimation ? '-100vw': '0vw'}}
             transition={{type: 'spring', delay: 0.5, stiffness: 40}}
           >
-            <p onClick={goBackAndFourthCalendar}>Detta är en länk! Styla den! Tillbaka</p>
-            <UserForm addCustomerInfo={getCustomerInfo} />
+            <motion.div className="showEditBookingInfoContainer"
+              initial={{ x: '100vw', y: '-35vh'}}
+              animate={{ x: removeCalendarAnimation ? 0: '100vw' , y: '-35vh'}}
+              transition={{type: 'spring', delay: 0.5, stiffness: 40}}
+            >
+              <p onClick={goBackAndFourthCustomerInfo}>Detta är en länk! Styla den! Tillbaka</p>
+              <UserForm addCustomerInfo={getCustomerInfo} />
+            </motion.div>
           </motion.div>
-        </motion.div>
-      ) : null}
+        ) : null}
 
-      {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
-      {summaryValue ? (
-        <motion.div
-          initial={{ x: '100vw', y: '-65vh'}}
-          animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , y: '-70vh'}}
-          transition={{type: 'spring', delay: 0.4, stiffness: 40}}
-        >
-          <p onClick={goBackAndFourthCustomerInfo}>Detta är en länk! Styla den! Tillbaka</p>
-          <BookingSummary booking={booking} />
-          <GDPR checkBox={toggleCheckbox} />
-        </motion.div>
-      ) : null}
-      {/* Rendera post-knapp ifall villkoren är godkända */}
-      {checkBox ? ( 
-        <motion.button className="post-button"  onClick={submitAllInfo}
-          initial={{x: '-100vw', y: '-60vh'}}
-          animate={{x: checkBox ? '0vw' : '90vw'}}
-        >
+        {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
+        {summaryValue ? (
+          <motion.div
+            initial={{ x: '100vw', y: '-65vh'}}
+            animate={{ x: removeCustomerInfoAnimation ? 0: '100vw' , y: '-70vh'}}
+            transition={{type: 'spring', delay: 0.4, stiffness: 40}}
+            >
+            <p onClick={goBackAndFourthCustomerInfo}>Detta är en länk! Styla den! Tillbaka</p>
+            <BookingSummary booking={booking} />
+            <GDPR checkBox={toggleCheckbox} />
+          </motion.div>
+        ) : null}
+        {/* Rendera post-knapp ifall villkoren är godkända */}
+        {checkBox ? (
+          <motion.button className="post-button"  onClick={submitAllInfo}
+            initial={{x: '-100vw', y: '-60vh'}}
+            animate={{x: checkBox ? '0vw' : '90vw'}}
+          >
             ADD BOOKING
-        </motion.button>)
-      : null}
-
+          </motion.button>)
+        ) : null}
+      </div>
     </>
   );
 };

@@ -9,13 +9,11 @@ export const Navbar = () => {
             <li>
               <Link to="/">
                 <div className="logoContainer">
-                  <b>
-                    <p>LOGO</p>
-                  </b>
+                    IL BRUTTO
                 </div>
               </Link>
             </li>
-            <div className="notLogoLinks">
+            <div className="navbarLinks">
               <li>
                 <Link to="/">Home</Link>
               </li>
