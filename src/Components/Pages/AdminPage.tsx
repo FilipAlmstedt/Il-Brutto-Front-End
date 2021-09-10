@@ -63,6 +63,7 @@ export const AdminPage = () => {
       .post<Booking>("http://localhost:8000/admin", booking)
       .then((response) => {
         getBookings();
+        //setBooking(defaultValues)
       });
   };
 
@@ -90,15 +91,16 @@ export const AdminPage = () => {
   return (
     <>
       <div className="adminPageContainer">
-        <h4>ADMIN PAGE</h4>
+        <h4>ADMINSIDA</h4>
 
         <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
         <div className="user-inputs">
           <AdminSeatingTime addSeatingTime={getSeatingTime} />
+          <h5>Gästinformation</h5>
           <UserForm addCustomerInfo={getCustomerInfo} />
-          <h4>Is above information entered correctly?</h4>
+          <h5>Är ovanstående information rätt ifylld?</h5>
           <button className="post-button" onClick={submitAllInfo}>
-            ADD BOOKING
+            LÄGG TILL BOKNING
           </button>
         </div>
         <AdminBookingTable

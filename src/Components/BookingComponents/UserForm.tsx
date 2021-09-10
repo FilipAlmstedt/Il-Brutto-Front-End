@@ -39,7 +39,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
 
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="firstName">First name *</label>
+        <label htmlFor="firstName">Förnamn *</label>
         <input
           {...register("firstName", { required: true })}
           type="text"
@@ -47,7 +47,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
           name="firstName"
         />
         <p className="errorMsg">{errors.firstName && "First name is required"}</p>
-        <label htmlFor="lastname">Last name *</label>
+        <label htmlFor="lastname">Efternamn *</label>
         <input
           {...register("lastName", { required: true })}
           type="text"
@@ -63,7 +63,7 @@ export const UserForm = (props: IAddCustomerInfo) => {
           name="email"
         />
         <p className="errorMsg">{errors.email && "Email is required"}</p>
-        <label htmlFor="tel">Phone number *</label>
+        <label htmlFor="tel">Telefon *</label>
         <input
           {...register("tel", { required: true })}
           type="number"
@@ -71,14 +71,14 @@ export const UserForm = (props: IAddCustomerInfo) => {
           name="tel"
         />
         <p className="errorMsg">{errors.tel && "Phone number is required"}</p>
-        <label htmlFor="additionalinfo">Additional info</label>
+        <label htmlFor="additionalinfo">Övrig information</label>
         <textarea
           {...register("additionalInfo")}
           name="additionalInfo"
           id="additionalInfo"
         ></textarea>
-        <p>* = required</p>
-        <button className="primaryButton" type="submit">Submit</button>
+        <p>* = måste fyllas i</p>
+        <button className="primaryButton" type="submit">Lägg till</button>
       </form>
     </>
   );

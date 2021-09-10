@@ -8,41 +8,40 @@
       @include flexStyling(column, center);
       list-style: none;
       margin: 1rem;
-      padding: 1rem;
+      padding: 2rem;
       border: 1px solid black;
       border-radius: 1rem;
       position: relative;
+      align-items: flex-start;
     }
 
-    .delete-button {
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
-      font-weight: bold;
-      width: 2.5rem;
-      height: 2.5rem;
-      background-color: lightcoral;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
+    h4, button {
+      align-self: center;
     }
 
-    .edit-button {
-      margin: 1rem;
-      padding: 0.5rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      background-color: lightskyblue;
+    @include desktopsOnly{
+      @include flexStyling(row, space-between);
+      flex-wrap: wrap;
+      width: 75vw;
+
+      li {
+        width: 30%;
+      }
     }
   }
 
   .user-inputs {
     @include flexStyling(column, space-between);
     margin: 1rem;
+    width: 90%;
 
-    .radio {
-      @include flexStyling(row, center);
+    .radioContainer {
+      @include flexStyling(row, space-between);
+      margin: 1rem;
+
+      label {
+        margin: 1rem;
+      }
 
       input {
         width: 2rem;

@@ -30,7 +30,7 @@ export const HomePage = () => {
         <Link to="/booking">
           <div className="homeBooking">
             <span className="headingBackground">
-              <h3>Book a table</h3>
+              <h3>Boka bord</h3>
             </span>
           </div>
         </Link>

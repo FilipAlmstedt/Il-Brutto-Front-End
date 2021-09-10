@@ -1,6 +1,5 @@
 .gdprContainer {
   .gdprBody {
-    
     height: 10rem;
     margin: 1rem;
     border: 1px solid black;
@@ -8,29 +7,37 @@
     overflow: auto;
 
     p {
-      
       max-height: 100%;
     }
   }
 
   input {
-    height: 5rem;
-    width: 5rem;
-    font-size: $fs-title;
+    transform: scale(1.5);
+  }
+
+  @include desktopsOnly {
+    margin: 2rem auto;
+    width: 50vw;
   }
 }
 
 .summaryContainer {
   @include flexStyling(column, center);
   font-size: 1.5rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  width: 90%;
+  margin: 2rem auto;
 
   h1 {
     text-align: center;
   }
 
-  .bookingDetails {
+  .bookingDetails,
+  .customerDetails {
     padding: 2rem;
     line-height: 2.5rem;
+    text-align: left;
 
     li {
       list-style: none;
@@ -38,6 +45,9 @@
   }
 
   @include desktopsOnly {
+    @include flexStyling(row, center);
+    width: 50vw;
+
     .bookingInfoDiv {
       @include flexStyling(row, center);
       .bookingRefAndDate {
@@ -46,17 +56,6 @@
       .amountAndTime {
         margin: 1rem;
       }
-    }
-  }
-
-  .customerInfoContainer {
-    overflow:hidden;
-    text-decoration: none;
-    padding: 2rem;
-    line-height: 2.5rem;
-
-    li {
-      list-style: none;
     }
   }
 }

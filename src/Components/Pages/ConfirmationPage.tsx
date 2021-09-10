@@ -38,11 +38,11 @@ export const ConfirmationPage = () => {
   return (
     <>
       <div className="confirmationContainer">
-        <h4>Your booking has been confirmed</h4>
+        <h4>Din bokning har bekräftats</h4>
         {/* Send booking to Booking summary component */}
         <BookingSummary booking={booking}></BookingSummary>
-        <p>If you need to cancel your booking, contact the restaurant or click this button:</p>
-        <button className="deleteButton" onClick={deleteBooking}>DELETE BOOKING</button>
+        <p>Om du måste avboka din bokning, kontakta restaurangen eller tryck på knappen:</p>
+        <button className="delete-button" onClick={deleteBooking}>TA BORT BOKNING</button>
       </div>
     </>
   );

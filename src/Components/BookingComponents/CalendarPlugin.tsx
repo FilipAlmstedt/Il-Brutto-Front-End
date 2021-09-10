@@ -19,7 +19,7 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
 
   return (
     <>
-      <label htmlFor="guestAmount">Guest amount: </label>
+      <label htmlFor="guestAmount">Gästantal: </label>
       <input
         id="guestAmount"
         onChange={submitGuestAmount}

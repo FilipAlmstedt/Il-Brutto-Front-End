@@ -24,7 +24,7 @@ export const Footer = () => {
 
         <ul className="contact-information">
           <li>
-            <div className="icon-clock"> </div> tue - sat, 18:00 - late
+            <div className="icon-clock"> </div> tis - lör, 18:00 - Sent
           </li>
           <li>
             <div className="icon-pin"> </div> Italienska torget 123 <br/> 123 45

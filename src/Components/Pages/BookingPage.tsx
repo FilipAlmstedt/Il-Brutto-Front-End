@@ -1,5 +1,5 @@
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Booking } from "../../Models/Booking";
 import moment from "moment";
@@ -184,8 +184,8 @@ export const BookingPage = () => {
           transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
           exit={{ opacity: 0 }}
         >
-          <h4>Book a table</h4>
-          <h5>Enter date and guest amount:</h5>
+          <h4>Boka bord</h4>
+          <h5>Fyll i datum och antal gäster:</h5>
           <CalendarPlugin
             getGuestAmount={getGuestAmount}
             getDate={getDate}
@@ -197,9 +197,9 @@ export const BookingPage = () => {
         <div>
           {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
           {earlyTable === false && lateTable === false ? (
-            <h4>
-              No reservations are available at this date, try a different date!
-            </h4>
+            <h5 className="errorMsg">
+              Inga tillgängliga tider finns på valt dautm, välj en annan dag!
+            </h5>
           ) : (
             /* seatingContainer is a div that is appearing when the removeCalendarAnimation trigger is changed */
             <motion.div
@@ -213,12 +213,12 @@ export const BookingPage = () => {
               }}
               transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
             >
-              <h5>Select time:</h5>
+              <h5>Välj sittningstid:</h5>
               <EarlySeating
                 addSeatingTime={getSeatingTime}
                 availability={earlyTable}
               />
-              <p>or:</p>
+              <p>eller:</p>
               <LateSeating
                 addSeatingTime={getSeatingTime}
                 availability={lateTable}
@@ -248,10 +248,15 @@ export const BookingPage = () => {
             }}
             transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
           >
-            <h4>Book a table</h4>
-            <h5>Enter your contact information</h5>
-            <p className="goBackLink" onClick={goBackAndFourthCalendar}>
-              Gå tillbaka
+             <h4>Boka bord</h4>
+              <h5>Fyll i dina kontaktuppgifter</h5>
+              <p className="goBackLink" onClick={goBackAndFourthCalendar}>
+                Gå tillbaka
+              </p>
+            <h4>Boka bord</h4>
+            <h5>Bokningsbekräftelse:</h5>
+            <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>
+              Gå tillbaka!
             </p>
 
             <UserForm addCustomerInfo={getCustomerInfo} />
@@ -285,7 +290,7 @@ export const BookingPage = () => {
             initial={{ x: "-100vw", y: "0vh" }}
             animate={{ x: checkBox ? "0vw" : "-0vw" }}
           >
-            ADD BOOKING
+            BOKA
           </motion.button>
         ) : null}
 

@@ -23,7 +23,7 @@ test("Should render booking table", () => {
       />
     </MemoryRouter>
   );
-  const heading = getByText(/Bookings/i);
+  const heading = getByText(/Bokningar/i);
   expect(heading).toBeInTheDocument();
 });
 
@@ -48,7 +48,7 @@ test("Bookings should have correct number of bookings", async () => {
 test("Should be able to trigger delete button", async () => {
   mockAxios.get.mockResolvedValue({ data: mockDataArray });
 
-  render(
+  const { container } = render(
     <MemoryRouter>
       <AdminBookingTable
         bookings={mockDataArray}
@@ -60,8 +60,7 @@ test("Should be able to trigger delete button", async () => {
   await waitFor(() => {
     const bookings = screen.getAllByRole("listitem");
     expect(bookings.length).toBe(mockDataArray.length);
-    const buttons = screen.getAllByText(/X/i);
-
+    const buttons = container.getElementsByClassName("booking-delete-button");
     fireEvent.click(buttons[0]);
     expect(mockFunction).toHaveBeenCalled();
   });
@@ -81,13 +80,18 @@ test("Should be able to make a delete request", async () => {
     let myLis = container.querySelectorAll("li").length;
     expect(myLis).toBe(3);
 
-    const buttons = screen.getAllByText(/X/i);
-    buttons[0].click();
+    const buttons = container.getElementsByClassName("booking-delete-button");
+
+    let button = buttons.item(0) as Element;
+    fireEvent.click(button);
+
+    //console.log(buttons.item(0))
 
     expect(mockAxios.delete).toHaveBeenCalledWith(
       "http://localhost:8000/admin/delete/abc123"
     );
 
+    // Fungerar inte
     // waitFor(() => {
     //   let myNewLis = container.querySelectorAll("li").length;
     //   expect(myNewLis).toBe(2);
