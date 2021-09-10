@@ -1,25 +1,13 @@
-import { ChangeEvent, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 
-interface IAddFormInput {
-  addFormInput(
-    date: Date,
-    bookingRef: string,
-    guestAmount: number,
-    seatingTime: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    tel: number,
-    additionalInfo: string
-  ): void;
+//import interface from parent
+interface IAddCustomerInfo {
+  addCustomerInfo(customerInfo: CustomerInfo): void;
 }
 
-interface IForm {
-  //date: Date;
-  bookingRef: string;
-  //guestAmount: number;
-  seatingTime: string;
+// declare interface for react hook form
+interface IUserInfo {
   firstName: string;
   lastName: string;
   email: string;
@@ -27,114 +15,70 @@ interface IForm {
   additionalInfo: string;
 }
 
-export const UserForm = (props: IAddFormInput) => {
-  const [form, setForm] = useState<IForm>({
-    // date: new Date(),
-    bookingRef: "",
-    // guestAmount: 1,
-    seatingTime: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    tel: 0,
-    additionalInfo: "",
-  });
+export const UserForm = (props: IAddCustomerInfo) => {
+  // declare object which handles validation and error msgs, using react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IUserInfo>();
 
-  const updateAll = (e: ChangeEvent<HTMLInputElement>) => {
-    let name = e.target.name;
-    setForm({ ...form, [name]: e.target.value });
+  const onSubmit: SubmitHandler<IUserInfo> = (data) => {
+    //convert data input from form into props and send to parent component
+    const customerInformation: CustomerInfo = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        tel: data.tel,
+        additionalInfo: data.additionalInfo,
+      };
+      props.addCustomerInfo(customerInformation);
   };
-
-  const submitCustomerInfo = () => {
-    props.addFormInput(
-      //PS - Dummy data
-      new Date(),
-      form.bookingRef,
-      2,
-      form.seatingTime,
-      form.firstName,
-      form.lastName,
-      form.email,
-      form.tel,
-      form.additionalInfo
-    );
-  };
-
-  console.log(form);
 
   return (
-    <>
-      <h1>UserForm works!</h1>
-      <form>
-        <input
-          type="text"
-          onChange={updateAll}
-          value={form.firstName}
-          name="firstName"
-          placeholder="First name"
-        />
-        <input
-          type="text"
-          hidden
-          name="bookingRef"
-          value="abc123"
-          onChange={updateAll}
-        />
-        <input
-          type="text"
-          onChange={updateAll}
-          value={form.lastName}
-          name="lastName"
-          placeholder="Last name"
-        />
-        <input
-          type="email"
-          onChange={updateAll}
-          value={form.email}
-          name="email"
-          placeholder="Email"
-        />
-        <input
-          type="tel"
-          onChange={updateAll}
-          value={form.tel}
-          name="tel"
-          placeholder="Phone number"
-        />
 
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="firstName">Förnamn *</label>
         <input
+          {...register("firstName", { required: true })}
           type="text"
-          onChange={updateAll}
-          value={form.additionalInfo}
-          name="additionalInfo"
-          placeholder="Additional information"
+          id="firstName"
+          name="firstName"
         />
-        {/*Seating input only for admin use (temporarily)*/}
-        <div className="radio">
-          <label>
-            <input
-              type="radio"
-              value="early"
-              name="seatingTime"
-              onChange={updateAll}
-            />
-            Early
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input
-              name="seatingTime"
-              type="radio"
-              value="late"
-              onChange={updateAll}
-            />
-            Late
-          </label>
-        </div>
-        <button type="button" onClick={submitCustomerInfo}>
-          Submit
-        </button>
+        <p className="errorMsg">{errors.firstName && "First name is required"}</p>
+        <label htmlFor="lastname">Efternamn *</label>
+        <input
+          {...register("lastName", { required: true })}
+          type="text"
+          id="lastName"
+          name="lastName"
+        />
+        <p className="errorMsg">{errors.lastName && "Last name is required"}</p>
+        <label htmlFor="firstName">Email *</label>
+        <input
+          {...register("email", { required: true })}
+          type="email"
+          id="email"
+          name="email"
+        />
+        <p className="errorMsg">{errors.email && "Email is required"}</p>
+        <label htmlFor="tel">Telefon *</label>
+        <input
+          {...register("tel", { required: true })}
+          type="number"
+          id="tel"
+          name="tel"
+        />
+        <p className="errorMsg">{errors.tel && "Phone number is required"}</p>
+        <label htmlFor="additionalinfo">Övrig information</label>
+        <textarea
+          {...register("additionalInfo")}
+          name="additionalInfo"
+          id="additionalInfo"
+        ></textarea>
+        <p>* = måste fyllas i</p>
+        <button className="primaryButton" type="submit">Lägg till</button>
       </form>
     </>
   );

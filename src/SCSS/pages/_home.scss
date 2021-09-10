@@ -4,57 +4,74 @@
 //Erik
 
 .homeHero {
-  height: 100vh;
-  width: 100%;
-  background: url("../assets/images/homePageHero.jpg");
-  @include homeImage;
-  color: white;
-  text-align: center;
-  h1 {
-    padding-top: 10vh;
-    font-size: 3rem;
-    color: #b6b7b9;
+  @include pageHero(url("../assets/images/homeHero.jpg"));
+  position: relative;
 
-    @include desktopsOnly {
-      font-size: 5rem;
-    }
+  h1 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40%;
+    font-size: 7rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+  @include desktopsOnly {
+    width: 75%;
+    margin: 0 auto;
   }
 }
 
 .homeAbout {
   @include flexStyling(column, center);
   text-align: center;
-  width: 100%;
+  width: 75%;
   height: 30vh;
-  margin: 0 auto;
-  letter-spacing: 0.3rem;
-}
-
-.homeMenu {
-  position: relative;
-  height: 30vh;
-  width: 100%;
-  background: url("../assets/images/menuImage.jpg");
-  @include homeImage;
-  @include homeImageText;
-
-  //Menu and booking on same row in desktop mode
-  @include desktopsOnly {
-    display: inline-flex;
-    width: 50%;
+  margin: 3rem auto 3rem auto;
+  letter-spacing: $ls-positive;
+  h2 {
+    margin: 2rem;
+  }
+  p {
+    font-style: italic;
   }
 }
 
-.homeBooking {
-  position: relative;
-  height: 30vh;
-  width: 100%;
-  background: url("../assets/images/bookingImage.jpg");
-  @include homeImage;
-  @include homeImageText;
+.modalContainer {
+  margin: 3rem auto 0 auto;
+  .homeMenu {
+    position: relative;
+    height: 30vh;
+    width: 100%;
+    background: url("../assets/images/menuImage.jpg");
+    @include imgPresets;
+    @include homeImageText;
 
+    //Menu and booking on same row in desktop mode
+    @include desktopsOnly {
+      display: inline-flex;
+      width: 50%;
+      height: 75vh;
+    }
+  }
+
+  .homeBooking {
+    position: relative;
+    height: 30vh;
+    width: 100%;
+    background: url("../assets/images/bookingImage.jpg");
+    @include imgPresets;
+    @include homeImageText;
+
+    @include desktopsOnly {
+      display: inline-flex;
+      width: 50%;
+      height: 75vh;
+    }
+  }
   @include desktopsOnly {
-    display: inline-flex;
-    width: 50%;
+    width: 75%;
   }
 }

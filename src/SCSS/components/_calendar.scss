@@ -1,9 +1,24 @@
-.calendar-plugin {
+.calenderContainer {
   @include flexStyling(column, center);
-  width: 100vw;
-  margin: 3rem 0 3rem 0;
+  margin: 1rem;
 
-  h1 {
-      margin: 1rem;
+  #guestAmount {
+    width: 17.5rem;
+    height: 3.5rem;
+    text-align: center;
+    font-size: 2rem;
+    color: $fontana;
+    background-color: $dorian;
+    border-radius: 5%;
+    margin-bottom: 1rem;
+  }
+
+  h5 {
+    margin: 1rem;
   }
 }
+
+.react-calendar {
+  margin: 1rem;
+}
+

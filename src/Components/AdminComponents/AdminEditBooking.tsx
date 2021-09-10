@@ -1,131 +1,133 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
-import { AdminCalendarPlugin } from "./AdminCalendarPlugin";
-import { AdminGuestAmount } from "./AdminGuestAmount";
 import { AdminSeatingTime } from "./AdminSeatingTime";
-import { AdminUserForm } from "./AdminUserForm";
+import { UserForm } from "../BookingComponents/UserForm";
+import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
+import { BookingSummary } from "../BookingComponents/BookingSummary";
+import moment from "moment";
 
 // Collect id - booking reference from URL
 interface IParams {
-    id: string;
+  id: string;
 }
 
 // Component that is displaying the information for the customer and gives admin the possibility to update that info
 export const AdminEditBooking = () => {
+  let history = useHistory();
+  let { id } = useParams<IParams>();
+  // Booking info that you get from DB
+  const [booking, setBooking] = useState<Booking>();
 
-    let {id} = useParams<IParams>();
-    // Booking info that you get from DB 
-    const [booking, setBooking] = useState<Booking>();
+  let defaultValues: Booking = {
+    date: new Date(),
+    bookingRef: "",
+    guestAmount: 0,
+    seatingTime: "",
+    customerInfo: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      tel: 123456,
+      additionalInfo: "",
+    },
+  };
 
-    let defaultValues: Booking = {
-        date: new Date(),
-        bookingRef: "",
-        guestAmount: 0,
-        seatingTime: "",
-        customerInfo: {
-          firstName: "",
-          lastName: "",
-          email: "",
-          tel: 123456,
-          additionalInfo: "",
-        },
-    };
+  // Booking object that you will update and the send to DB
+  const [updatedBooking, setUpdatedBooking] = useState<Booking>(defaultValues);
 
-    // Booking object that you will update and the send to DB 
-    const [updatedBooking, setUpdatedBooking] = useState<Booking>(defaultValues);
+  // Collect the booking object everytime the booking object is updated. The info updates on the page
+  useEffect(() => {
+    axios
+      .get<Booking>(`http://localhost:8000/editReservation/${id}`)
+      .then((response) => {
+        setBooking(response.data);
+      });
+  }, [id]);
 
-    // Collect the booking object everytime the booking object is updated. The info updates on the page
-    useEffect(() => {
-        axios.get<Booking>(`http://localhost:8000/editReservation/${id}`).then((response) => {
-            setBooking(response.data);
-        });
-    }, [booking]);
+  // Get date from calendarPlugin component
+  const getDate = (chosenDate: Date) => {
+    const bookingObject = { ...updatedBooking };
+    bookingObject.date = chosenDate;
+    setUpdatedBooking(bookingObject);
+  };
 
-    // Get chosen date from AdminCalendarPlugin component
-    const getDate = (selectedDate: Date) => {
-        const bookingObject: Booking = {...updatedBooking};
-        bookingObject.date = selectedDate;
-        setUpdatedBooking(bookingObject);
-    };
+  // Get seating time from AdminSeatingTime component
+  const getSeatingTime = (chosenTime: string) => {
+    const bookingObject: Booking = { ...updatedBooking };
+    bookingObject.seatingTime = chosenTime;
+    setUpdatedBooking(bookingObject);
+  };
 
-    // Get seating time from AdminSeatingTime component
-    const getSeatingTime = (chosenTime: string) => {
-        const bookingObject: Booking = {...updatedBooking};
-        bookingObject.seatingTime = chosenTime;
-        setUpdatedBooking(bookingObject);
-    };
+  // Get guestAmount from calendarPlugin component
+  const getGuestAmount = (guestAmount: number) => {
+    const bookingObject = { ...updatedBooking };
+    bookingObject.guestAmount = guestAmount;
+    setUpdatedBooking(bookingObject);
+  };
 
-    // Get the guest amount from AdminGuestAmount component
-    const getGuestAmount = (selectedGuestAmount: number) => {
-        const bookingObject: Booking = {...updatedBooking};
-        bookingObject.guestAmount = selectedGuestAmount;
-        setUpdatedBooking(bookingObject);
-    };
+  // Get customer information from UserForm component
+  const getCustomerInfo = (customerInput: CustomerInfo) => {
+    let bookingObject = { ...updatedBooking };
 
-    // Get customer information from AdminUserForm component
-    const getCustomerInfo = (customerInput: CustomerInfo) => {
-        const bookingObject = {...updatedBooking};
-        bookingObject.customerInfo = customerInput;
-
-        // Have the same bookingreference as the booking you collect so it update the right booking info
-        bookingObject.bookingRef = id;
-
-        setUpdatedBooking(bookingObject);
-    };
-  
-    // Call post request to back end and store in DB
-    const updateBooking = () => {
-        axios.post(`http://localhost:8000/editReservation`, updatedBooking);
+    // If no new date, guestAmount or SeatingTime is provided,
+    // Adopt previous booking values
+    if (
+      bookingObject.guestAmount === 0 &&
+      moment(bookingObject.date).format("YYYY MM DD") ===
+        moment(new Date()).format("YYYY MM DD") &&
+      bookingObject.seatingTime === ""
+    ) {
+      bookingObject.guestAmount = booking?.guestAmount || 0;
+      bookingObject.date = booking?.date || new Date();
+      bookingObject.seatingTime = booking?.seatingTime || "";
     }
 
-    return (
-        <>
-            <div className="showEditBookingInfoContainer">
-                <h1>Booking information for {booking?.customerInfo.firstName}</h1>
-                <div className="bookingInfoDiv">
-                    <div className="bookingRefAndDate">
-                        <ul>
-                            <li><b>Booking reference:</b> {id}</li>
-                            <li><b>Date: </b>{booking?.date}</li>
-                        </ul>
-                    </div>
+    bookingObject.customerInfo = customerInput;
 
-                    <div className="bookingGuestAmountAndSeatingTime">
-                        <ul>
-                            <li><b>Amount of guests booked:</b> {booking?.guestAmount}</li>
-                            <li><b>Seating time:</b> {booking?.seatingTime}</li>      
-                        </ul>
-                    </div>     
-                </div>
-                <div className="customerInfoDiv">
-                    <h3>Customer info: </h3>
-                    <ul>
-                        <li><b>Firstname:</b> {booking?.customerInfo.firstName}</li>
-                        <li><b>Lastname:</b> {booking?.customerInfo.lastName}</li>
-                        <li><b>Email:</b> {booking?.customerInfo.email}</li>
-                        <li><b>Phone number:</b> {booking?.customerInfo.tel}</li>
-                        <li><b>Additional info:</b> {booking?.customerInfo.additionalInfo}</li>
-                    </ul>
-                </div>
-                <hr className="line" />
-            </div>
+    // Have the same bookingreference as the booking you collect so it update the right booking info
+    bookingObject.bookingRef = id;
+    setUpdatedBooking(bookingObject);
+  };
 
-            
+  // Call post request to back end and store in DB
+  const updateBooking = () => {
+    axios
+      .post(`http://localhost:8000/editReservation`, updatedBooking)
+      .then((response) => {
+        history.push("/admin");
+      });
+  };
 
-            <AdminCalendarPlugin addChosenDate={getDate}></AdminCalendarPlugin>
-            <div className="user-inputs">
-                <AdminSeatingTime addSeatingTime={getSeatingTime}></AdminSeatingTime>
-                <AdminGuestAmount addGuestAmount={getGuestAmount}></AdminGuestAmount>
-                <AdminUserForm addCustomerInfo={getCustomerInfo}></AdminUserForm>
+  return (
+    <>
+      <div className="editBookingContainer">
+        <h4>UPPDATERA BOKNING</h4>
+        <BookingSummary booking={booking} />
 
-                <hr className="line2" />
+        <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
 
-                <button type="button" onClick={updateBooking}>Update booking!</button>
-                <Link to="/admin">Go back!</Link>
-            </div>
-        </>
-    );
-}
+        <div className="user-inputs">
+          <AdminSeatingTime addSeatingTime={getSeatingTime} />
+
+          <h5>Gästinformation</h5>
+          <UserForm addCustomerInfo={getCustomerInfo} />
+
+          <h5>Stämmer ovanstående uppgifter?</h5>
+          {updatedBooking.customerInfo.firstName === "" ? null : (
+            <button
+              className="post-button"
+              type="button"
+              onClick={updateBooking}
+            >
+              Spara
+            </button>
+          )}
+          <Link to="/admin">Tillbaka</Link>
+        </div>
+      </div>
+    </>
+  );
+};

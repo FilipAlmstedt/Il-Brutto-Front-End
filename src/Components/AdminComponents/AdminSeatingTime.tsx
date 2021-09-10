@@ -6,7 +6,6 @@ interface IAddSeatingTime {
 
 // Collect seating times early or late in a form and send up to parent
 export const AdminSeatingTime = (props: IAddSeatingTime) => {
-
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     let selectedTime = e.target.value;
     props.addSeatingTime(selectedTime);
@@ -14,8 +13,8 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
 
   return (
     <>
-      <h2>Seating time</h2>
-      <div className="radio">
+      <h5>Sittningstid</h5>
+      <div className="radioContainer">
         <label>
           <input
             id="early"
@@ -24,7 +23,7 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
             name="seatingTime"
             onChange={onValueChange}
           />
-          Early
+          {" "} 18:00
         </label>
 
         <label>
@@ -35,7 +34,7 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
             value="late"
             onChange={onValueChange}
           />
-          Late
+          {" "} 21:00
         </label>
       </div>
     </>

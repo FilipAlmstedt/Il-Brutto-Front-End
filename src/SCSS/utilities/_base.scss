@@ -1,18 +1,56 @@
+@import "./typography";
+@import "./mixins";
+
 *,
 *::after,
 *::before {
-    margin: 0rem;
-    padding: 0rem;
-    box-sizing: inherit;
+  margin: 0rem;
+  padding: 0rem;
+  box-sizing: inherit;
 }
 
 html {
-    // 1 rem = 10px
-    font-size: 62.5%;
-    scroll-behavior: smooth;
+  // 1 rem = 10px
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  //overflow-x: hidden; för att möjliggöra framer motion animationer
+  overflow-x: hidden;
 }
 
 body {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  @include fontBody;
+  //position: relative; + overflow-x: hidden; för att möjliggöra framer motion animationer
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+h1 {
+  @include fontTitle;
+}
+
+h2 {
+  @include fontHeader2;
+}
+
+h3 {
+  @include fontHeader3;
+}
+
+h4 {
+  @include fontSubtitle;
+}
+
+h5 {
+  @include fontPreTitle;
+}
+
+p {
+  @include fontBody;
+}
+
+button {
+  @include fontButtonText();
 }

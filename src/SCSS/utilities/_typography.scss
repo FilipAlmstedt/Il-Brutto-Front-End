@@ -1,0 +1,80 @@
+@import "./variables";
+
+@mixin fontTitle() {
+  font-family: $ff-cormorant;
+  font-weight: $fw-bold;
+  font-size: $fs-title;
+  letter-spacing: $ls-positive;
+  color: $vitello;
+  margin: 1rem;
+  //text-transform: uppercase;
+}
+
+@mixin fontHeader2() {
+  font-family: $ff-cormorant;
+  font-weight: $fw-bold;
+  font-size: $fs-header-2;
+  letter-spacing: $ls-positive;
+  color: $vitello; 
+  margin: 1rem;
+ // text-transform: uppercase;
+}
+
+@mixin fontHeader3() {
+  font-family: $ff-cormorant;
+  font-weight: $fw-bold;
+  font-size: $fs-header-3;
+  letter-spacing: $ls-positive;
+  color: $vitello;
+ // text-transform: uppercase;
+}
+
+@mixin fontSubtitle() {
+  font-family: $ff-cormorant;
+  font-weight: $fw-medium;
+  font-size: $fs-subtitle;
+  color: $fontana; 
+  margin: 1rem;
+  text-transform: uppercase;
+}  
+
+@mixin fontBody() {
+  font-family: $ff-montserrat;
+  font-weight: $fw-medium;
+  font-size: $fs-body;
+  line-height: 140%;
+  color: $fontana; 
+}
+
+@mixin fontSmall() {
+  font-family: $ff-montserrat;
+  font-weight: $fw-medium;
+  font-size: $fs-small;
+  color: $fontana; 
+}
+
+@mixin fontPreTitle() {
+  font-family: $ff-montserrat;
+  font-weight: $fw-bold;
+  font-size: $fs-body;
+  //letter-spacing: $ls-positive;
+  //text-transform: uppercase;
+  color: $fontana; 
+}
+
+@mixin fontButtonText() {
+  font-family: $ff-montserrat;
+  font-weight: $fw-bold;
+  font-size: $fs-body;
+  letter-spacing: $ls-positive;
+  text-transform: uppercase;
+  color: $fontana; 
+}
+
+@mixin fontLink() {
+  font-family: $ff-montserrat;
+  font-weight: $fw-bold;
+  font-size: $fs-body;
+  color: $vitello; 
+  decoration: underline;
+}

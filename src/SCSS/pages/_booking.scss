@@ -1,27 +1,75 @@
-.seatingContainer {
-  @include flexStyling(row, start);
-  align-items: flex-start;
-  
-  width: 133px;
-  height: 50px;
-  border-radius: 5%;
-}
+.bookingContainer {
+  @include flexStyling(column, center);
+  margin: 1rem;
+  text-align: center;
+  min-height: 75vh;
 
-.seating {
-  width: 50%;
-  border: 1px solid rgb(77, 77, 97);
-  background-color: rgb(230, 232, 255);
-  border-radius: 5%;
-  height: 100%;
-  @include flexCenter(column);
-  font-size: 2rem;
-  color:rgb(77, 77, 97);
-}
+  @include desktopsOnly() {
+    width: 75%;
+    margin: 5vh auto;
+  }
 
-.full {
-  opacity: 0.5;
-}
+  .customerInfoContainer {
+    width: 100vw;
+    .customerInfoContainer2 {
+      width: 100vw;
+      @include flexStyling(column, center);
+    }
+  }
 
-.available {
-  cursor:pointer;
+  /*Link to go back to previous child component in bookingPage*/
+  .goBackLink {
+    cursor: pointer;
+    text-align: center;
+    text-decoration: underline;
+    color: black;
+    transition: color .2s ease-in-out;
+
+    &:hover {
+      color: $tomata;
+      transition: $tomata 0.2s ease-in-out;
+    }
+  }
+
+  .seatingContainer {
+    @include flexStyling(row, space-evenly);
+    width: 35rem;
+    height: 5rem;
+
+    .seating {
+      @include flexStyling(column, center);
+      width: 25%;
+      border: 1px solid rgb(77, 77, 97);
+      background-color: rgb(230, 232, 255);
+      border-radius: 5%;
+      height: 100%;
+      font-size: 2rem;
+      color: rgb(77, 77, 97);
+    }
+
+    .full {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .available {
+      cursor: pointer;
+      &:hover {
+        background-color: $dorian;
+      }
+    }
+  }
+
+  .userFormContainer {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .calendarSwitch {
+    font-size: $fs-subtitle;
+    text-align: center;
+  }
+  .errorMsg {
+    color: $tomata;
+  }
 }
