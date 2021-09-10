@@ -28,7 +28,6 @@ export const BookingPage = () => {
   ] = useState<Boolean>(false);
   const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(false);
 
-  const [summaryValue, setSummaryValue] = useState<Boolean>(false);
   const [checkBox, setCheckBox] = useState<Boolean>(false);
 
   let history = useHistory();
@@ -71,11 +70,6 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
-  //Toggle summaryValue so summary page renderes correctly
-  const showSummary = () => {
-    setSummaryValue(true);
-  };
-
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
@@ -83,7 +77,6 @@ export const BookingPage = () => {
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
     setBooking(bookingObject);
-    showSummary();
 
     slideOutCustomerInfoComponent();
   };
@@ -105,51 +98,51 @@ export const BookingPage = () => {
   };
 
   const sortBookings = () => {
-    
     axios
       .get<Booking[]>("http://localhost:8000/reservations")
       .then((response) => {
-    
-    //Split up chosen dates DB bookings to early or late bookings
-    let earlyBookings: Booking[] = [];
-    let lateBookings: Booking[] = [];
-    for (let i = 0; i < response.data.length; i++) {
-      let dbDate: Date = response.data[i].date;
-      if (
-        moment(booking.date).format("YYYY MM DD") ===
-          moment(dbDate).format("YYYY MM DD") &&
-          response.data[i].seatingTime === "early"
-      ) {
-        earlyBookings.push(response.data[i]);
-      } else if (
-        moment(booking.date).format("YYYY MM DD") ===
-          moment(dbDate).format("YYYY MM DD") &&
-          response.data[i].seatingTime === "late"
-      ) {
-        lateBookings.push(response.data[i]);
-      }
-    }
-    
-    //Calculate how many tables are occupied by current bookings
-    let lateTables: number = 0;
-    let earlyTables: number = 0;
-    for (let i = 0; i < lateBookings.length; i++) {
-      lateBookings[i].guestAmount <= 6 ? lateTables++ : (lateTables += 2);
-    }
-    for (let i = 0; i < earlyBookings.length; i++) {
-      earlyBookings[i].guestAmount <= 6 ? earlyTables++ : (earlyTables += 2);
-    }
-    //Calculate if tables are available for 6(one table) or 7+(two tables)   
-    booking.guestAmount <= 6
-      ? setLateTable(lateTables <= 14)
-      : setLateTable(lateTables <= 13);
-    booking.guestAmount <= 6
-      ? setEarlyTable(earlyTables <= 14)
-      : setEarlyTable(earlyTables <= 13);
+        //Split up chosen dates DB bookings to early or late bookings
+        let earlyBookings: Booking[] = [];
+        let lateBookings: Booking[] = [];
+        for (let i = 0; i < response.data.length; i++) {
+          let dbDate: Date = response.data[i].date;
+          if (
+            moment(booking.date).format("YYYY MM DD") ===
+              moment(dbDate).format("YYYY MM DD") &&
+            response.data[i].seatingTime === "early"
+          ) {
+            earlyBookings.push(response.data[i]);
+          } else if (
+            moment(booking.date).format("YYYY MM DD") ===
+              moment(dbDate).format("YYYY MM DD") &&
+            response.data[i].seatingTime === "late"
+          ) {
+            lateBookings.push(response.data[i]);
+          }
+        }
+
+        //Calculate how many tables are occupied by current bookings
+        let lateTables: number = 0;
+        let earlyTables: number = 0;
+        for (let i = 0; i < lateBookings.length; i++) {
+          lateBookings[i].guestAmount <= 6 ? lateTables++ : (lateTables += 2);
+        }
+        for (let i = 0; i < earlyBookings.length; i++) {
+          earlyBookings[i].guestAmount <= 6
+            ? earlyTables++
+            : (earlyTables += 2);
+        }
+        //Calculate if tables are available for 6(one table) or 7+(two tables)
+        booking.guestAmount <= 6
+          ? setLateTable(lateTables <= 14)
+          : setLateTable(lateTables <= 13);
+        booking.guestAmount <= 6
+          ? setEarlyTable(earlyTables <= 14)
+          : setEarlyTable(earlyTables <= 13);
       });
   };
 
-//Run sorting function when user when booking-values are changed
+  //Run sorting function when user when booking-values are changed
   useEffect(() => {
     sortBookings();
   }, [booking]);
@@ -233,58 +226,57 @@ export const BookingPage = () => {
             </motion.div>
           )}
         </div>
-        {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
-          <motion.div
-            className="userFormContainer customerInfoContainer"
-            initial={{
-              display: "visible",
-              x: "100vw",
-            }}
-            animate={{
-              x: removeCustomerInfoAnimation ? "-100vw" : "0vw",
-              display: removeCalendarAnimation ? "flex" : "none",
-            }}
-            transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
-          >
-            <motion.div
-              className="customerInfoContainer2"
-              initial={{ x: "100vw" }}
-              animate={{
-                x: removeCalendarAnimation ? 0 : "100vw",
-                display: removeCustomerInfoAnimation ? "none" : "flex",
-              }}
-              transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
-            >
-              <h4>Book a table</h4>
-              <h5>Enter your contact information</h5>
-              <p className="goBackLink" onClick={goBackAndFourthCalendar}>
-                Gå tillbaka
-              </p>
 
-              <UserForm addCustomerInfo={getCustomerInfo} />
-            </motion.div>
-          </motion.div>
-        ) : null}
-
-        {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
-        {summaryValue ? (
+        <motion.div
+          className="userFormContainer customerInfoContainer"
+          initial={{
+            display: "visible",
+            x: "100vw",
+          }}
+          animate={{
+            x: removeCustomerInfoAnimation ? "-100vw" : "0vw",
+            display: removeCalendarAnimation ? "flex" : "none",
+          }}
+          transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
+        >
           <motion.div
+            className="customerInfoContainer2"
             initial={{ x: "100vw" }}
             animate={{
-              x: removeCustomerInfoAnimation ? 0 : "100vw",
-              display: removeCustomerInfoAnimation ? "block" : "none"
+              x: removeCalendarAnimation ? 0 : "100vw",
+              display: removeCustomerInfoAnimation ? "none" : "flex",
             }}
             transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
           >
             <h4>Book a table</h4>
-            <h5>Bokningsbekräftelse:</h5>
-            <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>
-              Gå tillbaka!
+            <h5>Enter your contact information</h5>
+            <p className="goBackLink" onClick={goBackAndFourthCalendar}>
+              Gå tillbaka
             </p>
-            <BookingSummary booking={booking} />
-            <GDPR checkBox={toggleCheckbox} />
+
+            <UserForm addCustomerInfo={getCustomerInfo} />
           </motion.div>
-        ) : null}
+        </motion.div>
+
+        {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
+
+        <motion.div
+          initial={{ x: "100vw" }}
+          animate={{
+            x: removeCustomerInfoAnimation ? 0 : "100vw",
+            display: removeCustomerInfoAnimation ? "block" : "none",
+          }}
+          transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
+        >
+          <h4>Book a table</h4>
+          <h5>Bokningsbekräftelse:</h5>
+          <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>
+            Gå tillbaka!
+          </p>
+          <BookingSummary booking={booking} />
+          <GDPR checkBox={toggleCheckbox} />
+        </motion.div>
+
         {/* Rendera post-knapp ifall villkoren är godkända */}
         {checkBox ? (
           <motion.button
