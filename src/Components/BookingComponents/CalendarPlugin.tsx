@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from "react";
-import Calendar, { OnChangeDateRangeCallback } from "react-calendar";
+import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 interface ICalendarPluginProps {
@@ -21,7 +21,7 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
 
   return (
     <>
-      <label htmlFor="guestAmount">Guest amount: </label>
+      <label htmlFor="guestAmount">Gästantal: </label>
       <input
         id="guestAmount"
         onChange={submitGuestAmount}

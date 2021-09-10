@@ -1,5 +1,4 @@
 .primaryButton {
-    @include fontBody(); 
     background-color: $dorian;
     margin: 1rem;
     padding: 1rem;
@@ -8,19 +7,7 @@
     cursor: pointer;
 }
 
-.deleteButton {
-    @include fontBody(); 
-    background-color: $tomata;
-    color: $dorian;
-    margin: 1rem;
-    padding: 1rem;
-    border: 1px solid black;
-    border-radius: 0.5rem;
-    cursor: pointer;
-}
-
 .post-button{
-    @include fontBody();
     background-color: green;
     margin: 1rem;
     padding: 2rem;
@@ -28,5 +15,32 @@
     border-radius: 0.5rem;
     cursor: pointer;
     color: $dorian;
-
 }
+
+.booking-delete-button {
+    //@include flexStyling(column, center);
+    position: absolute;
+    right: 1rem;
+    top: 2rem;
+    border: none;
+  }
+
+  .delete-button {
+    font-weight: bold;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: $tomata;
+    color: $dorian;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+
+  .edit-button {
+    margin: 1rem auto;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: lightskyblue;
+  }

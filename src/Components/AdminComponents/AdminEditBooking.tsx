@@ -76,20 +76,25 @@ export const AdminEditBooking = () => {
 
   return (
     <>
-      <BookingSummary booking={booking} />
+      <div className="editBookingContainer">
+        <h4>UPPDATERA BOKNING</h4>
+        <BookingSummary booking={booking} />
 
-      <CalendarPlugin getUserInput={getDateAndGuestAmount} />
+        <CalendarPlugin getUserInput={getDateAndGuestAmount} />
 
-      <div className="user-inputs">
-        <AdminSeatingTime addSeatingTime={getSeatingTime} />
-        <UserForm addCustomerInfo={getCustomerInfo} />
+        <div className="user-inputs">
+          <AdminSeatingTime addSeatingTime={getSeatingTime} />
 
-        <hr className="line2" />
+          <h5>Gästinformation</h5>
+          <UserForm addCustomerInfo={getCustomerInfo} />
 
-        <button type="button" onClick={updateBooking}>
-          Update booking!
-        </button>
-        <Link to="/admin">Go back!</Link>
+          <h5>Stämmer ovanstående uppgifter?</h5>
+
+          <button className="post-button" type="button" onClick={updateBooking}>
+            Spara
+          </button>
+          <Link to="/admin">Tillbaka</Link>
+        </div>
       </div>
     </>
   );

@@ -17,10 +17,10 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
           <div className="bookingRefAndDate">
             <ul>
               <li>
-                <b>Booking reference: </b> {props.booking?.bookingRef}
+                <b>Bokningsreferens: </b> {props.booking?.bookingRef}
               </li>
               <li>
-                <b>Date: </b>
+                <b>Datum: </b>
                 <Moment format="YYYY/MM/DD">{props.booking?.date}</Moment>
               </li>
             </ul>
@@ -29,33 +29,36 @@ export const BookingSummary = (props: IBookingSummaryProps) => {
           <div className="amountAndTime">
             <ul>
               <li>
-                <b>Amount of guests booked:</b> {props.booking?.guestAmount}
+                <b>Antal bokade gäster:</b> {props.booking?.guestAmount}
               </li>
               <li>
-                <b>Seating time:</b> {props.booking?.seatingTime}
+                <b>Sittningstid:</b>{" "}
+                {props.booking?.seatingTime === "early" ? "18.00" : "21:00"}
               </li>
             </ul>
           </div>
         </div>
-        <div className="customerInfoContainer">
-          <h5>Customer info: </h5>
+        <div className="customerDetails">
+          <h5>Gästinformation: </h5>
           <ul>
             <li>
-              <b>Firstname: </b> {props.booking?.customerInfo.firstName}
+              <b>Förnamn: </b> {props.booking?.customerInfo.firstName}
             </li>
             <li>
-              <b>Lastname: </b> {props.booking?.customerInfo.lastName}
+              <b>Efternamn: </b> {props.booking?.customerInfo.lastName}
             </li>
             <li>
               <b>Email: </b> {props.booking?.customerInfo.email}
             </li>
             <li>
-              <b>Phone number: </b> {props.booking?.customerInfo.tel}
+              <b>Telefon: </b> {props.booking?.customerInfo.tel}
             </li>
-            <li>
-              <b>Additional info: </b>{" "}
-              {props.booking?.customerInfo.additionalInfo}
-            </li>
+            {props.booking?.customerInfo.additionalInfo ? (
+              <li>
+                <b>Övrig information: </b>{" "}
+                {props.booking?.customerInfo.additionalInfo}
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>

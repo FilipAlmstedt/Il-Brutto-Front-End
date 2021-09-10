@@ -15,13 +15,13 @@ export const Navbar = () => {
             </li>
             <div className="navbarLinks">
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/">Hem</Link>
               </li>
               <li>
-                <Link to="/menu">Menu</Link>
+                <Link to="/menu">Meny</Link>
               </li>
               <li>
-                <Link to="/booking">Booking</Link>
+                <Link to="/booking">Boka bord</Link>
               </li>
             </div>
           </ul>
