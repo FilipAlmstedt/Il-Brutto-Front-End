@@ -4,15 +4,12 @@ import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
 import { UserForm } from "../BookingComponents/UserForm";
-import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import { AdminBookingTable } from "../AdminComponents/AdminBookingTable/AdminBookingTable";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
-
-  let history = useHistory();
 
   let defaultValues: Booking = {
     date: new Date(),
@@ -29,10 +26,17 @@ export const AdminPage = () => {
   };
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
-  const getDateAndGuestAmount = (chosenDate: Date, guestAmount: number) => {
+  const getGuestAmount = (guestAmount: number) => {
+    const bookingObject = { ...booking };
+    bookingObject.guestAmount = guestAmount;
+
+    setBooking(bookingObject);
+  };
+
+  const getDate = (chosenDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = chosenDate;
-    bookingObject.guestAmount = guestAmount;
+
     setBooking(bookingObject);
   };
 
@@ -89,7 +93,7 @@ export const AdminPage = () => {
       <div className="adminPageContainer">
         <h4>ADMINSIDA</h4>
 
-        <CalendarPlugin getUserInput={getDateAndGuestAmount} />
+        <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
         <div className="user-inputs">
           <AdminSeatingTime addSeatingTime={getSeatingTime} />
           <h5>Gästinformation</h5>

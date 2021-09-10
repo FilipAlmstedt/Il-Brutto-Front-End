@@ -52,12 +52,20 @@ export const AdminEditBooking = () => {
     setUpdatedBooking(bookingObject);
   };
 
-  const getDateAndGuestAmount = (chosenDate: Date, guestAmount: number) => {
+  const getGuestAmount = (guestAmount: number) => {
+    const bookingObject = { ...updatedBooking };
+    bookingObject.guestAmount = guestAmount;
+
+    setBooking(bookingObject);
+  };
+
+  const getDate = (chosenDate: Date) => {
     const bookingObject = { ...updatedBooking };
     bookingObject.date = chosenDate;
-    bookingObject.guestAmount = guestAmount;
-    setUpdatedBooking(bookingObject);
+
+    setBooking(bookingObject);
   };
+
   // Get customer information from AdminUserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...updatedBooking };
@@ -80,7 +88,7 @@ export const AdminEditBooking = () => {
         <h4>UPPDATERA BOKNING</h4>
         <BookingSummary booking={booking} />
 
-        <CalendarPlugin getUserInput={getDateAndGuestAmount} />
+      <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
 
         <div className="user-inputs">
           <AdminSeatingTime addSeatingTime={getSeatingTime} />

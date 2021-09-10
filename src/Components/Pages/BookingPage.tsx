@@ -19,16 +19,17 @@ export const BookingPage = () => {
   const [lateTable, setLateTable] = useState<Boolean>(false);
 
   // State that are used as trigger for slideanimations for different components
-  const [removeCalendarAnimation, setRemoveCalendarAnimation] =
-    useState<Boolean>(false);
-  const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] =
-    useState<Boolean>(false);
+  const [removeCalendarAnimation, setRemoveCalendarAnimation] = useState<
+    Boolean
+  >(false);
+  const [
+    removeCustomerInfoAnimation,
+    setRemoveCustomerInfoAnimation,
+  ] = useState<Boolean>(false);
   const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(false);
 
-  const [lateTablesTaken, setLateTablesTaken] = useState<number>(0);
-  const [earlyTablesTaken, setEarlyTablesTaken] = useState<number>(0);
-  const [summaryValue, setSummaryValue] = useState<Boolean>(false);
   const [checkBox, setCheckBox] = useState<Boolean>(false);
+
   let history = useHistory();
 
   let defaultValues: Booking = {
@@ -44,12 +45,20 @@ export const BookingPage = () => {
       additionalInfo: "",
     },
   };
+
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
-  const getDateAndGuestAmount = (chosenDate: Date, guestAmount: number) => {
+  const getGuestAmount = (guestAmount: number) => {
+    const bookingObject = { ...booking };
+    bookingObject.guestAmount = guestAmount;
+
+    setBooking(bookingObject);
+  };
+
+  const getDate = (chosenDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = chosenDate;
-    bookingObject.guestAmount = guestAmount;
+
     setBooking(bookingObject);
   };
 
@@ -61,11 +70,6 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
-  //Slå om summaryValue så att summary renderas med ifyllda värden
-  const showSummary = () => {
-    setSummaryValue(true);
-  };
-
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
@@ -73,7 +77,6 @@ export const BookingPage = () => {
     // Create unique bookingRef
     bookingObject.bookingRef = uuidv1();
     setBooking(bookingObject);
-    showSummary();
 
     slideOutCustomerInfoComponent();
   };
@@ -94,24 +97,23 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
-  const sortBookings = (chosenDate: Date, guestAmount: number) => {
-    let earlyBookings: Booking[] = [];
-    let lateBookings: Booking[] = [];
-
+  const sortBookings = () => {
     axios
       .get<Booking[]>("http://localhost:8000/reservations")
       .then((response) => {
-        //Hitta befintliga bokningar på kundens valda datum
+        //Split up chosen dates DB bookings to early or late bookings
+        let earlyBookings: Booking[] = [];
+        let lateBookings: Booking[] = [];
         for (let i = 0; i < response.data.length; i++) {
           let dbDate: Date = response.data[i].date;
           if (
-            moment(chosenDate).format("YYYY MM DD") ===
+            moment(booking.date).format("YYYY MM DD") ===
               moment(dbDate).format("YYYY MM DD") &&
             response.data[i].seatingTime === "early"
           ) {
             earlyBookings.push(response.data[i]);
           } else if (
-            moment(chosenDate).format("YYYY MM DD") ===
+            moment(booking.date).format("YYYY MM DD") ===
               moment(dbDate).format("YYYY MM DD") &&
             response.data[i].seatingTime === "late"
           ) {
@@ -119,35 +121,31 @@ export const BookingPage = () => {
           }
         }
 
-        getDateAndGuestAmount(chosenDate, guestAmount);
-        checkAvailability(earlyBookings, lateBookings, guestAmount);
+        //Calculate how many tables are occupied by current bookings
+        let lateTables: number = 0;
+        let earlyTables: number = 0;
+        for (let i = 0; i < lateBookings.length; i++) {
+          lateBookings[i].guestAmount <= 6 ? lateTables++ : (lateTables += 2);
+        }
+        for (let i = 0; i < earlyBookings.length; i++) {
+          earlyBookings[i].guestAmount <= 6
+            ? earlyTables++
+            : (earlyTables += 2);
+        }
+        //Calculate if tables are available for 6(one table) or 7+(two tables)
+        booking.guestAmount <= 6
+          ? setLateTable(lateTables <= 14)
+          : setLateTable(lateTables <= 13);
+        booking.guestAmount <= 6
+          ? setEarlyTable(earlyTables <= 14)
+          : setEarlyTable(earlyTables <= 13);
       });
   };
 
-  const checkAvailability = (
-    earlyBookings: Booking[],
-    lateBookings: Booking[],
-    guestAmount: number
-  ) => {
-    let lateTables: number = 0;
-    let earlyTables: number = 0;
-    for (let i = 0; i < lateBookings.length; i++) {
-      lateBookings[i].guestAmount <= 6 ? lateTables++ : (lateTables += 2);
-    }
-    for (let i = 0; i < earlyBookings.length; i++) {
-      earlyBookings[i].guestAmount <= 6 ? earlyTables++ : (earlyTables += 2);
-    }
-
-    setLateTablesTaken(lateTables);
-    setEarlyTablesTaken(earlyTables);
-
-    guestAmount <= 6
-      ? setLateTable(lateTablesTaken <= 14)
-      : setLateTable(lateTablesTaken <= 13);
-    guestAmount <= 6
-      ? setEarlyTable(earlyTablesTaken <= 14)
-      : setEarlyTable(earlyTablesTaken <= 13);
-  };
+  //Run sorting function when user when booking-values are changed
+  useEffect(() => {
+    sortBookings();
+  }, [booking]);
 
   //Post request using booking state
   const submitAllInfo = () => {
@@ -189,8 +187,8 @@ export const BookingPage = () => {
           <h4>Boka bord</h4>
           <h5>Fyll i datum och antal gäster:</h5>
           <CalendarPlugin
-            getUserInput={sortBookings}
-            // getUserDate={sortBookings}
+            getGuestAmount={getGuestAmount}
+            getDate={getDate}
           ></CalendarPlugin>
         </motion.div>
 
@@ -228,58 +226,62 @@ export const BookingPage = () => {
             </motion.div>
           )}
         </div>
-        {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
+
+        <motion.div
+          className="userFormContainer customerInfoContainer"
+          initial={{
+            display: "visible",
+            x: "100vw",
+          }}
+          animate={{
+            x: removeCustomerInfoAnimation ? "-100vw" : "0vw",
+            display: removeCalendarAnimation ? "flex" : "none",
+          }}
+          transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
+        >
           <motion.div
-            className="userFormContainer customerInfoContainer"
-            initial={{
-              display: "visible",
-              x: "100vw",
-            }}
+            className="customerInfoContainer2"
+            initial={{ x: "100vw" }}
             animate={{
-              x: removeCustomerInfoAnimation ? "-100vw" : "0vw",
-              display: removeCalendarAnimation ? "flex" : "none",
+              x: removeCalendarAnimation ? 0 : "100vw",
+              display: removeCustomerInfoAnimation ? "none" : "flex",
             }}
             transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
           >
-            <motion.div
-              className="customerInfoContainer2"
-              initial={{ x: "100vw" }}
-              animate={{
-                x: removeCalendarAnimation ? 0 : "100vw",
-                display: removeCustomerInfoAnimation ? "none" : "flex",
-              }}
-              transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
-            >
-              <h4>Boka bord</h4>
+             <h4>Boka bord</h4>
               <h5>Fyll i dina kontaktuppgifter</h5>
               <p className="goBackLink" onClick={goBackAndFourthCalendar}>
                 Gå tillbaka
               </p>
-
-              <UserForm addCustomerInfo={getCustomerInfo} />
-            </motion.div>
-          </motion.div>
-        ) : null}
-
-        {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
-        {summaryValue ? (
-          <motion.div
-            initial={{ x: "100vw" }}
-            animate={{
-              x: removeCustomerInfoAnimation ? 0 : "100vw",
-              display: removeCustomerInfoAnimation ? "block" : "none"
-            }}
-            transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
-          >
             <h4>Boka bord</h4>
             <h5>Bokningsbekräftelse:</h5>
             <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>
               Gå tillbaka!
             </p>
-            <BookingSummary booking={booking} />
-            <GDPR checkBox={toggleCheckbox} />
+
+            <UserForm addCustomerInfo={getCustomerInfo} />
           </motion.div>
-        ) : null}
+        </motion.div>
+
+        {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
+
+        <motion.div
+          initial={{ x: "100vw" }}
+          animate={{
+            x: removeCustomerInfoAnimation ? 0 : "100vw",
+            display: removeCustomerInfoAnimation ? "block" : "none",
+          }}
+          transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
+        >
+          <h4>Book a table</h4>
+          <h5>Bokningsbekräftelse:</h5>
+          <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>
+            Gå tillbaka!
+          </p>
+          <BookingSummary booking={booking} />
+          <GDPR checkBox={toggleCheckbox} />
+        </motion.div>
+
         {/* Rendera post-knapp ifall villkoren är godkända */}
         {checkBox ? (
           <motion.button
