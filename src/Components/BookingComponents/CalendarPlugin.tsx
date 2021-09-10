@@ -28,6 +28,7 @@ export function CalendarPlugin(props: ICalendarPluginProps) {
         type="number"
         defaultValue={2}
         min={1}
+        max={12}
       />
 
       <Calendar onChange={submitDate} minDate={new Date()} showWeekNumbers />
