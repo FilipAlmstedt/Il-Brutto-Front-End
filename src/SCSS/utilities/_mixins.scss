@@ -43,19 +43,18 @@
 //Mixin for homepage containers with text
 @mixin homeImageText {
   .headingBackground {
-    text-align: center;
+    @include flexStyling(row, center);
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
     bottom: 0;
     padding: 1rem;
     width: 100%;
-    transition: height 1s ease-in-out;
+    height: 5vh;
+    transition: .3s ease-in-out;
 
     &:hover {
       height: 10vh;
-      h3 {
-        font-size: 5rem;
-      }
+      font-size: 5rem;
     }
 
     h3 {

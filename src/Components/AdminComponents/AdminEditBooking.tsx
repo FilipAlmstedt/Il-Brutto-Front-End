@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "./AdminSeatingTime";
@@ -15,6 +15,7 @@ interface IParams {
 
 // Component that is displaying the information for the customer and gives admin the possibility to update that info
 export const AdminEditBooking = () => {
+  let history = useHistory();
   let { id } = useParams<IParams>();
   // Booking info that you get from DB
   const [booking, setBooking] = useState<Booking>();
@@ -52,21 +53,22 @@ export const AdminEditBooking = () => {
     setUpdatedBooking(bookingObject);
   };
 
+  // Get guestAmount from calendarPlugin component
   const getGuestAmount = (guestAmount: number) => {
     const bookingObject = { ...updatedBooking };
     bookingObject.guestAmount = guestAmount;
 
-    setBooking(bookingObject);
+    setUpdatedBooking(bookingObject);
   };
-
+  // Get date from calendarPlugin component
   const getDate = (chosenDate: Date) => {
     const bookingObject = { ...updatedBooking };
     bookingObject.date = chosenDate;
 
-    setBooking(bookingObject);
+    setUpdatedBooking(bookingObject);
   };
 
-  // Get customer information from AdminUserForm component
+  // Get customer information from UserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...updatedBooking };
     bookingObject.customerInfo = customerInput;
@@ -79,7 +81,11 @@ export const AdminEditBooking = () => {
 
   // Call post request to back end and store in DB
   const updateBooking = () => {
-    axios.post(`http://localhost:8000/editReservation`, updatedBooking);
+    axios
+      .post(`http://localhost:8000/editReservation`, updatedBooking)
+      .then((response) => {
+        history.push("/admin");
+      });
   };
 
   return (
@@ -88,7 +94,7 @@ export const AdminEditBooking = () => {
         <h4>UPPDATERA BOKNING</h4>
         <BookingSummary booking={booking} />
 
-      <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
+        <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
 
         <div className="user-inputs">
           <AdminSeatingTime addSeatingTime={getSeatingTime} />

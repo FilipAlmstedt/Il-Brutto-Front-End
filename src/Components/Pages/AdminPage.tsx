@@ -14,7 +14,7 @@ export const AdminPage = () => {
   let defaultValues: Booking = {
     date: new Date(),
     bookingRef: "",
-    guestAmount: 0,
+    guestAmount: 2,
     seatingTime: "",
     customerInfo: {
       firstName: "",
@@ -26,13 +26,14 @@ export const AdminPage = () => {
   };
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
+// Get guest amount from calenderplugin
   const getGuestAmount = (guestAmount: number) => {
     const bookingObject = { ...booking };
     bookingObject.guestAmount = guestAmount;
 
     setBooking(bookingObject);
   };
-
+// Get users selected date from calenderplugin
   const getDate = (chosenDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = chosenDate;
@@ -40,14 +41,14 @@ export const AdminPage = () => {
     setBooking(bookingObject);
   };
 
-  // Get seatingTime from AdminSeatingTime component // NOT DONE!!!
+  // Get seatingTime from AdminSeatingTime component
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject = { ...booking };
     bookingObject.seatingTime = chosenTime;
     setBooking(bookingObject);
   };
 
-  // Get customer information from AdminUserForm component
+  // Get customer information from userForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
@@ -57,13 +58,12 @@ export const AdminPage = () => {
     setBooking(bookingObject);
   };
 
-  //Post request using booking state
+  //Post request using booking state triggered by submitbutton
   const submitAllInfo = () => {
     axios
       .post<Booking>("http://localhost:8000/admin", booking)
       .then((response) => {
         getBookings();
-        //setBooking(defaultValues)
       });
   };
 
@@ -98,10 +98,15 @@ export const AdminPage = () => {
           <AdminSeatingTime addSeatingTime={getSeatingTime} />
           <h5>Gästinformation</h5>
           <UserForm addCustomerInfo={getCustomerInfo} />
-          <h5>Är ovanstående information rätt ifylld?</h5>
-          <button className="post-button" onClick={submitAllInfo}>
-            LÄGG TILL BOKNING
-          </button>
+
+          {booking.customerInfo.firstName === "" ? null : (
+            <div>
+              <h5>Är ovanstående information rätt ifylld?</h5>
+              <button className="post-button" onClick={submitAllInfo}>
+                LÄGG TILL BOKNING
+              </button>
+            </div>
+          )}
         </div>
         <AdminBookingTable
           cancelReservation={deleteBooking}
