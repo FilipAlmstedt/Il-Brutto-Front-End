@@ -13,11 +13,8 @@
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
     "axios": "^0.21.1",
-<<<<<<< HEAD
-=======
     "framer-motion": "^4.1.17",
     "moment": "^2.29.1",
->>>>>>> 38aa64fe49478f49b0bcf4d745f0cd551274fd1c
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-calendar": "^3.4.0",
