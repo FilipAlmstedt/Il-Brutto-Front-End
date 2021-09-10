@@ -1,7 +1,9 @@
 export const PageNotFound = () => {
   return (
     <>
-      <h1>Oops! Something went wrong!</h1>
+    <div className="pageNotFoundContainer">
+    <h4>Oops! Something went wrong!</h4>
+    </div>
     </>
   );
 };

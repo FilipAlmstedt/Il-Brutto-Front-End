@@ -211,7 +211,7 @@ export const BookingPage = () => {
                 x: "100vw",
               }}
               animate={{
-                x: removeCalendarAnimation ? "-100vw" : "0vw",
+                x: removeCalendarAnimation ? "-10vw" : "0vw",
                 display: removeCalendarAnimation ? "none" : "flex",
               }}
               transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
@@ -268,7 +268,7 @@ export const BookingPage = () => {
             initial={{ x: "100vw" }}
             animate={{
               x: removeCustomerInfoAnimation ? 0 : "100vw",
-              display: removeCustomerInfoAnimation ? "block" : "none",
+              display: removeCustomerInfoAnimation ? "block" : "none"
             }}
             transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
           >
