@@ -87,6 +87,9 @@ The SCSS-folder contains:
 └── App.scss            # SASS-file that is used for styling and imports the other SASS-files
 
 ```
+
+_The `utilities` folder contains all major presets for the project, corresponding with Brand Outline as presented in [FIGMA team project IL BRUTTO](https://www.figma.com/file/KKd0ShsoPkyrjkDGNEEwlG/IL-BRUTTO?node-id=99%3A326)_
+
 ---
 
 ### Lifting State Up
