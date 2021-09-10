@@ -15,6 +15,8 @@ import { motion } from "framer-motion";
 import { LoadingComponent } from "../BookingComponents/LoadingComponent";
 
 export const BookingPage = () => {
+
+  //booleans for rendering seatingTime components
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
 
@@ -24,7 +26,7 @@ export const BookingPage = () => {
   const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] =
     useState<Boolean>(false);
   const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(false);
-
+  //State used to trigger submitButton
   const [checkBox, setCheckBox] = useState<Boolean>(false);
 
   let history = useHistory();
@@ -45,13 +47,14 @@ export const BookingPage = () => {
 
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
+  // Get users selected date from calenderplugin
   const getGuestAmount = (guestAmount: number) => {
     const bookingObject = { ...booking };
     bookingObject.guestAmount = guestAmount;
 
     setBooking(bookingObject);
   };
-
+  // Get guest amount from calenderplugin
   const getDate = (chosenDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = chosenDate;
@@ -59,6 +62,7 @@ export const BookingPage = () => {
     setBooking(bookingObject);
   };
 
+  // Get selected seatingTime from seatingComponent
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject = { ...booking };
     bookingObject.seatingTime = chosenTime;
@@ -67,6 +71,7 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
+  // Get customer information from userForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
@@ -86,7 +91,7 @@ export const BookingPage = () => {
     setRemoveCalendarAnimation(!removeCalendarAnimation);
   };
 
-  // These fucntion trigger the set state functions that are triggered from links
+  // These function trigger the set state functions that are triggered from links
   const goBackAndFourthCustomerInfo = () => {
     slideOutCustomerInfoComponent();
   };
@@ -94,6 +99,8 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
+
+  //Function to compare users selected date and guestamount to databases current bookings
   const sortBookings = () => {
     axios
       .get<Booking[]>("http://localhost:8000/reservations")
@@ -168,7 +175,6 @@ export const BookingPage = () => {
     <>
       <div className="bookingContainer">
         {/* A state activates the animation for the calendar to slide out of frame depending if the customer has clicked the seatingTime or not*/}
-
         <motion.div
           className="calenderContainer"
           initial={{
@@ -189,10 +195,8 @@ export const BookingPage = () => {
           ></CalendarPlugin>
         </motion.div>
 
-        {/* rendera komponent beroende på tillgänglighet */}
-
         <div>
-          {/* If all the table are booked, show a text that forces the customer to pick another date to book a table */}
+          {/* If all the tables are booked, show a text that informing the customer to pick another date to book a table */}
           {earlyTable === false && lateTable === false ? (
             <h5 className="errorMsg">
               Inga tillgängliga tider finns på valt dautm, välj en annan dag!
@@ -255,8 +259,6 @@ export const BookingPage = () => {
           </motion.div>
         </motion.div>
 
-        {/* Rendera summary ifall användare gått fyllt i och gått vidare med formuläret */}
-
         <motion.div
           initial={{ x: "100vw" }}
           animate={{
@@ -274,7 +276,7 @@ export const BookingPage = () => {
           <GDPR checkBox={toggleCheckbox} />
         </motion.div>
 
-        {/* Rendera post-knapp ifall villkoren är godkända */}
+        {/* Render post-button if values are valid */}
         {checkBox ? (
           <motion.button
             className="post-button"

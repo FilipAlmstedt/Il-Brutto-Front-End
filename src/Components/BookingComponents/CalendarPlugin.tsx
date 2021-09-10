@@ -9,10 +9,12 @@ interface ICalendarPluginProps {
 
 export function CalendarPlugin(props: ICalendarPluginProps) {
   
+  //send user guestamount input to parent state
   const submitGuestAmount = (e: ChangeEvent<HTMLInputElement>) => {
     props.getGuestAmount(+e.target.value);
   };
 
+  //send user selected date input to parent state
   const submitDate = (e: Date) => {
     props.getDate(e);
   };
