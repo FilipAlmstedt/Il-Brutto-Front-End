@@ -13,23 +13,24 @@ import { BookingSummary } from "../BookingComponents/BookingSummary";
 import { GDPR } from "../BookingComponents/GDPR";
 import { motion } from "framer-motion";
 import { LoadingComponent } from "../BookingComponents/LoadingComponent";
-import { NONAME } from "dns";
 
 export const BookingPage = () => {
   const [earlyTable, setEarlyTable] = useState<Boolean>(false);
   const [lateTable, setLateTable] = useState<Boolean>(false);
 
   // State that are used as trigger for slideanimations for different components
-  const [removeCalendarAnimation, setRemoveCalendarAnimation] =
-    useState<Boolean>(false);
-  const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] =
-    useState<Boolean>(false);
+  const [removeCalendarAnimation, setRemoveCalendarAnimation] = useState<
+    Boolean
+  >(false);
+  const [
+    removeCustomerInfoAnimation,
+    setRemoveCustomerInfoAnimation,
+  ] = useState<Boolean>(false);
   const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(false);
 
-  const [lateTablesTaken, setLateTablesTaken] = useState<number>(0);
-  const [earlyTablesTaken, setEarlyTablesTaken] = useState<number>(0);
   const [summaryValue, setSummaryValue] = useState<Boolean>(false);
   const [checkBox, setCheckBox] = useState<Boolean>(false);
+
   let history = useHistory();
 
   let defaultValues: Booking = {
@@ -45,12 +46,20 @@ export const BookingPage = () => {
       additionalInfo: "",
     },
   };
+
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
-  const getDateAndGuestAmount = (chosenDate: Date, guestAmount: number) => {
+  const getGuestAmount = (guestAmount: number) => {
+    const bookingObject = { ...booking };
+    bookingObject.guestAmount = guestAmount;
+
+    setBooking(bookingObject);
+  };
+
+  const getDate = (chosenDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = chosenDate;
-    bookingObject.guestAmount = guestAmount;
+
     setBooking(bookingObject);
   };
 
@@ -62,7 +71,7 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
-  //Slå om summaryValue så att summary renderas med ifyllda värden
+  //Toggle summaryValue so summary page renderes correctly
   const showSummary = () => {
     setSummaryValue(true);
   };
@@ -95,41 +104,33 @@ export const BookingPage = () => {
     slideOutCalendarComponent();
   };
 
-  const sortBookings = (chosenDate: Date, guestAmount: number) => {
-    let earlyBookings: Booking[] = [];
-    let lateBookings: Booking[] = [];
-
+  const sortBookings = () => {
+    
     axios
       .get<Booking[]>("http://localhost:8000/reservations")
       .then((response) => {
-        //Hitta befintliga bokningar på kundens valda datum
-        for (let i = 0; i < response.data.length; i++) {
-          let dbDate: Date = response.data[i].date;
-          if (
-            moment(chosenDate).format("YYYY MM DD") ===
-              moment(dbDate).format("YYYY MM DD") &&
-            response.data[i].seatingTime === "early"
-          ) {
-            earlyBookings.push(response.data[i]);
-          } else if (
-            moment(chosenDate).format("YYYY MM DD") ===
-              moment(dbDate).format("YYYY MM DD") &&
-            response.data[i].seatingTime === "late"
-          ) {
-            lateBookings.push(response.data[i]);
-          }
-        }
-
-        getDateAndGuestAmount(chosenDate, guestAmount);
-        checkAvailability(earlyBookings, lateBookings, guestAmount);
-      });
-  };
-
-  const checkAvailability = (
-    earlyBookings: Booking[],
-    lateBookings: Booking[],
-    guestAmount: number
-  ) => {
+    
+    //Split up chosen dates DB bookings to early or late bookings
+    let earlyBookings: Booking[] = [];
+    let lateBookings: Booking[] = [];
+    for (let i = 0; i < response.data.length; i++) {
+      let dbDate: Date = response.data[i].date;
+      if (
+        moment(booking.date).format("YYYY MM DD") ===
+          moment(dbDate).format("YYYY MM DD") &&
+          response.data[i].seatingTime === "early"
+      ) {
+        earlyBookings.push(response.data[i]);
+      } else if (
+        moment(booking.date).format("YYYY MM DD") ===
+          moment(dbDate).format("YYYY MM DD") &&
+          response.data[i].seatingTime === "late"
+      ) {
+        lateBookings.push(response.data[i]);
+      }
+    }
+    
+    //Calculate how many tables are occupied by current bookings
     let lateTables: number = 0;
     let earlyTables: number = 0;
     for (let i = 0; i < lateBookings.length; i++) {
@@ -138,17 +139,20 @@ export const BookingPage = () => {
     for (let i = 0; i < earlyBookings.length; i++) {
       earlyBookings[i].guestAmount <= 6 ? earlyTables++ : (earlyTables += 2);
     }
-
-    setLateTablesTaken(lateTables);
-    setEarlyTablesTaken(earlyTables);
-
-    guestAmount <= 6
-      ? setLateTable(lateTablesTaken <= 14)
-      : setLateTable(lateTablesTaken <= 13);
-    guestAmount <= 6
-      ? setEarlyTable(earlyTablesTaken <= 14)
-      : setEarlyTable(earlyTablesTaken <= 13);
+    //Calculate if tables are available for 6(one table) or 7+(two tables)   
+    booking.guestAmount <= 6
+      ? setLateTable(lateTables <= 14)
+      : setLateTable(lateTables <= 13);
+    booking.guestAmount <= 6
+      ? setEarlyTable(earlyTables <= 14)
+      : setEarlyTable(earlyTables <= 13);
+      });
   };
+
+//Run sorting function when user when booking-values are changed
+  useEffect(() => {
+    sortBookings();
+  }, [booking]);
 
   //Post request using booking state
   const submitAllInfo = () => {
@@ -190,8 +194,8 @@ export const BookingPage = () => {
           <h4>Book a table</h4>
           <h5>Enter date and guest amount:</h5>
           <CalendarPlugin
-            getUserInput={sortBookings}
-            // getUserDate={sortBookings}
+            getGuestAmount={getGuestAmount}
+            getDate={getDate}
           ></CalendarPlugin>
         </motion.div>
 
