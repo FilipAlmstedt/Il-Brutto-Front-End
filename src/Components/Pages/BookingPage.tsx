@@ -1,5 +1,5 @@
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Booking } from "../../Models/Booking";
 import moment from "moment";
@@ -19,13 +19,10 @@ export const BookingPage = () => {
   const [lateTable, setLateTable] = useState<Boolean>(false);
 
   // State that are used as trigger for slideanimations for different components
-  const [removeCalendarAnimation, setRemoveCalendarAnimation] = useState<
-    Boolean
-  >(false);
-  const [
-    removeCustomerInfoAnimation,
-    setRemoveCustomerInfoAnimation,
-  ] = useState<Boolean>(false);
+  const [removeCalendarAnimation, setRemoveCalendarAnimation] =
+    useState<Boolean>(false);
+  const [removeCustomerInfoAnimation, setRemoveCustomerInfoAnimation] =
+    useState<Boolean>(false);
   const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(false);
 
   const [checkBox, setCheckBox] = useState<Boolean>(false);
@@ -248,15 +245,10 @@ export const BookingPage = () => {
             }}
             transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
           >
-             <h4>Boka bord</h4>
-              <h5>Fyll i dina kontaktuppgifter</h5>
-              <p className="goBackLink" onClick={goBackAndFourthCalendar}>
-                Gå tillbaka
-              </p>
             <h4>Boka bord</h4>
-            <h5>Bokningsbekräftelse:</h5>
-            <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>
-              Gå tillbaka!
+            <h5>Fyll i dina kontaktuppgifter</h5>
+            <p className="goBackLink" onClick={goBackAndFourthCalendar}>
+              Gå tillbaka
             </p>
 
             <UserForm addCustomerInfo={getCustomerInfo} />
@@ -273,7 +265,7 @@ export const BookingPage = () => {
           }}
           transition={{ type: "spring", delay: 0.3, stiffness: 40 }}
         >
-          <h4>Book a table</h4>
+          <h4>Boka bord</h4>
           <h5>Bokningsbekräftelse:</h5>
           <p className="goBackLink" onClick={goBackAndFourthCustomerInfo}>
             Gå tillbaka!
