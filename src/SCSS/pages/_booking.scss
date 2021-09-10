@@ -3,6 +3,11 @@
   margin: 1rem;
   //min-height: 75vh;
 
+  @include desktopsOnly() {
+    width: 75%;
+    margin: 0 auto;
+  }
+
   .customerInfoContainer {
     width: 100vw;
     .customerInfoContainer2 {

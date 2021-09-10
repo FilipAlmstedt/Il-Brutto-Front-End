@@ -18,15 +18,15 @@ export const AdminBookingTable = (props: IAdminBookingTable) => {
   let liTags = props.bookings.map((booking) => {
     return (
       <li key={booking.bookingRef}>
-        <h3>
-          {booking.customerInfo.firstName} {booking.customerInfo.lastName}
-        </h3>
-        <h4>Guestamount:{booking.guestAmount}</h4>
         <h4>
-          Date:<Moment format="YYYY/MM/DD">{booking.date}</Moment>
+          {booking.customerInfo.firstName} {booking.customerInfo.lastName}
         </h4>
-        <h4>Seating time: {booking.seatingTime}</h4>
-        <h4>Booking reference:{booking.bookingRef}</h4>
+        <h5>Guestamount: {booking.guestAmount}</h5>
+        <h5>
+          Date: <Moment format="YYYY/MM/DD">{booking.date}</Moment>
+        </h5>
+        <h5>Seating time: {booking.seatingTime}</h5>
+        <h5>Booking reference: {booking.bookingRef}</h5>
 
         <button
           className="delete-button"

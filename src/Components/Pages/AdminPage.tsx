@@ -85,19 +85,23 @@ export const AdminPage = () => {
 
   return (
     <>
-      <CalendarPlugin getUserInput={getDateAndGuestAmount} />
-      <div className="user-inputs">
-        <AdminSeatingTime addSeatingTime={getSeatingTime} />
-        <UserForm addCustomerInfo={getCustomerInfo} />
-        <h2>Is above information entered correctly?</h2>
-        <button className="post-button" onClick={submitAllInfo}>
-          ADD BOOKING
-        </button>
+      <div className="adminPageContainer">
+        <h4>ADMIN PAGE</h4>
+
+        <CalendarPlugin getUserInput={getDateAndGuestAmount} />
+        <div className="user-inputs">
+          <AdminSeatingTime addSeatingTime={getSeatingTime} />
+          <UserForm addCustomerInfo={getCustomerInfo} />
+          <h4>Is above information entered correctly?</h4>
+          <button className="post-button" onClick={submitAllInfo}>
+            ADD BOOKING
+          </button>
+        </div>
+        <AdminBookingTable
+          cancelReservation={deleteBooking}
+          bookings={bookings}
+        />
       </div>
-      <AdminBookingTable
-        cancelReservation={deleteBooking}
-        bookings={bookings}
-      />
     </>
   );
 };
