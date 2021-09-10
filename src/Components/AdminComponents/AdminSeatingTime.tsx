@@ -13,7 +13,7 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
 
   return (
     <>
-      <h2>Seating time</h2>
+      <h4>Seating time</h4>
       <div className="radio">
         <label>
           <input
@@ -23,7 +23,7 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
             name="seatingTime"
             onChange={onValueChange}
           />
-          Early
+          {" "} Early
         </label>
 
         <label>
@@ -34,7 +34,7 @@ export const AdminSeatingTime = (props: IAddSeatingTime) => {
             value="late"
             onChange={onValueChange}
           />
-          Late
+          {" "} Late
         </label>
       </div>
     </>
