@@ -233,7 +233,7 @@ export const BookingPage = () => {
           <motion.div
             className="userFormContainer customerInfoContainer"
             initial={{
-              display: "visible",
+              display: "none",
               x: "100vw",
             }}
             animate={{
@@ -244,7 +244,7 @@ export const BookingPage = () => {
           >
             <motion.div
               className="customerInfoContainer2"
-              initial={{ x: "100vw" }}
+              initial={{ x: "100vw", display: "none" }}
               animate={{
                 x: removeCalendarAnimation ? 0 : "100vw",
                 display: removeCustomerInfoAnimation ? "none" : "flex",
