@@ -230,10 +230,9 @@ export const BookingPage = () => {
           )}
         </div>
         {booking.seatingTime === "late" || booking.seatingTime === "early" ? (
-          <motion.div
+          <motion.div 
             className="userFormContainer customerInfoContainer"
             initial={{
-              display: "none",
               x: "100vw",
             }}
             animate={{
@@ -244,7 +243,7 @@ export const BookingPage = () => {
           >
             <motion.div
               className="customerInfoContainer2"
-              initial={{ x: "100vw", display: "none" }}
+              initial={{ x: "100vw" }}
               animate={{
                 x: removeCalendarAnimation ? 0 : "100vw",
                 display: removeCustomerInfoAnimation ? "none" : "flex",
