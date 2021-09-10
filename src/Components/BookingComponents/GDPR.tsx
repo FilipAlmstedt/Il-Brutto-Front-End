@@ -125,7 +125,7 @@ export const GDPR = (props: IPropsCheckbox) => {
         </div>
       </div>
 
-      <label htmlFor="terms">Jag godkänner vilkoren </label>
+      <label htmlFor="terms">Jag godkänner villkoren </label>
       <input type="checkbox" id="terms" onChange={checkBox} />
     </>
   );

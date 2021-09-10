@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "./AdminSeatingTime";
@@ -15,6 +15,7 @@ interface IParams {
 
 // Component that is displaying the information for the customer and gives admin the possibility to update that info
 export const AdminEditBooking = () => {
+  let history = useHistory();
   let { id } = useParams<IParams>();
   // Booking info that you get from DB
   const [booking, setBooking] = useState<Booking>();
@@ -52,13 +53,22 @@ export const AdminEditBooking = () => {
     setUpdatedBooking(bookingObject);
   };
 
-  const getDateAndGuestAmount = (chosenDate: Date, guestAmount: number) => {
+  // Get guestAmount from calendarPlugin component
+  const getGuestAmount = (guestAmount: number) => {
     const bookingObject = { ...updatedBooking };
-    bookingObject.date = chosenDate;
     bookingObject.guestAmount = guestAmount;
+
     setUpdatedBooking(bookingObject);
   };
-  // Get customer information from AdminUserForm component
+  // Get date from calendarPlugin component
+  const getDate = (chosenDate: Date) => {
+    const bookingObject = { ...updatedBooking };
+    bookingObject.date = chosenDate;
+
+    setUpdatedBooking(bookingObject);
+  };
+
+  // Get customer information from UserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...updatedBooking };
     bookingObject.customerInfo = customerInput;
@@ -71,25 +81,34 @@ export const AdminEditBooking = () => {
 
   // Call post request to back end and store in DB
   const updateBooking = () => {
-    axios.post(`http://localhost:8000/editReservation`, updatedBooking);
+    axios
+      .post(`http://localhost:8000/editReservation`, updatedBooking)
+      .then((response) => {
+        history.push("/admin");
+      });
   };
 
   return (
     <>
-      <BookingSummary booking={booking} />
+      <div className="editBookingContainer">
+        <h4>UPPDATERA BOKNING</h4>
+        <BookingSummary booking={booking} />
 
-      <CalendarPlugin getUserInput={getDateAndGuestAmount} />
+        <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
 
-      <div className="user-inputs">
-        <AdminSeatingTime addSeatingTime={getSeatingTime} />
-        <UserForm addCustomerInfo={getCustomerInfo} />
+        <div className="user-inputs">
+          <AdminSeatingTime addSeatingTime={getSeatingTime} />
 
-        <hr className="line2" />
+          <h5>Gästinformation</h5>
+          <UserForm addCustomerInfo={getCustomerInfo} />
 
-        <button type="button" onClick={updateBooking}>
-          Update booking!
-        </button>
-        <Link to="/admin">Go back!</Link>
+          <h5>Stämmer ovanstående uppgifter?</h5>
+
+          <button className="post-button" type="button" onClick={updateBooking}>
+            Spara
+          </button>
+          <Link to="/admin">Tillbaka</Link>
+        </div>
       </div>
     </>
   );

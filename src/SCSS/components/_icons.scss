@@ -21,3 +21,15 @@
 .icon-tel{
     @include smallIcon(url("../assets/icons/icon_tel.png"))
 }
+
+.icon-bin{
+    @include smallIcon(url("../assets/icons/icon_bin.png"));
+    filter: none;
+    margin: none;
+    cursor: pointer;
+    transition: ease-in-out .3s;
+
+    &:hover{
+        transform: scale(1.2);
+    }
+}

@@ -21,23 +21,24 @@ export const AdminBookingTable = (props: IAdminBookingTable) => {
         <h4>
           {booking.customerInfo.firstName} {booking.customerInfo.lastName}
         </h4>
-        <h5>Guestamount: {booking.guestAmount}</h5>
+        <h5>Gästantal: {booking.guestAmount}</h5>
         <h5>
-          Date: <Moment format="YYYY/MM/DD">{booking.date}</Moment>
+          Datum: <Moment format="YYYY/MM/DD">{booking.date}</Moment>
         </h5>
-        <h5>Seating time: {booking.seatingTime}</h5>
-        <h5>Booking reference: {booking.bookingRef}</h5>
+        <h5>
+          Sittningstid: {booking.seatingTime === "early" ? "18:00" : "21:00"}
+        </h5>
+        <h5>Bokningsreferens: {booking.bookingRef}</h5>
 
         <button
-          className="delete-button"
+          className="icon-bin booking-delete-button"
           onClick={() => {
             cancelReservation(booking);
           }}
-        >
-          X
+        > 
         </button>
         <Link to={`/edit/${booking.bookingRef}`}>
-          <button className="edit-button">EDIT BOOKING</button>
+          <button className="edit-button">UPPDATERA BOKNING</button>
         </Link>
       </li>
     );
@@ -45,7 +46,7 @@ export const AdminBookingTable = (props: IAdminBookingTable) => {
 
   return (
     <>
-      <h2>Bookings</h2>
+      <h4>Bokningar</h4>
       <ul className="booking-table">{liTags}</ul>
     </>
   );

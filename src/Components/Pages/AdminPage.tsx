@@ -4,7 +4,6 @@ import { Booking } from "../../Models/Booking";
 import { CustomerInfo } from "../../Models/CustomerInfo";
 import { AdminSeatingTime } from "../AdminComponents/AdminSeatingTime";
 import { UserForm } from "../BookingComponents/UserForm";
-import { useHistory } from "react-router-dom";
 import { v1 as uuidv1 } from "uuid";
 import { AdminBookingTable } from "../AdminComponents/AdminBookingTable/AdminBookingTable";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
@@ -12,12 +11,10 @@ import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 export const AdminPage = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
-  let history = useHistory();
-
   let defaultValues: Booking = {
     date: new Date(),
     bookingRef: "",
-    guestAmount: 0,
+    guestAmount: 2,
     seatingTime: "",
     customerInfo: {
       firstName: "",
@@ -29,21 +26,29 @@ export const AdminPage = () => {
   };
   const [booking, setBooking] = useState<Booking>(defaultValues);
 
-  const getDateAndGuestAmount = (chosenDate: Date, guestAmount: number) => {
+// Get guest amount from calenderplugin
+  const getGuestAmount = (guestAmount: number) => {
+    const bookingObject = { ...booking };
+    bookingObject.guestAmount = guestAmount;
+
+    setBooking(bookingObject);
+  };
+// Get users selected date from calenderplugin
+  const getDate = (chosenDate: Date) => {
     const bookingObject = { ...booking };
     bookingObject.date = chosenDate;
-    bookingObject.guestAmount = guestAmount;
+
     setBooking(bookingObject);
   };
 
-  // Get seatingTime from AdminSeatingTime component // NOT DONE!!!
+  // Get seatingTime from AdminSeatingTime component
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject = { ...booking };
     bookingObject.seatingTime = chosenTime;
     setBooking(bookingObject);
   };
 
-  // Get customer information from AdminUserForm component
+  // Get customer information from userForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...booking };
     bookingObject.customerInfo = customerInput;
@@ -53,7 +58,7 @@ export const AdminPage = () => {
     setBooking(bookingObject);
   };
 
-  //Post request using booking state
+  //Post request using booking state triggered by submitbutton
   const submitAllInfo = () => {
     axios
       .post<Booking>("http://localhost:8000/admin", booking)
@@ -86,16 +91,22 @@ export const AdminPage = () => {
   return (
     <>
       <div className="adminPageContainer">
-        <h4>ADMIN PAGE</h4>
+        <h4>ADMINSIDA</h4>
 
-        <CalendarPlugin getUserInput={getDateAndGuestAmount} />
+        <CalendarPlugin getDate={getDate} getGuestAmount={getGuestAmount} />
         <div className="user-inputs">
           <AdminSeatingTime addSeatingTime={getSeatingTime} />
+          <h5>Gästinformation</h5>
           <UserForm addCustomerInfo={getCustomerInfo} />
-          <h4>Is above information entered correctly?</h4>
-          <button className="post-button" onClick={submitAllInfo}>
-            ADD BOOKING
-          </button>
+
+          {booking.customerInfo.firstName === "" ? null : (
+            <div>
+              <h5>Är ovanstående information rätt ifylld?</h5>
+              <button className="post-button" onClick={submitAllInfo}>
+                LÄGG TILL BOKNING
+              </button>
+            </div>
+          )}
         </div>
         <AdminBookingTable
           cancelReservation={deleteBooking}
