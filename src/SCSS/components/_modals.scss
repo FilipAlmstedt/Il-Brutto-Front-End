@@ -1,10 +1,16 @@
 .gdprContainer {
   .gdprBody {
-    overflow: scroll;
+    
     height: 10rem;
     margin: 1rem;
     border: 1px solid black;
     padding: 1rem;
+    overflow: auto;
+
+    p {
+      
+      max-height: 100%;
+    }
   }
 
   input {
@@ -44,6 +50,7 @@
   }
 
   .customerInfoContainer {
+    overflow:hidden;
     text-decoration: none;
     padding: 2rem;
     line-height: 2.5rem;

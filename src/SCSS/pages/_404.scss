@@ -1,0 +1,5 @@
+.pageNotFoundContainer {
+  @include flexStyling(column, center);
+  height: 75vh;
+  text-align: center;
+}
