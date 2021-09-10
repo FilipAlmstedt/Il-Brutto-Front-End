@@ -19,8 +19,6 @@ export const AdminEditBooking = () => {
   // Booking info that you get from DB
   const [booking, setBooking] = useState<Booking>();
 
-  
-
   let defaultValues: Booking = {
     date: new Date(),
     bookingRef: "",
@@ -47,13 +45,6 @@ export const AdminEditBooking = () => {
       });
   }, [id]);
 
-  // Get chosen date from AdminCalendarPlugin component
-  const getDate = (selectedDate: Date) => {
-    const bookingObject: Booking = { ...updatedBooking };
-    bookingObject.date = selectedDate;
-    setUpdatedBooking(bookingObject);
-  };
-
   // Get seating time from AdminSeatingTime component
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject: Booking = { ...updatedBooking };
@@ -61,13 +52,12 @@ export const AdminEditBooking = () => {
     setUpdatedBooking(bookingObject);
   };
 
-  // Get the guest amount from AdminGuestAmount component
-  const getGuestAmount = (selectedGuestAmount: number) => {
-    const bookingObject: Booking = { ...updatedBooking };
-    bookingObject.guestAmount = selectedGuestAmount;
+  const getDateAndGuestAmount = (chosenDate: Date, guestAmount: number) => {
+    const bookingObject = { ...updatedBooking };
+    bookingObject.date = chosenDate;
+    bookingObject.guestAmount = guestAmount;
     setUpdatedBooking(bookingObject);
   };
-
   // Get customer information from AdminUserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
     const bookingObject = { ...updatedBooking };
@@ -86,11 +76,9 @@ export const AdminEditBooking = () => {
 
   return (
     <>
-      <BookingSummary
-        booking={booking}
-      />
+      <BookingSummary booking={booking} />
 
-      <CalendarPlugin getUserAmount={getGuestAmount} getUserDate={getDate} />
+      <CalendarPlugin getUserInput={getDateAndGuestAmount} />
 
       <div className="user-inputs">
         <AdminSeatingTime addSeatingTime={getSeatingTime} />
@@ -103,7 +91,6 @@ export const AdminEditBooking = () => {
         </button>
         <Link to="/admin">Go back!</Link>
       </div>
-
     </>
   );
 };
