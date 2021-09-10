@@ -7,6 +7,7 @@ import { AdminSeatingTime } from "./AdminSeatingTime";
 import { UserForm } from "../BookingComponents/UserForm";
 import { CalendarPlugin } from "../BookingComponents/CalendarPlugin";
 import { BookingSummary } from "../BookingComponents/BookingSummary";
+import moment from "moment";
 
 // Collect id - booking reference from URL
 interface IParams {
@@ -46,6 +47,13 @@ export const AdminEditBooking = () => {
       });
   }, [id]);
 
+  // Get date from calendarPlugin component
+  const getDate = (chosenDate: Date) => {
+    const bookingObject = { ...updatedBooking };
+    bookingObject.date = chosenDate;
+    setUpdatedBooking(bookingObject);
+  };
+
   // Get seating time from AdminSeatingTime component
   const getSeatingTime = (chosenTime: string) => {
     const bookingObject: Booking = { ...updatedBooking };
@@ -57,25 +65,30 @@ export const AdminEditBooking = () => {
   const getGuestAmount = (guestAmount: number) => {
     const bookingObject = { ...updatedBooking };
     bookingObject.guestAmount = guestAmount;
-
-    setUpdatedBooking(bookingObject);
-  };
-  // Get date from calendarPlugin component
-  const getDate = (chosenDate: Date) => {
-    const bookingObject = { ...updatedBooking };
-    bookingObject.date = chosenDate;
-
     setUpdatedBooking(bookingObject);
   };
 
   // Get customer information from UserForm component
   const getCustomerInfo = (customerInput: CustomerInfo) => {
-    const bookingObject = { ...updatedBooking };
+    let bookingObject = { ...updatedBooking };
+
+    // If no new date, guestAmount or SeatingTime is provided,
+    // Adopt previous booking values
+    if (
+      bookingObject.guestAmount === 0 &&
+      moment(bookingObject.date).format("YYYY MM DD") ===
+        moment(new Date()).format("YYYY MM DD") &&
+      bookingObject.seatingTime === ""
+    ) {
+      bookingObject.guestAmount = booking?.guestAmount || 0;
+      bookingObject.date = booking?.date || new Date();
+      bookingObject.seatingTime = booking?.seatingTime || "";
+    }
+
     bookingObject.customerInfo = customerInput;
 
     // Have the same bookingreference as the booking you collect so it update the right booking info
     bookingObject.bookingRef = id;
-
     setUpdatedBooking(bookingObject);
   };
 
@@ -103,10 +116,15 @@ export const AdminEditBooking = () => {
           <UserForm addCustomerInfo={getCustomerInfo} />
 
           <h5>Stämmer ovanstående uppgifter?</h5>
-
-          <button className="post-button" type="button" onClick={updateBooking}>
-            Spara
-          </button>
+          {updatedBooking.customerInfo.firstName === "" ? null : (
+            <button
+              className="post-button"
+              type="button"
+              onClick={updateBooking}
+            >
+              Spara
+            </button>
+          )}
           <Link to="/admin">Tillbaka</Link>
         </div>
       </div>
